@@ -50,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:maxLength="10"
                 app:hintEnabled="false">
 
                 <EditText
@@ -73,6 +74,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="right"
                     android:hint="Tên"
+                    android:maxLength="10"
                     android:inputType="textPersonName"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -110,6 +112,7 @@
                 android:id="@+id/edittext_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:maxLength="50"
                 android:hint="Email"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -140,10 +143,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="Địa Chỉ"
+                android:maxLength="1000"
                 android:singleLine="true">
             </EditText>
         </com.google.android.material.textfield.TextInputLayout>
-
 
     </LinearLayout>
 
@@ -152,9 +155,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="12dp"
+        android:layout_marginRight="30dp"
+        android:enabled="false"
         android:text="Lưu Thông Tin"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

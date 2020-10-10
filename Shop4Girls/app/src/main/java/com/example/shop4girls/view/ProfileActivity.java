@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -31,14 +33,18 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private EditText edtPass,edtFirstName,edtLastName,edtAddress,edtEmail,edtPhone;
+    private EditText edtFirstName,edtLastName,edtAddress,edtEmail,edtPhone;
     private Button btnSave;
     private Toolbar toolbar;
     private RadioButton radioButtonMale, radioButtonFeMale;
     private int sex=0;
+    public static final String EMAIL_PATTERN="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+    public static final String PHONE_PATTERN="^0[0-9]{9,10}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
         edtLastName =findViewById(R.id.edittext_lastname);
         edtEmail = findViewById(R.id.edittext_email);
         edtPhone = findViewById(R.id.edittext_phone);
-        edtPass = findViewById(R.id.edittext_pass);
         btnSave = findViewById(R. id.button_edit_profile);
         toolbar = findViewById(R.id.toolbar);
         radioButtonFeMale = findViewById(R.id.radiobutton_female);
@@ -59,8 +64,16 @@ public class ProfileActivity extends AppCompatActivity {
         setActionBar();
         getData();
         eventButtonSave();
+        checkInput();
     }
+    private void checkError(){
+        if(edtAddress.getError()==null&&edtEmail.getError()==null&&edtFirstName.getError()==null&&edtPhone.getError()==null&&edtLastName.getError()==null){
+            btnSave.setEnabled(true);
+        }else {
+            btnSave.setEnabled(false);
+        }
 
+    }
     private void eventButtonSave() {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,19 +90,22 @@ public class ProfileActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //Dismiss Dialog
                         dialog.dismiss();
+                        getData();
                     }
                 });
                 imgBntDismiss.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
+                        dialog.cancel();
                     }
                 });
                 bntAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        updateProfile();
+                        dialog.cancel();
                     }
+
                 });
                 // Set width and height
                 dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
@@ -149,6 +165,171 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    private void updateProfile(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.updateProfile, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("success")) {
+                    Toast.makeText(ProfileActivity.this, "Cập nhật tài khoản thành công", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(ProfileActivity.this, "Cập nhật tài khoản không thành công", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProfileActivity.this,"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("id", String.valueOf(LoginActivity.id));
+                param.put("ho",edtLastName.getText().toString().trim());
+                param.put("email",edtEmail.getText().toString().trim());
+                param.put("ten",edtFirstName.getText().toString().trim());
+                param.put("dt",edtPhone.getText().toString().trim());
+                param.put("diachi",edtAddress.getText().toString().trim());
+                if(radioButtonMale.isChecked()){
+                    param.put("gioitinh", String.valueOf(0));
+                }else{
+                    param.put("gioitinh", String.valueOf(1));
+                }
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    private  void checkInput(){
+        edtEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Pattern patternDate = Pattern.compile(EMAIL_PATTERN,Pattern.CASE_INSENSITIVE);
+                Matcher matcher = patternDate.matcher(edtEmail.getText().toString().trim());
+                if (edtEmail.getText().length()<= 0) {
+                    edtEmail.setError("Không được để trống");
+                    btnSave.setEnabled(false);
+                }
+                else if(!matcher.matches()){
+                    edtEmail.setError("Email không hợp lệ");
+                    btnSave.setEnabled(false);
+                }
+                else {
+                    edtEmail.setError(null);
+                    checkError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        edtFirstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtFirstName.getText().length()<= 0) {
+                    edtFirstName.setError("Không được để trống");
+                    btnSave.setEnabled(false);
+                }
+                else {
+                    edtFirstName.setError(null);
+                    checkError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtLastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtLastName.getText().length()<= 0) {
+                    edtLastName.setError("Không được để trống");
+                    btnSave.setEnabled(false);
+                }
+                else {
+                    edtLastName.setError(null);
+                    checkError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Pattern patternDate = Pattern.compile(PHONE_PATTERN,Pattern.CASE_INSENSITIVE);
+                Matcher matcher = patternDate.matcher(edtPhone.getText().toString().trim());
+                if (edtPhone.getText().length()<= 0) {
+                    edtPhone.setError("Không được để trống");
+                    btnSave.setEnabled(false);
+                }
+                else if(!matcher.matches()){
+                    edtPhone.setError("Số điện thoại không hợp lệ");
+                    btnSave.setEnabled(false);
+                }
+                else {
+                    edtPhone.setError(null);
+                    checkError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtAddress.getText().length()<= 0) {
+                    edtAddress.setError("Không được để trống");
+                }
+                else {
+                    edtAddress.setError(null);
+                    checkError();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 }
