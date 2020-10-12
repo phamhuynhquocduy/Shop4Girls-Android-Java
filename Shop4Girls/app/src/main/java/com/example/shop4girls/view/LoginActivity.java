@@ -26,7 +26,7 @@ import java.util.Map;
 ;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextView txtNotification;
+    private TextView txtNotification, txtSignIn;
     private EditText edtPass, edtEmail;
     private Button button;
     public  static  int id;
@@ -40,8 +40,10 @@ public class LoginActivity extends AppCompatActivity {
         edtPass = findViewById(R.id.edittext_pass);
         button = findViewById(R.id.button_login);
         txtNotification = findViewById(R.id.textview_notification);
+        txtSignIn =findViewById(R.id.txtSignIn);
 
         eventLogIn();
+        clickTextSignIn();
     }
 
     private void eventLogIn() {
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void checkAccount(){
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getAccount, new Response.Listener<String>() {
@@ -83,4 +86,13 @@ public class LoginActivity extends AppCompatActivity {
             };
             requestQueue.add(stringRequest);
         }
+
+    private void clickTextSignIn(){
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),SignInActivity.class));
+            }
+        });
+    }
 }
