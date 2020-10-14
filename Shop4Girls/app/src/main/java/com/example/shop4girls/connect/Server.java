@@ -6,6 +6,7 @@ public class Server {
     public  static String postAccount=url+"postAccount.php";
     public static String getNewProduct=url+"getNewProduct.php";
     public static String getProfile=url+"getProfile.php";
-    public static String getCategory = url+"getCategory.php?page=";
+    public static String getCategory = url+"getCategory.php";
     public static String updateProfile=url+"updateProfile.php";
+    public static String getProduct=url+"getProduct.php?id=";
 }

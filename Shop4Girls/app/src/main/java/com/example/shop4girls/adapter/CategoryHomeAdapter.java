@@ -36,8 +36,8 @@ public class CategoryHomeAdapter  extends  RecyclerView.Adapter<CategoryHomeAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryHomeAdapter.ItemHolder itemHolder, final  int i) {
-        Category category=arrayList.get(i);
+    public void onBindViewHolder(@NonNull final CategoryHomeAdapter.ItemHolder itemHolder, final  int i) {
+        final Category category=arrayList.get(i);
         itemHolder.txtName.setText(category.getName());
         Picasso.get().load(category.getImage())
                 .placeholder(R.drawable.image_place_holder)
@@ -48,6 +48,7 @@ public class CategoryHomeAdapter  extends  RecyclerView.Adapter<CategoryHomeAdap
             public void onClick(View v) {
                 Intent intent = new Intent(context.getApplicationContext(), ListProductActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("idcategory",category.getId());
                 context.startActivity(intent);
             }
         });

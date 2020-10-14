@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         setUpNavDrawer();
         setViewFlipper();
         getNewProduct();
-        getCategory(0);
+        getCategory();
 
     }
 
@@ -204,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getCategory(final int page) {
+    private void getCategory() {
         final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getCategory + page, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getCategory, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if (response != null) {

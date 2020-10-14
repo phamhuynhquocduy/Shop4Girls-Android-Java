@@ -1,7 +1,6 @@
 <?php
     include("connect.php");
-    $loai=$_GET['page'];
-	$resultCategory= "SELECT * FROM loaisanpham WHERE idcha=$loai ";	 
+	$resultCategory= "SELECT * FROM loaisanpham ";	 
 	$data=$con->query($resultCategory);
 	$mangLoai=array();
 	while($row = $data->fetch_assoc()){

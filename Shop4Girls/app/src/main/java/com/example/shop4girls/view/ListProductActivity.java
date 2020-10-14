@@ -1,5 +1,6 @@
 package com.example.shop4girls.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -28,24 +29,29 @@ public class ListProductActivity extends AppCompatActivity {
     private RecyclerView recyclerViewListProduct;
     private ArrayList arrayListListProduct;
     private ListProductAdapter listProductAdapter;
+    private  int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_product);
 
-        //New Product
+        // Product
         recyclerViewListProduct = findViewById(R.id.recyclerview_list_product);
         arrayListListProduct = new ArrayList<>();
         listProductAdapter = new ListProductAdapter(getApplicationContext(), arrayListListProduct);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-        gridLayoutManager.setOrientation(GridLayoutManager.HORIZONTAL);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerViewListProduct.setLayoutManager(gridLayoutManager);
         recyclerViewListProduct.setAdapter(listProductAdapter);
+        Intent intent = getIntent();
+        id=intent.getIntExtra("idcategory",1);
+
+        loadProduct();
     }
-    private void Product() {
+    private void loadProduct() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getNewProduct, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getProduct+id, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if (response != null) {

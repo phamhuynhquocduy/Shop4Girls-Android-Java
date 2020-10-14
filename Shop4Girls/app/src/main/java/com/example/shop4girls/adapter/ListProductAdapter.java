@@ -31,7 +31,7 @@ public class ListProductAdapter extends  RecyclerView.Adapter<ListProductAdapter
     @NonNull
     @Override
     public ListProductAdapter.ItemHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_new_product,null);
+        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_product,null);
         ListProductAdapter.ItemHolder itemHolder=new ListProductAdapter.ItemHolder(v);
         return itemHolder;
     }
