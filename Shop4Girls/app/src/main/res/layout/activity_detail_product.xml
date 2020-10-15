@@ -58,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:background="@color/colorTransparent"
                     android:src="@drawable/ic_baseline_favorite_border_red__24"
                     android:layout_marginRight="5dp">
                 </ImageButton>

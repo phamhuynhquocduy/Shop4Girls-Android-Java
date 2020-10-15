@@ -2,6 +2,7 @@ package com.example.shop4girls.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,10 +19,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.adapter.CategoryHomeAdapter;
@@ -39,6 +43,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private CategoryHomeAdapter categoryHomeAdapter;
     private ArrayList<Category> arrayListCategory;
     public static ArrayList<Cart> arrayListCart;
+    public static ArrayList<Product> arrayListFavorite= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         setViewFlipper();
         getNewProduct();
         getCategory();
-
+        getFavorite();
     }
 
     private void getNewProduct() {
@@ -233,6 +240,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonArrayRequest);
+    }
+
+    public void getFavorite() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getFavorite, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.i("tagconvertstr", "[" + response + "]");
+                    JSONArray jsonArray = new JSONArray(response);
+                    Log.d("mangjson", jsonArray.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        arrayListFavorite.add(new Product(jsonObject.getInt("id")
+                                , jsonObject.getString("tensp")
+                                , jsonObject.getInt("giasp")
+                                , jsonObject.getString("hinhanhsp")
+                                , jsonObject.getString("motasp")
+                                , jsonObject.getInt("idsanpham")));
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    CheckConnection.ShowToast_short(getApplicationContext(), e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idtaikhoan", String.valueOf(LoginActivity.id));
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
 }

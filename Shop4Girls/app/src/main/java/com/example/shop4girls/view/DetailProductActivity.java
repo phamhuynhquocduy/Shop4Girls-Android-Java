@@ -2,6 +2,7 @@ package com.example.shop4girls.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +16,23 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
+import com.example.shop4girls.connect.CheckConnection;
+import com.example.shop4girls.connect.Server;
 import com.example.shop4girls.model.Cart;
 import com.example.shop4girls.model.Product;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DetailProductActivity extends AppCompatActivity {
     private TextView txtName, txtPrice,txtDescription;
@@ -55,6 +67,7 @@ public class DetailProductActivity extends AppCompatActivity {
         getData();
         setActionBar();
         eventButtonCart();
+        eventButtonFavorite();
     }
 
     private void eventButtonCart() {
@@ -90,11 +103,13 @@ public class DetailProductActivity extends AppCompatActivity {
             }
         });
     }
+
     private void catchEventSpinner() {
         Integer[] soluong=new Integer[]{1,2,3,4,5,6,7,8,9,10};
         ArrayAdapter<Integer> arrayAdapter=new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,soluong);
         spinner.setAdapter(arrayAdapter);
     }
+
     private void getData() {
         Product product= (Product) getIntent().getSerializableExtra("thongtinsanpham");
         id=product.getId();
@@ -112,16 +127,17 @@ public class DetailProductActivity extends AppCompatActivity {
                 .placeholder(R.drawable.image_place_holder)
                 .error(R.drawable.image_error)
                 .into(imageView);
-//        btnyeuthich.setTag(0);
-//        for(int i=0;i<MainActivity.mangyeuthich.size();++i){
-//            if(sanpham.ID==MainActivity
-//                    .mangyeuthich.get(i).ID){
-//                btnyeuthich.setBackgroundResource(R.drawable.ic_favorite);
-//                btnyeuthich.setTag(1);
-//                break;
-//            }
-//        }
+        btnFavorite.setTag(0);
+        for(int i=0;i<MainActivity.arrayListFavorite.size();++i){
+            if(product.getId()==MainActivity
+                    .arrayListFavorite.get(i).getId()){
+                btnFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_red_24);
+                btnFavorite.setTag(1);
+                break;
+            }
+        }
     }
+
     private void setActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -129,6 +145,74 @@ public class DetailProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void eventButtonFavorite() {
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int flag = (Integer) btnFavorite.getTag();
+                if(flag==0){
+                    final RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+                    StringRequest stringRequest=new StringRequest(Request.Method.POST, Server.postFavorite, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("yeuthich",response);
+                            if(response.equals("success")){
+                                btnFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_red_24);
+                                btnFavorite.setTag(1);
+                                CheckConnection.ShowToast_short(getApplicationContext(),"Bạn đã thêm thành công");
+                            }else{
+                                CheckConnection.ShowToast_short(getApplicationContext(),"Dữ liệu của bạn đã bị lỗi"+response+String.valueOf(LoginActivity.id)+String.valueOf(id));
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String,String> hashMap=new HashMap<String,String>();
+                            hashMap.put("idtaikhoan",String.valueOf(LoginActivity.id));
+                            hashMap.put("idsanpham",String.valueOf(id));
+                            return hashMap;
+                        }
+                    };
+                    requestQueue.add(stringRequest);
+                }else{
+                    final RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+                    StringRequest stringRequest=new StringRequest(Request.Method.POST, Server.delFavorite, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("tagconverxoa", "["+response+"]");
+                            if(response.equals("success")){
+                                btnFavorite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_red__24);
+                                btnFavorite.setTag(0);
+                                CheckConnection.ShowToast_short(getApplicationContext(),"Bạn đã xoá sản phẩm thành công");
+                            }else{
+                                CheckConnection.ShowToast_short(getApplicationContext(),"Dữ liệu của bạn đã bị lỗi");
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String,String> hashMap=new HashMap<String,String>();
+                            hashMap.put("idtaikhoan",String.valueOf(LoginActivity.id));
+                            hashMap.put("idsanpham",String.valueOf(id));
+                            return hashMap;
+                        }
+                    };
+                    requestQueue.add(stringRequest);
+                }
             }
         });
     }
