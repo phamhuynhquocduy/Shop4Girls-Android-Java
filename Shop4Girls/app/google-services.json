@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "944424890010",
+    "firebase_url": "https://shop4girls-a796a.firebaseio.com",
+    "project_id": "shop4girls-a796a",
+    "storage_bucket": "shop4girls-a796a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944424890010:android:76b435562bdd33345ab923",
+        "android_client_info": {
+          "package_name": "com.example.shop4girls"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944424890010-tmau1ac5o7m2ke05pnlsu5flc2bk7j6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shop4girls",
+            "certificate_hash": "e5376b1e1e183ec1c4b578dc555ed0111721a196"
+          }
+        },
+        {
+          "client_id": "944424890010-97be9l6ehlr22tg764sk5jg5s0uo7knd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwtvL6xBMMfY5oGRGj4lwyZDAfi9PYh3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944424890010-97be9l6ehlr22tg764sk5jg5s0uo7knd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -35,7 +35,12 @@ import com.example.shop4girls.connect.Server;
 import com.example.shop4girls.model.Cart;
 import com.example.shop4girls.model.Category;
 import com.example.shop4girls.model.Product;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         getNewProduct();
         getCategory();
         getFavorite();
+        getTokenFMC();
     }
 
     private void getNewProduct() {
@@ -283,4 +289,20 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void getTokenFMC(){
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("gettokenfail","Lỗi");
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        Log.d("gettoken", token);
+                    }
+                });
+        FirebaseMessaging.getInstance().subscribeToTopic("TopicName");
+    }
 }

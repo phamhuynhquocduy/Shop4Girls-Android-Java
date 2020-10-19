@@ -1,7 +1,7 @@
 package com.example.shop4girls.connect;
 
 public class Server {
-    public  static String url="http://192.168.2.107:8080/Shop4GirlsAPI/";
+    public  static String url="https://mshop4girls.000webhostapp.com//";
     public  static String getAccount=url+"getAccount.php";
     public  static String postAccount=url+"postAccount.php";
     public static String getNewProduct=url+"getNewProduct.php";

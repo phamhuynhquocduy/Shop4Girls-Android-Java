@@ -18,10 +18,12 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ListProductAdapter extends  RecyclerView.Adapter<ListProductAdapter.ItemHolder> {
     public Context context;
     public ArrayList<Product> arrayList;
+    public static ArrayList<Product> arrayListCopy = new ArrayList<Product>();
 
     public ListProductAdapter(Context context, ArrayList<Product> arrayList) {
         this.context = context;
@@ -61,6 +63,7 @@ public class ListProductAdapter extends  RecyclerView.Adapter<ListProductAdapter
     public int getItemCount() {
         return arrayList.size();
     }
+
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView image;
         public TextView txtName,txtPrice;
@@ -71,5 +74,20 @@ public class ListProductAdapter extends  RecyclerView.Adapter<ListProductAdapter
             txtName=itemView.findViewById(R.id.textview_name);
             txtPrice=itemView.findViewById(R.id.textview_price);
         }
+    }
+
+    public void  filterName(String charText){
+        charText=charText.toLowerCase(Locale.getDefault());
+        arrayList.clear();
+        if(charText.length() == 0){
+            arrayList.addAll(arrayListCopy);
+        }else{
+            for(Product product : arrayListCopy ){
+                if(product.getName().toLowerCase(Locale.getDefault()).contains(charText)){
+                    arrayList .add(product);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

@@ -2,9 +2,14 @@ package com.example.shop4girls.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,11 +35,14 @@ public class ListProductActivity extends AppCompatActivity {
     private ArrayList arrayListListProduct;
     private ListProductAdapter listProductAdapter;
     private  int id;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_product);
+
+        toolbar = findViewById(R.id.toolbar);
 
         // Product
         recyclerViewListProduct = findViewById(R.id.recyclerview_list_product);
@@ -48,7 +56,9 @@ public class ListProductActivity extends AppCompatActivity {
         id=intent.getIntExtra("idcategory",1);
 
         loadProduct();
+        setActionBar();
     }
+
     private void loadProduct() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getProduct+id, new Response.Listener<JSONArray>() {
@@ -65,6 +75,7 @@ public class ListProductActivity extends AppCompatActivity {
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
                             arrayListListProduct.add(new Product(id, name, price, image, description, idCategory));
+                            listProductAdapter.arrayListCopy.add(new Product(id, name, price, image, description, idCategory));
                             listProductAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             Toast.makeText(ListProductActivity.this, e.getMessage()+"", Toast.LENGTH_SHORT).show();
@@ -80,5 +91,34 @@ public class ListProductActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonArrayRequest);
+    }
+
+    private void setActionBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu,menu);
+        androidx.appcompat.widget.SearchView searchView= (androidx.appcompat.widget.SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                listProductAdapter.filterName(s.trim());
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

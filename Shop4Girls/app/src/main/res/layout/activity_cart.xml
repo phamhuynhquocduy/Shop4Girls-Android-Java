@@ -11,9 +11,18 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         app:titleTextColor="@color/colorWhite"
-        app:title="Chi Tiếc Sản Phẩm"
+        app:title=""
         android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
         android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chi Tiết Sản Phẩm"
+            android:textSize="23sp"
+            android:textColor="#fff"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
     </androidx.appcompat.widget.Toolbar>
     <LinearLayout
         android:layout_weight="7"
