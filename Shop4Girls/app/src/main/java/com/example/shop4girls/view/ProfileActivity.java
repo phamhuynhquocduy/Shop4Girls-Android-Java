@@ -162,7 +162,7 @@ public class ProfileActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ProfileActivity.this, error.getMessage()+"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

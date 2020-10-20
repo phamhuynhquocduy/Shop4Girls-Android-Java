@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPass = findViewById(R.id.edittext_pass);
         button = findViewById(R.id.button_login);
         txtNotification = findViewById(R.id.textview_notification);
-        txtSignIn =findViewById(R.id.txtSignIn);
+        txtSignIn =findViewById(R.id.txt_sign_in);
 
         eventLogIn();
         clickTextSignIn();

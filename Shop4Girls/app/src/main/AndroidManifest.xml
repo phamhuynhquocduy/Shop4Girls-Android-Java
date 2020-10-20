@@ -14,18 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.FavoriteActivity"></activity>
+        <activity android:name=".view.OrderProductActivity"></activity>
+        <activity android:name=".view.ConfirmActivity" />
+        <activity android:name=".view.FavoriteActivity" />
         <activity android:name=".view.SignInActivity" />
         <activity android:name=".view.ListProductActivity" />
         <activity android:name=".view.ProfileActivity" />
         <activity android:name=".view.CartActivity" />
         <activity android:name=".view.DetailProductActivity" />
         <activity android:name=".view.MainActivity" />
+
         <service android:name=".connect.MyFirebaseService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

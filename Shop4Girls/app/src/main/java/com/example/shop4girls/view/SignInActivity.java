@@ -69,6 +69,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
+
     private void createAccount(){
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.postAccount, new Response.Listener<String>() {
