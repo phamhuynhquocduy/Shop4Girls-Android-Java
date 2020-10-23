@@ -37,7 +37,7 @@ public class SignInActivity extends AppCompatActivity {
     private int sex=0;
     public static final String EMAIL_PATTERN="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
     public static final String PHONE_PATTERN="^0[0-9]{9,10}$";
-    public static  final String PASS_PATTERN="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*+=?-]).{8,15}$";
+    public static  final String PASS_PATTERN="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*+=?/-]).{8,15}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
