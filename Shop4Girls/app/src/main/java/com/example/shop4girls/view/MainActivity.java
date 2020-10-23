@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 final int menuItemId = menuItem.getItemId();
                 switch (menuItemId) {
-                    case R.id.nav_my_account:{
+                    case R.id.nav_my_account: {
                         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
                             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                             startActivity(intent);
@@ -158,15 +158,29 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.nav_my_rewrad: {
+                        if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
+                            Intent intent = new Intent(MainActivity.this, OrderProductActivity.class);
+                            startActivity(intent);
+                        } else {
+                            CheckConnection.ShowToast_short(getApplicationContext(), "Lỗi");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     }
                     case R.id.nav_my_wishlist: {
+                        if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
+                            Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+                            startActivity(intent);
+                        } else {
+                            CheckConnection.ShowToast_short(getApplicationContext(), "Lỗi");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     }
-                    case R.id.nav_support:{
+                    case R.id.nav_support: {
                         return true;
                     }
-                    case R.id.nav_sign_out:{
+                    case R.id.nav_sign_out: {
                         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(intent);
