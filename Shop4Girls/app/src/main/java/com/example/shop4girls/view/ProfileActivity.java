@@ -150,9 +150,11 @@ public class ProfileActivity extends AppCompatActivity {
                     edtAddress.setText(jsonObject.getString("diachi"));
                     sex=jsonObject.getInt("gioitinh");
                     if(sex==0){
-                        radioButtonMale.isChecked();
+                        radioButtonMale.setChecked(true);
+                        radioButtonFeMale.setChecked(false);
                     }else{
-                        radioButtonFeMale.isChecked();
+                        radioButtonFeMale.setChecked(true);
+                        radioButtonMale.setChecked(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
