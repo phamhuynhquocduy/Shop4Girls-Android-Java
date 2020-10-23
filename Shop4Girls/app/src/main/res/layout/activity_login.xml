@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Đăng Nhập"
-            android:textColor="#fff"
+            android:textColor="#000000"
             android:textSize="25sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
@@ -86,7 +86,7 @@
             android:layout_marginRight="32dp"
             android:layout_gravity="right"
             android:text="Quên mật khẩu?"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
             android:background="@drawable/custom_button"
             android:padding="4dp"
             android:text="Đăng Nhập"
-            android:textColor="#fff"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
         <TextView
@@ -111,7 +111,7 @@
             android:layout_marginRight="32dp"
             android:text="Bạn chưa có tài khoản?"
             android:textAlignment="center"
-            android:textColor="#000"
+            android:textColor="#000000"
             android:textSize="16sp" />
 
         <TextView
@@ -123,16 +123,6 @@
             android:layout_marginRight="32dp"
             android:gravity="center"
             android:text="Đăng ký tài khoản"
-            android:textColor="@color/colorPrimaryDark" />
-        <TextView
-            android:id="@+id/textview_notification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="32dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/colorRed" />
+            android:textColor="#0099FF" />
     </LinearLayout>
 </LinearLayout>
