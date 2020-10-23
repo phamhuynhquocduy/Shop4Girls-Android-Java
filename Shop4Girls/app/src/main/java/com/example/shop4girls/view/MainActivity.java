@@ -31,6 +31,7 @@ import com.example.shop4girls.R;
 import com.example.shop4girls.adapter.CategoryHomeAdapter;
 import com.example.shop4girls.adapter.NewProductAdpater;
 import com.example.shop4girls.connect.CheckConnection;
+import com.example.shop4girls.connect.SaveSharedPreference;
 import com.example.shop4girls.connect.Server;
 import com.example.shop4girls.model.Cart;
 import com.example.shop4girls.model.Category;
@@ -182,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case R.id.nav_sign_out: {
                         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
+                            SaveSharedPreference.setUserName(MainActivity.this,"");
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -318,5 +320,44 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         FirebaseMessaging.getInstance().subscribeToTopic("TopicName");
+    }
+
+    private void getFavoriteProduct() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getFavorite, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.i("tagconvertstr", "[" + response + "]");
+                    JSONArray jsonArray = new JSONArray(response);
+                    Log.d("mangjson", jsonArray.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        arrayListFavorite.add(new Product(jsonObject.getInt("id")
+                                , jsonObject.getString("tensp")
+                                , jsonObject.getInt("giasp")
+                                , jsonObject.getString("hinhanhsp")
+                                , jsonObject.getString("motasp")
+                                , jsonObject.getInt("idsanpham")));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    CheckConnection.ShowToast_short(getApplicationContext(), e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idtaikhoan", String.valueOf(LoginActivity.id));
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 }

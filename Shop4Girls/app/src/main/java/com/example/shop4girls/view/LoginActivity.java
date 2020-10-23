@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
+import com.example.shop4girls.connect.SaveSharedPreference;
 import com.example.shop4girls.connect.Server;
 
 import java.util.HashMap;
@@ -44,6 +45,13 @@ public class LoginActivity extends AppCompatActivity {
 
         eventLogIn();
         clickTextSignIn();
+        if(SaveSharedPreference.getUserName(LoginActivity.this).length() != 0)
+        {
+            id= Integer.parseInt(SaveSharedPreference.getUserName(LoginActivity.this));
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void eventLogIn() {
@@ -65,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     }else{
                         txtNotification.setText("");
                         id= Integer.parseInt(response);
+                        SaveSharedPreference.setUserName(LoginActivity.this,response);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

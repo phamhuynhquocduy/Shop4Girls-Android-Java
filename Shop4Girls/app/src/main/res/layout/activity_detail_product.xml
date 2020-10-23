@@ -29,8 +29,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="96"
-        android:weightSum="100"
-        >
+        android:weightSum="100">
 
         <ImageView
             android:id="@+id/imageview"
@@ -63,7 +62,6 @@
                 android:layout_weight="2"
                 android:text="Giá sản phẩm"
                 android:textColor="#9e0e3caf"
-
                 android:textSize="18sp" />
 
             <ImageButton
@@ -72,9 +70,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="5dp"
-                android:layout_weight=""
+                android:layout_weight="0.25"
                 android:background="@color/colorTransparent"
-                android:src="@drawable/ic_baseline_favorite_border_red__24"></ImageButton>
+                android:src="@drawable/ic_baseline_favorite_border_red__24">
+            </ImageButton>
         </LinearLayout>
 
         <Spinner
