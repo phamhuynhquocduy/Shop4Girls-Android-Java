@@ -34,7 +34,7 @@ public class FavoriteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView txtProductEmpty;
     private Toolbar toolbar;
-    private FavoriteProductAdapter favoriteProductAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +53,11 @@ public class FavoriteActivity extends AppCompatActivity {
             CheckConnection.ShowToast_short(getApplicationContext(),"Lỗi kết nối mạng");
         }
         //OrderProduct
-        favoriteProductAdapter = new FavoriteProductAdapter(getApplicationContext(), MainActivity.arrayListFavorite);
-        GridLayoutManager gridLayoutManagerCategory = new GridLayoutManager(this, 1);
-        gridLayoutManagerCategory.setOrientation(GridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManagerCategory);
-        recyclerView.setAdapter(favoriteProductAdapter);
+        MainActivity.favoriteProductAdapter = new FavoriteProductAdapter(getApplicationContext(), MainActivity.arrayListFavorite);
+        GridLayoutManager gridLayoutManagerFavorite = new GridLayoutManager(this, 1);
+        gridLayoutManagerFavorite.setOrientation(GridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(gridLayoutManagerFavorite);
+        recyclerView.setAdapter(MainActivity.favoriteProductAdapter);
     }
 
     private void getData() {
@@ -79,7 +79,7 @@ public class FavoriteActivity extends AppCompatActivity {
                                     ,jsonObject.getString("motasp")
                                     ,jsonObject.getInt("idsanpham")));
                         }
-                        favoriteProductAdapter.notifyDataSetChanged();
+                        MainActivity.favoriteProductAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         CheckConnection.ShowToast_short(getApplicationContext(),e.getMessage());

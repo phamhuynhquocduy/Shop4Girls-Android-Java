@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.OrderProductActivity"></activity>
+        <activity android:name=".view.InformationOrderActivity"></activity>
+        <activity android:name=".view.OrderProductActivity" />
         <activity android:name=".view.ConfirmActivity" />
         <activity android:name=".view.FavoriteActivity" />
         <activity android:name=".view.SignInActivity" />

@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.adapter.CategoryHomeAdapter;
+import com.example.shop4girls.adapter.FavoriteProductAdapter;
 import com.example.shop4girls.adapter.NewProductAdpater;
 import com.example.shop4girls.connect.CheckConnection;
 import com.example.shop4girls.connect.SaveSharedPreference;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Category> arrayListCategory;
     public static ArrayList<Cart> arrayListCart;
     public static ArrayList<Product> arrayListFavorite= new ArrayList<>();
+    public static FavoriteProductAdapter favoriteProductAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         gridLayoutManagerCategory.setOrientation(GridLayoutManager.HORIZONTAL);
         recyclerViewCategory.setLayoutManager(gridLayoutManagerCategory);
         recyclerViewCategory.setAdapter(categoryHomeAdapter);
+
 
         setActionBar();
         setUpNavDrawer();
@@ -270,9 +273,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.i("tagconvertstr", "[" + response + "]");
                     JSONArray jsonArray = new JSONArray(response);
-                    Log.d("mangjson", jsonArray.toString());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         arrayListFavorite.add(new Product(jsonObject.getInt("id")
@@ -281,7 +282,6 @@ public class MainActivity extends AppCompatActivity {
                                 , jsonObject.getString("hinhanhsp")
                                 , jsonObject.getString("motasp")
                                 , jsonObject.getInt("idsanpham")));
-
                     }
 
                 } catch (JSONException e) {
@@ -320,44 +320,5 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         FirebaseMessaging.getInstance().subscribeToTopic("TopicName");
-    }
-
-    private void getFavoriteProduct() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.getFavorite, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    Log.i("tagconvertstr", "[" + response + "]");
-                    JSONArray jsonArray = new JSONArray(response);
-                    Log.d("mangjson", jsonArray.toString());
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        arrayListFavorite.add(new Product(jsonObject.getInt("id")
-                                , jsonObject.getString("tensp")
-                                , jsonObject.getInt("giasp")
-                                , jsonObject.getString("hinhanhsp")
-                                , jsonObject.getString("motasp")
-                                , jsonObject.getInt("idsanpham")));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    CheckConnection.ShowToast_short(getApplicationContext(), e.getMessage());
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> param = new HashMap<String, String>();
-                param.put("idtaikhoan", String.valueOf(LoginActivity.id));
-                return param;
-            }
-        };
-        requestQueue.add(stringRequest);
     }
 }
