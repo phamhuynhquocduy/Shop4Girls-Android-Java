@@ -14,4 +14,5 @@ public class Server {
     public static String postFavorite=url+"postFavoriteProduct.php";
     public static String delFavorite=url+"deleteFavoriteProduct.php";
     public static String getOrderProduct=url+"getOrderProduct.php";
+    public static String sendEmail=url+"sendEmail.php";
 }

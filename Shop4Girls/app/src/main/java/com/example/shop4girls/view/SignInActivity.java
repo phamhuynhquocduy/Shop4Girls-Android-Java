@@ -1,9 +1,12 @@
 package com.example.shop4girls.view;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -25,6 +28,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +69,43 @@ public class SignInActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount();
+                //Create random
+                Random rNo = new Random();
+                final int code = rNo.nextInt((99999 - 10000) + 1) + 10000;
+                //Send Email
+                checkAccount(code,edtEmail.getText().toString().trim());
+                //Create Dialog
+                final Dialog dialog = new Dialog(SignInActivity.this);
+                //Gan content view cho dialog la mot layout tu dinh nghia
+                dialog.setContentView(R.layout.layout_custom_dialog_verify);
+                //Ket noi XML layout va Java code
+                final EditText txtUser = dialog.findViewById(R.id.txt_vetify);
+                Button button = dialog.findViewById(R.id.btnClose);
+                Button buttonDismiss = dialog.findViewById(R.id.img_btn_dismiss);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Tat Dialog
+                        String user =txtUser.getText().toString().trim();
+                        if(String.valueOf(code).equals(user)){
+                            createAccount();
+                        }else{
+                            Toast.makeText(SignInActivity.this, "Mã Xác Nhận Không Đúng", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                buttonDismiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                // Setting wight and height dialog
+                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.WRAP_CONTENT);
+                dialog.show();
+
             }
         });
     }
@@ -265,5 +305,33 @@ public class SignInActivity extends AppCompatActivity {
         }else {
             btnSave.setEnabled(false);
         }
+    }
+
+    private void checkAccount(final int randomNumber, final String email){
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.sendEmail, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.compareTo("success")>=0) {
+                    Toast.makeText(SignInActivity.this,"Gửi Email thành công ",Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(SignInActivity.this,"Gửi Email không thành công",Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignInActivity.this,"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("random", String.valueOf(randomNumber));
+                param.put("email",email);
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 }
