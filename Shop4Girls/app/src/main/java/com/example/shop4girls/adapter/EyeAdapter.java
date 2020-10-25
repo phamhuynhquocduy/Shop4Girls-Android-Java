@@ -19,26 +19,25 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class NewProductAdpater extends RecyclerView.Adapter<NewProductAdpater.ItemHolder>{
-
+public class EyeAdapter extends RecyclerView.Adapter<EyeAdapter.ItemHolder> {
     public Context context;
     public ArrayList<Product> arrayList;
 
-    public NewProductAdpater(Context context, ArrayList<Product> arrayList) {
+    public EyeAdapter(Context context, ArrayList<Product> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
 
     @NonNull
     @Override
-    public NewProductAdpater.ItemHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_new_product,null);
-        NewProductAdpater.ItemHolder itemHolder=new NewProductAdpater.ItemHolder(v);
+    public EyeAdapter.ItemHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_new_category_product,null);
+        EyeAdapter.ItemHolder itemHolder=new EyeAdapter.ItemHolder(v);
         return itemHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewProductAdpater.ItemHolder itemHolder, final int i) {
+    public void onBindViewHolder(@NonNull EyeAdapter.ItemHolder itemHolder, final int i) {
         Product product=arrayList.get(i);
         itemHolder.txtName.setText(product.getName());
         DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
@@ -62,7 +61,6 @@ public class NewProductAdpater extends RecyclerView.Adapter<NewProductAdpater.It
     public int getItemCount() {
         return arrayList.size();
     }
-
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView image;
         public TextView txtName,txtPrice;

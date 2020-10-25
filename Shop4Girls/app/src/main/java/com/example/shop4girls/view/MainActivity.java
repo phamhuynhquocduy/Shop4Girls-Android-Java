@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -14,8 +15,10 @@ import android.widget.ViewFlipper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +32,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.adapter.CategoryHomeAdapter;
+import com.example.shop4girls.adapter.EyeAdapter;
+import com.example.shop4girls.adapter.FaceAdapter;
 import com.example.shop4girls.adapter.FavoriteProductAdapter;
+import com.example.shop4girls.adapter.LipAdapter;
 import com.example.shop4girls.adapter.NewProductAdpater;
 import com.example.shop4girls.connect.CheckConnection;
 import com.example.shop4girls.connect.SaveSharedPreference;
@@ -58,11 +64,14 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ViewFlipper viewFlipper;
-    private RecyclerView recyclerViewNewProduct,recyclerViewCategory;
+    private RecyclerView recyclerViewNewProduct,recyclerViewCategory,recyclerViewEye,recyclerViewFace,recyclerViewLip;
     private NewProductAdpater newProductAdpater;
-    private ArrayList<Product> arrayListNewProdcut;
+    private ArrayList<Product> arrayListNewProdcut,arrayListEye,arrayListFace, arrayListLip;
     private CategoryHomeAdapter categoryHomeAdapter;
     private ArrayList<Category> arrayListCategory;
+    private EyeAdapter eyeAdapter;
+    private FaceAdapter faceAdapter;
+    private LipAdapter lipAdapter;
     public static ArrayList<Cart> arrayListCart;
     public static ArrayList<Product> arrayListFavorite= new ArrayList<>();
     public static FavoriteProductAdapter favoriteProductAdapter;
@@ -97,7 +106,33 @@ public class MainActivity extends AppCompatActivity {
         gridLayoutManagerCategory.setOrientation(GridLayoutManager.HORIZONTAL);
         recyclerViewCategory.setLayoutManager(gridLayoutManagerCategory);
         recyclerViewCategory.setAdapter(categoryHomeAdapter);
-
+        //EyeCategory
+        recyclerViewEye = findViewById(R.id.recyclerview_eye);
+        arrayListEye = new ArrayList<>();
+        eyeAdapter = new EyeAdapter(getApplicationContext(), arrayListEye);
+        GridLayoutManager gridLayoutManagerEye = new GridLayoutManager(this, 1);
+        gridLayoutManagerEye.setOrientation(GridLayoutManager.HORIZONTAL);
+        recyclerViewEye.setLayoutManager(gridLayoutManagerEye);
+        recyclerViewEye.setHasFixedSize(true);
+        recyclerViewEye.setAdapter(eyeAdapter);
+        //FaceCategory
+        recyclerViewFace = findViewById(R.id.recyclerview_face);
+        arrayListFace = new ArrayList<>();
+        faceAdapter = new FaceAdapter(getApplicationContext(), arrayListFace);
+        GridLayoutManager gridLayoutManagerFace = new GridLayoutManager(this, 1);
+        gridLayoutManagerFace.setOrientation(GridLayoutManager.HORIZONTAL);
+        recyclerViewFace.setLayoutManager(gridLayoutManagerFace);
+        recyclerViewFace.setHasFixedSize(true);
+        recyclerViewFace.setAdapter(faceAdapter);
+        //LipCategory
+        recyclerViewLip = findViewById(R.id.recyclerview_lip);
+        arrayListLip = new ArrayList<>();
+        lipAdapter = new LipAdapter(getApplicationContext(), arrayListLip);
+        GridLayoutManager gridLayoutManagerLip = new GridLayoutManager(this, 1);
+        gridLayoutManagerLip.setOrientation(GridLayoutManager.HORIZONTAL);
+        recyclerViewLip.setLayoutManager(gridLayoutManagerLip);
+        recyclerViewLip.setHasFixedSize(true);
+        recyclerViewLip.setAdapter(lipAdapter);
 
         setActionBar();
         setUpNavDrawer();
@@ -106,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
         getCategory();
         getFavorite();
         getTokenFMC();
+        loadProduct(5,arrayListEye);
+        loadProduct(6,arrayListFace);
+        loadProduct(7,arrayListLip);
     }
 
     private void getNewProduct() {
@@ -320,5 +358,45 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         FirebaseMessaging.getInstance().subscribeToTopic("TopicName");
+    }
+
+    private void loadProduct(final int idCate, final ArrayList<Product> arrayList) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getCategoryProduct+String.valueOf(idCate), new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null) {
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String name = jsonObject.getString("tensp");
+                            int price = jsonObject.getInt("giasp");
+                            String image = jsonObject.getString("hinhanhsp");
+                            String description = jsonObject.getString("motasp");
+                            int idCategory = jsonObject.getInt("idsanpham");
+                            arrayList.add(new Product(id, name, price, image, description, idCategory));
+                            if(idCate==5){
+                                eyeAdapter.notifyDataSetChanged();
+                            }else if(idCate==6){
+                                faceAdapter.notifyDataSetChanged();
+                            }else if(idCate==7){
+                                lipAdapter.notifyDataSetChanged();
+                            }
+
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
     }
 }
