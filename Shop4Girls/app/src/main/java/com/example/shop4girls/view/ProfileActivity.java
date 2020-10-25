@@ -329,6 +329,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (edtAddress.getText().length()<= 0) {
                     tilAddress.setError("Không được để trống");
+                    btnSave.setEnabled(false);
                 }
                 else {
                     tilAddress.setError(null);

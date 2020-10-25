@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -81,7 +82,7 @@ public class SignInActivity extends AppCompatActivity {
                 //Ket noi XML layout va Java code
                 final EditText txtUser = dialog.findViewById(R.id.txt_vetify);
                 Button button = dialog.findViewById(R.id.btnClose);
-                Button buttonDismiss = dialog.findViewById(R.id.img_btn_dismiss);
+                ImageButton buttonDismiss = dialog.findViewById(R.id.img_btn_dismiss);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
