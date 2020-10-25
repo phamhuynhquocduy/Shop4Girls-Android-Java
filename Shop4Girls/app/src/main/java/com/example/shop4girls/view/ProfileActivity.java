@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     private int sex=0;
     public static final String EMAIL_PATTERN="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
     public static final String PHONE_PATTERN="^0[0-9]{9,10}$";
+    private boolean checkAddress=true, checkLastName=true, checkFirstName=true , checkPhone=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
         checkInput();
     }
     private void checkError(){
-        if(edtAddress.getError()==null&&edtEmail.getError()==null&&edtFirstName.getError()==null&&edtPhone.getError()==null&&edtLastName.getError()==null){
+        if(checkAddress==true&&checkLastName==true&&checkFirstName==true&&checkPhone==true){
             btnSave.setEnabled(true);
         }else {
             btnSave.setEnabled(false);
@@ -216,34 +217,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private  void checkInput(){
-        edtEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Pattern patternDate = Pattern.compile(EMAIL_PATTERN,Pattern.CASE_INSENSITIVE);
-                Matcher matcher = patternDate.matcher(edtEmail.getText().toString().trim());
-                if (edtEmail.getText().length()<= 0) {
-                    tilEmail.setError("Không được để trống");
-                    btnSave.setEnabled(false);
-                }
-                else if(!matcher.matches()){
-                    tilEmail.setError("Email không hợp lệ");
-                    btnSave.setEnabled(false);
-                }
-                else {
-                    tilEmail.setError(null);
-                    checkError();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
         edtFirstName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -255,9 +228,11 @@ public class ProfileActivity extends AppCompatActivity {
                 if (edtFirstName.getText().length()<= 0) {
                     tilFirstName.setError("Không được để trống");
                     btnSave.setEnabled(false);
+                    checkFirstName=false;
                 }
                 else {
                     tilFirstName.setError(null);
+                    checkFirstName=true;
                     checkError();
                 }
             }
@@ -278,9 +253,11 @@ public class ProfileActivity extends AppCompatActivity {
                 if (edtLastName.getText().length()<= 0) {
                     tilLastName.setError("Không được để trống");
                     btnSave.setEnabled(false);
+                    checkLastName=false;
                 }
                 else {
                     tilLastName.setError(null);
+                    checkLastName=true;
                     checkError();
                 }
             }
@@ -303,13 +280,16 @@ public class ProfileActivity extends AppCompatActivity {
                 if (edtPhone.getText().length()<= 0) {
                     tilPhone.setError("Không được để trống");
                     btnSave.setEnabled(false);
+                    checkPhone=false;
                 }
                 else if(!matcher.matches()){
                     tilPhone.setError("Số điện thoại không hợp lệ");
                     btnSave.setEnabled(false);
+                    checkPhone=false;
                 }
                 else {
                     tilPhone.setError(null);
+                    checkPhone=true;
                     checkError();
                 }
             }
@@ -330,16 +310,16 @@ public class ProfileActivity extends AppCompatActivity {
                 if (edtAddress.getText().length()<= 0) {
                     tilAddress.setError("Không được để trống");
                     btnSave.setEnabled(false);
+                    checkAddress=false;
                 }
                 else {
                     tilAddress.setError(null);
+                    checkAddress=true;
                     checkError();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
