@@ -257,10 +257,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setViewFlipper() {
         ArrayList<String> mangquangcao = new ArrayList<>();
-        mangquangcao.add("https://cdn.tgdd.vn/Files/2020/04/29/1252555/laptop_800x450.jpg");
-        mangquangcao.add("https://cdn.tgdd.vn/Files/2020/04/28/1252375/laptople_800x450.jpg");
-        mangquangcao.add("https://cdn.tgdd.vn/Files/2020/04/23/1251226/1200-628_800x450.png");
-        mangquangcao.add("https://cdn.tgdd.vn/Files/2020/05/04/1253433/fb_800x449.png");
+        mangquangcao.add("https://iweb.tatthanh.com.vn/pic/3/blog/images/banner-my-pham(15).jpg");
+        mangquangcao.add("https://hali.vn/wp-content/uploads/2020/07/thiet-ke-banner-my-pham3.jpg");
+        mangquangcao.add("https://iweb.tatthanh.com.vn/pic/3/blog/images/banner-my-pham(7).jpg");
+        mangquangcao.add("https://iweb.tatthanh.com.vn/pic/3/blog/images/banner-my-pham(9).jpg");
         for (int i = 0; i < mangquangcao.size(); i++) {
             ImageView imageView = new ImageView(getApplicationContext());
             Picasso.get().load(mangquangcao.get(i)).into(imageView);
