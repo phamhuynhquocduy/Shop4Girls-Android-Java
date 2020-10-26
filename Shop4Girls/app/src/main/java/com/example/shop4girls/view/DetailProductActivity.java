@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
+import com.example.shop4girls.adapter.CartAdapter;
 import com.example.shop4girls.connect.CheckConnection;
 import com.example.shop4girls.connect.Server;
 import com.example.shop4girls.model.Cart;
@@ -41,8 +42,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private ImageView imageView;
     private Toolbar toolbar;
     private ImageButton btnFavorite;
-    private Button btnCart;
-    private Spinner spinner;
+    private Button btnCart, btnMinus, btnPlus , btnValues;
     public int id=0;
     public String name="";
     public int price=0;
@@ -63,14 +63,60 @@ public class DetailProductActivity extends AppCompatActivity {
         imageView=findViewById(R.id.imageview);
         btnCart=  findViewById(R.id.button_cart);
         btnFavorite = findViewById(R.id.btn_favorite);
+        btnMinus = findViewById(R.id.button_minus);
+        btnPlus = findViewById(R.id.button_plus);
+        btnValues = findViewById(R.id.button_values);
 
-
-
-        catchEventSpinner();
         getData();
         setActionBar();
         eventButtonCart();
         eventButtonFavorite();
+        evenCountProduct();
+    }
+
+    private void evenCountProduct() {
+        final int sl= Integer.parseInt(btnValues.getText().toString());
+        if (sl>=10) {
+            btnPlus.setVisibility(View.INVISIBLE);
+
+        }else if(sl<=1){
+            btnMinus.setVisibility(View.INVISIBLE);
+
+        }else {
+            btnMinus.setVisibility(View.VISIBLE);
+            btnPlus.setVisibility(View.VISIBLE);
+        }
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newCount =Integer.parseInt(btnValues.getText().toString())-1;
+                if(newCount<2){
+                    btnValues.setText(String.valueOf(newCount));
+                    btnMinus.setVisibility(View.INVISIBLE);
+                    btnPlus.setVisibility(View.VISIBLE);
+                }else{
+                    btnValues.setText(String.valueOf(newCount));
+                    btnMinus.setVisibility(View.VISIBLE);
+                    btnPlus.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newCount=Integer.parseInt(btnValues.getText().toString())+1;
+                if(newCount>9){
+                    btnValues.setText(String.valueOf(newCount));
+                    btnMinus.setVisibility(View.VISIBLE);
+                    btnPlus.setVisibility(View.INVISIBLE);
+                }else{
+                    btnValues.setText(String.valueOf(newCount));
+                    btnMinus.setVisibility(View.VISIBLE);
+                    btnPlus.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void eventButtonCart() {
@@ -78,7 +124,7 @@ public class DetailProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(MainActivity.arrayListCart.size()>0){
-                    int count=Integer.parseInt(spinner.getSelectedItem().toString());
+                    int count=Integer.parseInt(btnValues.getText().toString());
                     boolean exits=false;
                     for(int i=0;i<MainActivity.arrayListCart.size();i++){
                         if(MainActivity.arrayListCart.get(i).getId() == id){
@@ -91,13 +137,13 @@ public class DetailProductActivity extends AppCompatActivity {
                         }
                     }
                     if(exits==false){
-                        int newCount=Integer.parseInt(spinner.getSelectedItem().toString());
+                        int newCount=Integer.parseInt(btnValues.getText().toString());
                         long newPrice =newCount*price;
                         MainActivity.arrayListCart.add(new Cart(id,name,newPrice,image,newCount));
                     }
                 }
                 else{
-                    int newCount=Integer.parseInt(spinner.getSelectedItem().toString());
+                    int newCount=Integer.parseInt(btnValues.getText().toString());
                     long newPrice=newCount*price;
                     MainActivity.arrayListCart.add(new Cart(id,name,newPrice,image,newCount));
                 }
@@ -105,12 +151,6 @@ public class DetailProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void catchEventSpinner() {
-        Integer[] soluong=new Integer[]{1,2,3,4,5,6,7,8,9,10};
-        ArrayAdapter<Integer> arrayAdapter=new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,soluong);
-        spinner.setAdapter(arrayAdapter);
     }
 
     private void getData() {

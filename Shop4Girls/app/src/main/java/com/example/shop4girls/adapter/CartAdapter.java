@@ -81,7 +81,7 @@ public class CartAdapter extends BaseAdapter {
         if (sl>=10) {
             viewHolder.btnPlus.setVisibility(View.INVISIBLE);
 
-        }else if(sl<1){
+        }else if(sl<=1){
             viewHolder.btnMinus.setVisibility(View.INVISIBLE);
 
         }else {
