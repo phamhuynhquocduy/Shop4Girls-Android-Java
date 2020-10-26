@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button btnSave;
     private Toolbar toolbar;
     private RadioButton radioButtonMale, radioButtonFeMale;
+    private TextView txtBackLogIn;
     private int sex=0;
     private boolean checkFirstName=false,checkLastName=false,checkAddress=false,checkEmail=false,checkPhone=false,checkPass=false;
     public static final String EMAIL_PATTERN="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
@@ -67,9 +69,15 @@ public class SignInActivity extends AppCompatActivity {
         tilEmail = findViewById(R.id.til_email);
         tilPhone = findViewById(R.id.til_phone);
         tilPass = findViewById(R.id.til_pass);
+        txtBackLogIn = findViewById(R.id.txt_sign_in);
         btnSave.setEnabled(false);
-        checkInput();
 
+        checkInput();
+        eventBackLogIn();
+        eventSignIn();
+    }
+
+    private void eventSignIn() {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +118,15 @@ public class SignInActivity extends AppCompatActivity {
                         WindowManager.LayoutParams.WRAP_CONTENT);
                 dialog.show();
 
+            }
+        });
+    }
+
+    private void eventBackLogIn(){
+        txtBackLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }
