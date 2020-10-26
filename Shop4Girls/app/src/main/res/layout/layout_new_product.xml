@@ -9,28 +9,27 @@
         android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp">
+        android:layout_margin="5dp">
 
         <LinearLayout
             android:gravity="center"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="190dp">
+            android:layout_height="220dp">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_gravity="right|top"
-                    android:src="@drawable/newicon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
                 <ImageView
                     android:layout_gravity="center"
                     android:id="@+id/imageview"
                     android:layout_width="130dp"
                     android:layout_height="130dp" />
+                <ImageView
+                    android:layout_gravity="right|top"
+                    android:src="@drawable/newicon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
             </FrameLayout>
             <TextView
                 android:id="@+id/textview_name"
@@ -40,8 +39,8 @@
                 android:layout_marginLeft="5dp"
                 android:text="Ten san pham"
                 android:textAlignment="textStart"
+                android:maxLines="2"
                 android:textColor="#000000" />
-
             <TextView
                 android:id="@+id/textview_price"
                 android:layout_width="170dp"
