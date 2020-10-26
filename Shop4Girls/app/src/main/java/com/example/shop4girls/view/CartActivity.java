@@ -62,8 +62,8 @@ public class CartActivity extends AppCompatActivity {
     }
     private void setActionBar() {
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitle("Giỏ Hàng");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

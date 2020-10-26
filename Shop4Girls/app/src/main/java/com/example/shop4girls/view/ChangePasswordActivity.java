@@ -9,10 +9,21 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
+import com.example.shop4girls.connect.Server;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TooManyListenersException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,6 +55,46 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         checkInput();
         setActionBar();
+        eventButtonChangePass();
+    }
+
+    private void eventButtonChangePass() {
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePass();
+            }
+        });
+    }
+
+    private void changePass(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.changePassword, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("success")) {
+                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản thành công", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản không thành công", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("id", String.valueOf(LoginActivity.id));
+                param.put("newpass", edtNewPass.getText().toString().trim());
+                param.put("oldpass", edtOldPass.getText().toString().trim());
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void checkInput() {
@@ -60,6 +111,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                String newPass = edtNewPass.getText().toString().trim();
+                String confirmPass = edtConfirm.getText().toString().trim();
+
                 Pattern patternDate = Pattern.compile(PASS_PATTERN,Pattern.CASE_INSENSITIVE);
                 Matcher matcher = patternDate.matcher(edtConfirm.getText().toString().trim());
                 if (edtConfirm.getText().length()<= 0) {
@@ -69,6 +123,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 }
                 else if(!matcher.matches()){
                     tilConfirm.setError("Mật mẩu phải từ 8-20 ký tự và chứa ít nhất chữ hoa, thường, ký tự đặc biệt");
+                    checkConfirm=false;
+                    btnAccept.setEnabled(false);
+                } else if(!confirmPass.equals(newPass)&&newPass.length()>0){
+                    tilConfirm.setError("Mật khẩu xác nhận không giống với mật khẩu mới");
                     checkConfirm=false;
                     btnAccept.setEnabled(false);
                 }
