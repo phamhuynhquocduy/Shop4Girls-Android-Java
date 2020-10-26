@@ -81,45 +81,48 @@ public class SignInActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Create random
-                Random rNo = new Random();
-                final int code = rNo.nextInt((99999 - 10000) + 1) + 10000;
-                //Send Email
-                checkAccount(code,edtEmail.getText().toString().trim());
-                //Create Dialog
-                final Dialog dialog = new Dialog(SignInActivity.this);
-                //Gan content view cho dialog la mot layout tu dinh nghia
-                dialog.setContentView(R.layout.layout_custom_dialog_verify);
-                //Ket noi XML layout va Java code
-                final EditText txtUser = dialog.findViewById(R.id.txt_vetify);
-                Button button = dialog.findViewById(R.id.btnClose);
-                ImageButton buttonDismiss = dialog.findViewById(R.id.img_btn_dismiss);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Tat Dialog
-                        String user =txtUser.getText().toString().trim();
-                        if(String.valueOf(code).equals(user)){
-                            createAccount();
-                        }else{
-                            Toast.makeText(SignInActivity.this, "Mã Xác Nhận Không Đúng", Toast.LENGTH_SHORT).show();
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                buttonDismiss.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                // Setting wight and height dialog
-                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT);
-                dialog.show();
-
+                checkSameAccount();
             }
         });
+    }
+
+    private void eventDialog(){
+        //Create random
+        Random rNo = new Random();
+        final int code = rNo.nextInt((99999 - 10000) + 1) + 10000;
+        //Send Email
+        checkAccount(code,edtEmail.getText().toString().trim());
+        //Create Dialog
+        final Dialog dialog = new Dialog(SignInActivity.this);
+        //Gan content view cho dialog la mot layout tu dinh nghia
+        dialog.setContentView(R.layout.layout_custom_dialog_verify);
+        //Ket noi XML layout va Java code
+        final EditText txtUser = dialog.findViewById(R.id.txt_vetify);
+        Button button = dialog.findViewById(R.id.btnClose);
+        ImageButton buttonDismiss = dialog.findViewById(R.id.img_btn_dismiss);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Tat Dialog
+                String user =txtUser.getText().toString().trim();
+                if(String.valueOf(code).equals(user)){
+                    createAccount();
+                }else{
+                    Toast.makeText(SignInActivity.this, "Mã Xác Nhận Không Đúng", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        });
+        buttonDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        // Setting wight and height dialog
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.show();
     }
 
     private void eventBackLogIn(){
@@ -138,8 +141,9 @@ public class SignInActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 if(response.equals("success")) {
                     Toast.makeText(SignInActivity.this, "Đăng ký khoản thành công", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(SignInActivity.this, response+"", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(SignInActivity.this, "Đăng ký không thành Công", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -365,6 +369,33 @@ public class SignInActivity extends AppCompatActivity {
                 HashMap<String, String> param = new HashMap<String, String>();
                 param.put("random", String.valueOf(randomNumber));
                 param.put("email",email);
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    private void checkSameAccount(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.checkSameAccount, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("error")) {
+                    Toast.makeText(SignInActivity.this, "Tài Khoản Đã Tồn Tại", Toast.LENGTH_SHORT).show();
+                }else {
+                   eventDialog();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignInActivity.this,"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("email",edtEmail.getText().toString().trim());
                 return param;
             }
         };
