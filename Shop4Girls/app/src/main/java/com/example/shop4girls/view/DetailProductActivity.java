@@ -56,7 +56,7 @@ public class DetailProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_product);
 
 
-        toolbar=findViewById(R.id.toolbarchitiecsanpham);
+        toolbar=findViewById(R.id.toolbar);
         txtPrice=findViewById(R.id.textview_price);
         txtDescription=findViewById(R.id.textview_description);
         txtName=findViewById(R.id.textview_name);
@@ -183,6 +183,7 @@ public class DetailProductActivity extends AppCompatActivity {
 
     private void setActionBar() {
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

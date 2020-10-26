@@ -29,12 +29,16 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:id="@+id/nav_change_password"
+                    android:icon="@drawable/ic_baseline_settings_24"
+                    android:title="Đổi Mật Khẩu" />
+                <item
                     android:id="@+id/nav_support"
                     android:icon="@drawable/ic_baseline_contact_support_24"
                     android:title="Thông Tin Liên Hệ" />
                 <item
                     android:id="@+id/nav_sign_out"
-                    android:icon="@drawable/ic_baseline_settings_24"
+                    android:icon="@drawable/ic_baseline_exit_to_app_24"
                     android:title="Đăng Xuất" />
             </group>
         </menu>

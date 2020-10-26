@@ -226,6 +226,16 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_support: {
                         return true;
                     }
+                    case R.id.nav_change_password:{
+                        if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
+                            Intent intent = new Intent(MainActivity.this, ChangePasswordActivity.class);
+                            startActivity(intent);
+                        } else {
+                            CheckConnection.ShowToast_short(getApplicationContext(), "Lỗi");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    }
                     case R.id.nav_sign_out: {
                         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
                             SaveSharedPreference.setUserName(MainActivity.this,"");
@@ -250,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
     private void setActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_baseline_menu_24);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
