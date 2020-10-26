@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.InformationOrderActivity"></activity>
+        <activity android:name=".view.ChangePasswordActivity"></activity>
+        <activity android:name=".view.ForgotPasswordActivity" />
+        <activity android:name=".view.InformationOrderActivity" />
         <activity android:name=".view.OrderProductActivity" />
         <activity android:name=".view.ConfirmActivity" />
         <activity android:name=".view.FavoriteActivity" />
