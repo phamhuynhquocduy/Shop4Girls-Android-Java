@@ -16,8 +16,18 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toobar_main"
                 app:title="Trang Chủ"
+                android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Shop4Girls"
+                    android:textColor="#000000"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
             </androidx.appcompat.widget.Toolbar>
 
             <androidx.core.widget.NestedScrollView

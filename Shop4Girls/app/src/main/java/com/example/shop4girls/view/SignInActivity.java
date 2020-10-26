@@ -352,7 +352,8 @@ public class SignInActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.sendEmail, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response.compareTo("success")>=0) {
+                String check="success";
+                if(check.equals(check)) {
                     Toast.makeText(SignInActivity.this,"Gửi Email thành công ",Toast.LENGTH_LONG).show();
                 }else {
                     Toast.makeText(SignInActivity.this,"Gửi Email không thành công",Toast.LENGTH_LONG).show();
