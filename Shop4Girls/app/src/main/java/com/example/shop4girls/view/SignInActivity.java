@@ -40,9 +40,11 @@ public class SignInActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RadioButton radioButtonMale, radioButtonFeMale;
     private int sex=0;
+    private boolean checkFirstName=false,checkLastName=false,checkAddress=false,checkEmail=false,checkPhone=false,checkPass=false;
     public static final String EMAIL_PATTERN="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
     public static final String PHONE_PATTERN="^0[0-9]{9,10}$";
     public static  final String PASS_PATTERN="^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*+=?/-]).{8,15}$";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class SignInActivity extends AppCompatActivity {
         tilEmail = findViewById(R.id.til_email);
         tilPhone = findViewById(R.id.til_phone);
         tilPass = findViewById(R.id.til_pass);
+        btnSave.setEnabled(false);
         checkInput();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -166,13 +169,16 @@ public class SignInActivity extends AppCompatActivity {
                 if (edtEmail.getText().length()<= 0) {
                     tilEmail.setError("Không được để trống");
                     btnSave.setEnabled(false);
+                    checkEmail=false;
                 }
                 else if(!matcher.matches()){
                     tilEmail.setError("Email không hợp lệ");
                     btnSave.setEnabled(false);
+                    checkEmail=false;
                 }
                 else {
                     tilEmail.setError(null);
+                    checkEmail=true;
                     checkError();
                 }
             }
@@ -192,9 +198,11 @@ public class SignInActivity extends AppCompatActivity {
                 if (edtFirstName.getText().length()<= 0) {
                     tilFirstName.setError("Không được để trống");
                     btnSave.setEnabled(false);
+                    checkFirstName=false;
                 }
                 else {
                     tilFirstName.setError(null);
+                    checkFirstName=true;
                     checkError();
                 }
             }
@@ -213,10 +221,12 @@ public class SignInActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (edtLastName.getText().length()<= 0) {
                     tilLastName.setError("Không được để trống");
+                    checkLastName=false;
                     btnSave.setEnabled(false);
                 }
                 else {
                     tilLastName.setError(null);
+                    checkLastName=true;
                     checkError();
                 }
             }
@@ -237,14 +247,17 @@ public class SignInActivity extends AppCompatActivity {
                 Matcher matcher = patternDate.matcher(edtPhone.getText().toString().trim());
                 if (edtPhone.getText().length()<= 0) {
                     tilPhone.setError("Không được để trống");
+                    checkPhone=false;
                     btnSave.setEnabled(false);
                 }
                 else if(!matcher.matches()){
                     tilPhone.setError("Số điện thoại không hợp lệ");
+                    checkPhone=false;
                     btnSave.setEnabled(false);
                 }
                 else {
                     tilPhone.setError(null);
+                    checkPhone=true;
                     checkError();
                 }
             }
@@ -263,10 +276,12 @@ public class SignInActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (edtAddress.getText().length()<= 0) {
                     tilAddress.setError("Không được để trống");
+                    checkAddress=false;
                     btnSave.setEnabled(false);
                 }
                 else {
                     tilAddress.setError(null);
+                    checkAddress=true;
                     checkError();
                 }
             }
@@ -286,14 +301,17 @@ public class SignInActivity extends AppCompatActivity {
                 Matcher matcher = patternDate.matcher(edtPass.getText().toString().trim());
                 if (edtPass.getText().length()<= 0) {
                     tilPass.setError("Không được để trống");
+                    checkPass=false;
                     btnSave.setEnabled(false);
                 }
                 else if(!matcher.matches()){
                     tilPass.setError("Mật mẩu phải từ 8-20 ký tự và chứa ít nhất chữ hoa, thường, ký tự đặc biệt");
+                    checkPass=false;
                     btnSave.setEnabled(false);
                 }
                 else {
                     tilPass.setError(null);
+                    checkPass=true;
                     checkError();
                 }
             }
@@ -301,7 +319,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void checkError(){
-        if(tilAddress.getError()==null&&tilEmail.getError()==null&&tilFirstName.getError()==null&&tilPhone.getError()==null&&tilLastName.getError()==null){
+        if(checkFirstName==true&&checkLastName==true&&checkPass==true&&checkEmail==true&&checkAddress==true&&checkPhone==true){
             btnSave.setEnabled(true);
         }else {
             btnSave.setEnabled(false);
