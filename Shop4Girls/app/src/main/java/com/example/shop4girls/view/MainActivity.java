@@ -40,6 +40,7 @@ import com.example.shop4girls.adapter.NewProductAdpater;
 import com.example.shop4girls.connect.CheckConnection;
 import com.example.shop4girls.connect.SaveSharedPreference;
 import com.example.shop4girls.connect.Server;
+import com.example.shop4girls.model.Account;
 import com.example.shop4girls.model.Cart;
 import com.example.shop4girls.model.Category;
 import com.example.shop4girls.model.Product;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Cart> arrayListCart;
     public static ArrayList<Product> arrayListFavorite= new ArrayList<>();
     public static FavoriteProductAdapter favoriteProductAdapter;
+    public static Account account = new Account() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         getCategory();
         getFavorite();
         getTokenFMC();
+        getAccount();
         loadProduct(5,arrayListEye);
         loadProduct(6,arrayListFace);
         loadProduct(7,arrayListLip);
@@ -399,5 +402,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonArrayRequest);
+    }
+
+    private void getAccount(){
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, Server.getProfile, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    account.setLastName(jsonObject.getString("ho"));
+                    account.setFirstName(jsonObject.getString("ten"));
+                    account.setEmail(jsonObject.getString("email"));
+                    account.setPhone(jsonObject.getString("dienthoai"));
+                    account.setAddress(jsonObject.getString("diachi"));
+                    account.setSex(jsonObject.getInt("gioitinh"));
+                    account.setPass(jsonObject.getString("matkhau"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> param=new HashMap<String, String>();
+                param.put("id",String.valueOf(LoginActivity.id));
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 }

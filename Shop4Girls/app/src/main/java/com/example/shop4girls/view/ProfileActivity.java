@@ -70,9 +70,9 @@ public class ProfileActivity extends AppCompatActivity {
         tilPhone = findViewById(R.id.til_phone);
 
         setActionBar();
-        getData();
         eventButtonSave();
         checkInput();
+        getData();
     }
     private void checkError(){
         if(checkAddress==true&&checkLastName==true&&checkFirstName==true&&checkPhone==true){
@@ -99,7 +99,6 @@ public class ProfileActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         //Dismiss Dialog
                         dialog.dismiss();
-                        getData();
                     }
                 });
                 imgBntDismiss.setOnClickListener(new View.OnClickListener() {
@@ -138,45 +137,19 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void getData(){
-        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, Server.getProfile, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    edtLastName.setText(jsonObject.getString("ho"));
-                    edtFirstName.setText(jsonObject.getString("ten"));
-                    edtEmail.setText(jsonObject.getString("email"));
-                    edtPhone.setText(jsonObject.getString("dienthoai"));
-                    edtAddress.setText(jsonObject.getString("diachi"));
-                    sex=jsonObject.getInt("gioitinh");
-                    if(sex==0){
-                        radioButtonMale.setChecked(true);
-                        radioButtonFeMale.setChecked(false);
-                    }else{
-                        radioButtonFeMale.setChecked(true);
-                        radioButtonMale.setChecked(false);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(ProfileActivity.this, e.getMessage()+"", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ProfileActivity.this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> param=new HashMap<String, String>();
-                param.put("id",String.valueOf(LoginActivity.id));
-                return param;
-            }
-        };
-        requestQueue.add(stringRequest);
+        edtFirstName.setText(MainActivity.account.getFirstName());
+        edtLastName.setText(MainActivity.account.getLastName());
+        edtPhone.setText(MainActivity.account.getPhone());
+        edtEmail.setText(MainActivity.account.getEmail());
+        edtAddress.setText(MainActivity.account.getAddress());
+        sex=MainActivity.account.getSex();
+        if(sex==0){
+            radioButtonMale.setChecked(true);
+            radioButtonFeMale.setChecked(false);
+        }else{
+            radioButtonFeMale.setChecked(true);
+            radioButtonMale.setChecked(false);
+        }
     }
 
     private void updateProfile(){
@@ -185,6 +158,16 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if(response.equals("success")) {
+                    MainActivity.account.setLastName(edtLastName.getText().toString().trim());
+                    MainActivity.account.setFirstName(edtFirstName.getText().toString().trim());
+                    MainActivity.account.setPhone(edtPhone.getText().toString().trim());
+                    MainActivity.account.setAddress(edtAddress.getText().toString().trim());
+                    if(radioButtonMale.isChecked()){
+                        MainActivity.account.setSex(0);
+                    }else{
+                        MainActivity.account.setSex(1);
+                    }
+                    MainActivity.account.setPass(edtLastName.getText().toString().trim());
                     Toast.makeText(ProfileActivity.this, "Cập nhật tài khoản thành công", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(ProfileActivity.this, "Cập nhật tài khoản không thành công", Toast.LENGTH_SHORT).show();
