@@ -55,7 +55,7 @@ public class DetailProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
 
-        spinner = findViewById(R.id.spinner);
+
         toolbar=findViewById(R.id.toolbarchitiecsanpham);
         txtPrice=findViewById(R.id.textview_price);
         txtDescription=findViewById(R.id.textview_description);
@@ -63,6 +63,7 @@ public class DetailProductActivity extends AppCompatActivity {
         imageView=findViewById(R.id.imageview);
         btnCart=  findViewById(R.id.button_cart);
         btnFavorite = findViewById(R.id.btn_favorite);
+
 
 
         catchEventSpinner();
