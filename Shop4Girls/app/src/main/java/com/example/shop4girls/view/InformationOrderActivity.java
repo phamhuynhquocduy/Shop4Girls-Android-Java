@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.example.shop4girls.R;
 
 public class InformationOrderActivity extends AppCompatActivity {
-    Textview textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

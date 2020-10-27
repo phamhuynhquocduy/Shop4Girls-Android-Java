@@ -33,9 +33,15 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -358,8 +364,11 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void measurePasswordStrengh(String password) {
+        String[] array = {"Duy", "duy", "Tuan", "tuan", "Pham","pham","Huynh","huynh","Ly","ly","Tran","Tran","Chau","chau","123123 ","Password ","123456 ","12345678 ","qwerty",
+        "12345","123456789","hello","freedom","iloveyou","welcome","money","letmein","passw0rd","abc123","qazwsx","trustno1","asdf","test",""};
+        List<String> list = Arrays.asList(array);
         Zxcvbn zxcvbn = new Zxcvbn();
-        Strength strength = zxcvbn.measure(password);
+        Strength strength = zxcvbn.measure(password,list);
         int score = strength.getScore();
         passwordStrenghProgressBar.setProgress(score + 1);
 
