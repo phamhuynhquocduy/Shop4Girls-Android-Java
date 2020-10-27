@@ -2,6 +2,7 @@ package com.example.shop4girls.view;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,12 +11,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,6 +30,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.connect.Server;
 import com.google.android.material.textfield.TextInputLayout;
+import com.nulabinc.zxcvbn.Strength;
+import com.nulabinc.zxcvbn.Zxcvbn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,8 +45,9 @@ public class SignInActivity extends AppCompatActivity {
     private Button btnSave;
     private Toolbar toolbar;
     private RadioButton radioButtonMale, radioButtonFeMale;
-    private TextView txtBackLogIn;
+    private TextView txtBackLogIn,passwordStrenghText;
     private int sex=0;
+    private ProgressBar passwordStrenghProgressBar;
     private boolean checkFirstName=false,checkLastName=false,checkAddress=false,checkEmail=false,checkPhone=false,checkPass=false;
     public static final String EMAIL_PATTERN="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
     public static final String PHONE_PATTERN="^0[0-9]{9,10}$";
@@ -70,6 +76,10 @@ public class SignInActivity extends AppCompatActivity {
         tilPhone = findViewById(R.id.til_phone);
         tilPass = findViewById(R.id.til_pass);
         txtBackLogIn = findViewById(R.id.txt_sign_in);
+        passwordStrenghText =findViewById(R.id.textView);
+        passwordStrenghProgressBar = findViewById(R.id.progressBar);
+        passwordStrenghProgressBar.setVisibility(View.GONE);
+        passwordStrenghText.setVisibility(View.GONE);
         btnSave.setEnabled(false);
 
         checkInput();
@@ -318,25 +328,72 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 Pattern patternDate = Pattern.compile(PASS_PATTERN,Pattern.CASE_INSENSITIVE);
                 Matcher matcher = patternDate.matcher(edtPass.getText().toString().trim());
                 if (edtPass.getText().length()<= 0) {
+                    passwordStrenghProgressBar.setVisibility(View.GONE);
+                    passwordStrenghText.setVisibility(View.GONE);
                     tilPass.setError("Không được để trống");
                     checkPass=false;
                     btnSave.setEnabled(false);
                 }
                 else if(!matcher.matches()){
+                    passwordStrenghProgressBar.setVisibility(View.GONE);
+                    passwordStrenghText.setVisibility(View.GONE);
                     tilPass.setError("Mật mẩu phải từ 8-20 ký tự và chứa ít nhất chữ hoa, thường, ký tự đặc biệt");
                     checkPass=false;
                     btnSave.setEnabled(false);
                 }
                 else {
+                    passwordStrenghProgressBar.setVisibility(View.VISIBLE);
+                    passwordStrenghText.setVisibility(View.VISIBLE);
+                    measurePasswordStrengh(edtPass.getText().toString().trim());
                     tilPass.setError(null);
                     checkPass=true;
                     checkError();
                 }
             }
         });
+    }
+
+    private void measurePasswordStrengh(String password) {
+        Zxcvbn zxcvbn = new Zxcvbn();
+        Strength strength = zxcvbn.measure(password);
+        int score = strength.getScore();
+        passwordStrenghProgressBar.setProgress(score + 1);
+
+        int color = ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray);
+        switch (score) {
+            case 0: {
+                color = ContextCompat.getColor(getApplicationContext(), R.color.colorRed);
+                passwordStrenghText.setText("Quá Yếu");
+                break;
+            }
+            case 1: {
+                color = ContextCompat.getColor(getApplicationContext(), R.color.colorOrange);
+                passwordStrenghText.setText("Yếu");
+                break;
+            }
+            case 2: {
+                color = ContextCompat.getColor(getApplicationContext(), R.color.colorYellow);
+                passwordStrenghText.setText("Trung Bình");
+                break;
+            }
+            case 3: {
+                color = ContextCompat.getColor(getApplicationContext(), R.color.colorBlue);
+                passwordStrenghText.setText("Mạnh");
+                break;
+            }
+            case 4: {
+                color = ContextCompat.getColor(getApplicationContext(), R.color.colorGreen);
+                passwordStrenghText.setText("Rất Mạnh");
+                break;
+            }
+        }
+
+        passwordStrenghText.setTextColor(color);
+        passwordStrenghProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
     private void checkError(){
