@@ -90,6 +90,11 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
     <Button
         android:textStyle="bold"
         android:layout_marginTop="2dp"
@@ -112,4 +117,5 @@
         android:layout_gravity="center"
         android:layout_width="300dp"
         android:layout_height="50dp" />
+</LinearLayout>
 </LinearLayout>
