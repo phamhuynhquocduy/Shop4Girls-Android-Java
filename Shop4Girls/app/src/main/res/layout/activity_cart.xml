@@ -99,9 +99,8 @@
         android:text="Thanh Toán"
         android:background="#CCCCCC"
         android:layout_gravity="center"
-        android:layout_weight="1"
         android:layout_width="300dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         />
     <Button
         android:textStyle="bold"
@@ -111,7 +110,6 @@
         android:background="@drawable/custom_button"
         android:text="Tiếp Tục mua hàng"
         android:layout_gravity="center"
-        android:layout_weight="1"
         android:layout_width="300dp"
-        android:layout_height="0dp" />
+        android:layout_height="50dp" />
 </LinearLayout>
