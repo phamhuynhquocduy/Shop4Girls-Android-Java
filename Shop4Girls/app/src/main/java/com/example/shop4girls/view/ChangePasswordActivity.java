@@ -22,6 +22,8 @@ import com.example.shop4girls.R;
 import com.example.shop4girls.connect.Server;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TooManyListenersException;
@@ -62,7 +64,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changePass();
+                if(md5(edtOldPass.getText().toString().trim())==MainActivity.account.getPass()){
+                    tilOldPass.setError(null);
+                    changePass();
+                }else {
+                    tilOldPass.setError("Mật khẩu không đúng");
+                }
+
             }
         });
     }
@@ -221,5 +229,30 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
