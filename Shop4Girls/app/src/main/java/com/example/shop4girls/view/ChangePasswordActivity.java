@@ -76,7 +76,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(md5(edtOldPass.getText().toString().trim())==MainActivity.account.getPass()){
+                String oldPass = md5(edtOldPass.getText().toString().trim());
+                String checkPass =MainActivity.account.getPass();
+                if(oldPass.equals(checkPass)){
                     tilOldPass.setError(null);
                     changePass();
                 }else {
@@ -91,8 +93,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.changePassword, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản thành công", Toast.LENGTH_SHORT).show();
+                String check = response;
+                if(check.equals("success")) {
+                    MainActivity.account.setPass(md5(edtNewPass.getText().toString().trim()));
+                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản thành công"+LoginActivity.id, Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }else{
                     Toast.makeText(getApplicationContext(), "Cập nhật tài khoản không thành công", Toast.LENGTH_SHORT).show();
@@ -108,8 +112,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
                 param.put("id", String.valueOf(LoginActivity.id));
-                param.put("newpass", edtNewPass.getText().toString().trim());
-                param.put("oldpass", edtOldPass.getText().toString().trim());
+                param.put("password", edtNewPass.getText().toString().trim());
                 return param;
             }
         };
