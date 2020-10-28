@@ -31,7 +31,7 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
     @NonNull
     @Override
     public FavoriteProductAdapter.ItemHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_product,null);
+        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_favorite,null);
         FavoriteProductAdapter.ItemHolder itemHolder=new FavoriteProductAdapter.ItemHolder(v);
         return itemHolder;
     }
