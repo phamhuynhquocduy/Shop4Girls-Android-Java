@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop4girls.R;
 import com.example.shop4girls.adapter.CartAdapter;
@@ -16,8 +18,8 @@ import com.example.shop4girls.adapter.CartAdapter;
 import java.text.DecimalFormat;
 
 public class CartActivity extends AppCompatActivity {
-    private ListView lvCart;
-    private TextView txtNotification;
+    public static RecyclerView recyclerView;
+    public static TextView txtNotification;
     public static TextView txtTotal;
     private static long tongtien=0;
     private Button btnPayment,btnContinue;
@@ -29,14 +31,17 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        lvCart=findViewById(R.id.listview_cart);
+        recyclerView = findViewById(R.id.recyclerview_cart);
         txtTotal=findViewById(R.id.textview_price);
         txtNotification=findViewById(R.id.textview_notification);
         btnPayment=findViewById(R.id.button_payment);
         btnContinue=findViewById(R.id.button_continue);
         toolbar=findViewById(R.id.toolbar);
         adapter=new CartAdapter(getApplicationContext(),MainActivity.arrayListCart);
-        lvCart.setAdapter(adapter);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(adapter);
 
         eventButtonContinue();
         eventTotal();
@@ -52,6 +57,7 @@ public class CartActivity extends AppCompatActivity {
         });
 
     }
+
     public static void eventTotal() {
         tongtien=0;
         for(int i=0;i<MainActivity.arrayListCart.size();i++){
@@ -60,6 +66,7 @@ public class CartActivity extends AppCompatActivity {
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         txtTotal.setText(decimalFormat.format(tongtien)+" đ");
     }
+
     private void setActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -71,15 +78,16 @@ public class CartActivity extends AppCompatActivity {
             }
         });
     }
+
     private void checkData() {
         if(MainActivity.arrayListCart.size() <= 0){
             adapter.notifyDataSetChanged();
             txtNotification.setVisibility(View.VISIBLE);
-            lvCart.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
         }else{
             adapter.notifyDataSetChanged();
             txtNotification.setVisibility(View.INVISIBLE);
-            lvCart.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 }
