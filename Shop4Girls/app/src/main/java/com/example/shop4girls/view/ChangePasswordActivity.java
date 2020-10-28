@@ -97,7 +97,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 String check = response;
                 if(check.equals("success")) {
                     MainActivity.account.setPass(md5(edtNewPass.getText().toString().trim()));
-                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản thành công"+LoginActivity.id, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản thành công", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }else{
                     Toast.makeText(getApplicationContext(), "Cập nhật tài khoản không thành công", Toast.LENGTH_SHORT).show();

@@ -14,20 +14,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.CreateNewPasswordActivity"></activity>
-        <activity android:name=".view.InformationOfStoreActivity" />
-        <activity android:name=".view.ChangePasswordActivity" />
-        <activity android:name=".view.ForgotPasswordActivity" />
-        <activity android:name=".view.InformationOrderActivity" />
-        <activity android:name=".view.OrderProductActivity" />
-        <activity android:name=".view.ConfirmActivity" />
-        <activity android:name=".view.FavoriteActivity" />
-        <activity android:name=".view.SignInActivity" />
-        <activity android:name=".view.ListProductActivity" />
-        <activity android:name=".view.ProfileActivity" />
-        <activity android:name=".view.CartActivity" />
-        <activity android:name=".view.DetailProductActivity" />
-        <activity android:name=".view.MainActivity" />
+        <activity android:name=".view.CreateNewPasswordActivity"
+             android:screenOrientation="portrait"/>
+        <activity android:name=".view.InformationOfStoreActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.ChangePasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.ForgotPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.InformationOrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.OrderProductActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.FavoriteActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.SignInActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.ListProductActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.ProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.CartActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.DetailProductActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.MainActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".connect.MyFirebaseService">
             <intent-filter>
@@ -35,7 +47,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".view.LoginActivity">
+        <activity android:name=".view.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
