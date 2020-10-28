@@ -37,16 +37,16 @@
         </androidx.cardview.widget.CardView>
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/main_fullname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Đăng Nhập"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/framelayout" />
+<!--    <TextView-->
+<!--        android:id="@+id/main_fullname"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:paddingTop="@dimen/nav_header_vertical_spacing"-->
+<!--        android:text="Đăng Nhập"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+<!--        android:textColor="@color/colorWhite"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/framelayout" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

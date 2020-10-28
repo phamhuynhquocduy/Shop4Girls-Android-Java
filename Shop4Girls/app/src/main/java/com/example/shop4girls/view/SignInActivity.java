@@ -33,6 +33,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -334,7 +335,9 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                String name = edtFirstName.getText().toString().trim()+" "+edtLastName.getText().toString().trim();
+                name = removeAccent(name);
+                String pass = edtPass.getText().toString().trim();
                 Pattern patternDate = Pattern.compile(PASS_PATTERN,Pattern.CASE_INSENSITIVE);
                 Matcher matcher = patternDate.matcher(edtPass.getText().toString().trim());
                 if (edtPass.getText().length()<= 0) {
@@ -347,7 +350,7 @@ public class SignInActivity extends AppCompatActivity {
                 else if(!matcher.matches()){
                     passwordStrenghProgressBar.setVisibility(View.GONE);
                     passwordStrenghText.setVisibility(View.GONE);
-                    tilPass.setError("Mật mẩu phải từ 8-20 ký tự và chứa ít nhất chữ hoa, thường, ký tự đặc biệt");
+                    tilPass.setError("Mật mẩu phải từ 8 ký tự bao gồm chữ hoa, chữ thường, ký tự đặc biệt");
                     checkPass=false;
                     btnSave.setEnabled(false);
                 }
@@ -468,4 +471,28 @@ public class SignInActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
+
+    private boolean convertString(String check,String password){
+        String [] words = check.split(" ", 8);
+        for (String word : words) {
+            if (password.toLowerCase().contains(word.toLowerCase())) {
+                return true;
+            }
+        }
+        return  false;
+    }
+
+    public static String removeAccent(String s) {
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(temp).replaceAll("");
+    }
+
+//    else if(convertString(name,pass)){
+//        passwordStrenghProgressBar.setVisibility(View.GONE);
+//        passwordStrenghText.setVisibility(View.GONE);
+//        tilPass.setError("Mật mẩu không được chứa họ tên");
+//        checkPass=false;
+//        btnSave.setEnabled(false);
+//    }
 }
