@@ -16,10 +16,17 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:background="@color/colorPrimary"
-            app:titleTextColor="@color/colorWhite"
-            app:title="Danh Sách Sản Phẩm Đã Đặt"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="25dp"
+                android:text="Sản phẩm đã mua"
+                android:gravity="center">
+            </TextView>
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
