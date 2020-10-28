@@ -10,6 +10,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -62,6 +64,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView txtEye,txtLip,txtFace;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -88,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerlayout);
         toolbar = findViewById(R.id.toobar_main);
         viewFlipper = findViewById(R.id.viewlipper);
+        txtEye = findViewById(R.id.txt_eye);
+        txtFace = findViewById(R.id.txt_face);
+        txtLip = findViewById(R.id.txt_lip);
         //Cart
         if (arrayListCart != null) {
         } else {
@@ -146,10 +152,44 @@ public class MainActivity extends AppCompatActivity {
         getFavorite();
         getTokenFMC();
         getAccount();
+        //eventTextViewAll();
         loadProduct(5,arrayListEye);
         loadProduct(6,arrayListFace);
         loadProduct(7,arrayListLip);
     }
+
+//    private void eventTextViewAll() {
+//        txtEye.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadProduct(5,arrayListEye);
+//                Intent intent = new Intent(context.getApplicationContext(), ListProductActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("idcategory",category.getId());
+//                startActivity(intent);
+//            }
+//        });
+//        txtFace.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadProduct(6,arrayListFace);
+//                Intent intent = new Intent(context.getApplicationContext(), ListProductActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("idcategory",category.getId());
+//                context.startActivity(intent);
+//            }
+//        });
+//        txtLip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadProduct(7,arrayListLip);
+//                Intent intent = new Intent(context.getApplicationContext(), ListProductActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("idcategory",category.getId());
+//                context.startActivity(intent);
+//            }
+//        });
+//    }
 
     private void getNewProduct() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
