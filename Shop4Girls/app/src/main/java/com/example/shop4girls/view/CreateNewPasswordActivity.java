@@ -77,7 +77,7 @@ public class CreateNewPasswordActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 String check = response;
                 if(check.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản thành công"+, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Cập nhật tài khoản thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

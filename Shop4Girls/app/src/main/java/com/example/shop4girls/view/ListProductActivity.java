@@ -96,6 +96,13 @@ public class ListProductActivity extends AppCompatActivity {
 
     private void setActionBar() {
         setSupportActionBar(toolbar);
+        if(id==5){
+            getSupportActionBar().setTitle("Mắt");
+        }else if(id==6){
+            getSupportActionBar().setTitle("Mặt");
+        }else {
+            getSupportActionBar().setTitle("Môi");
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

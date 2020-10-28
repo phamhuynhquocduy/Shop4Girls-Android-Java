@@ -76,7 +76,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemHolder> {
                 long newPrice=(currentPrice*newCount)/currentCount;
                 MainActivity.arrayListCart.get(i).setPirce(newPrice);
                 DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
-                itemHolder.txtPrice.setText(decimalFormat.format(newPrice)+" đ");
                 CartActivity.eventTotal();
                 if(newCount>9){
                     itemHolder.btnValues.setText(String.valueOf(newCount));
@@ -99,7 +98,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemHolder> {
                 long newPrice=(currentPrice*newCount)/currentCount;
                 MainActivity.arrayListCart.get(i).setPirce(newPrice);
                 DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
-                itemHolder.txtPrice.setText(decimalFormat.format(newPrice)+" đ");
                 CartActivity.eventTotal();
                 if(newCount<2){
                     itemHolder.btnValues.setText(String.valueOf(newCount));
