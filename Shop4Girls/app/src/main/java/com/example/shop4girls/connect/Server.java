@@ -17,4 +17,5 @@ public class Server {
     public static String getCategoryProduct =url+"getCategoryProduct.php?id=";
     public static String checkSameAccount=url+"checkSameAccount.php";
     public static String changePassword=url+"changePassword.php";
+    public static String checkAccount = url+"checkAccount.php";
 }

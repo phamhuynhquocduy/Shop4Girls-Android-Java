@@ -315,5 +315,4 @@ public class ChangePasswordActivity extends AppCompatActivity {
         passwordStrenghText.setTextColor(color);
         passwordStrenghProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
-
 }

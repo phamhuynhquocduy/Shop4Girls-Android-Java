@@ -27,7 +27,7 @@ import java.util.Map;
 ;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextView txtNotification, txtSignIn;
+    private TextView txtNotification, txtSignIn,txtForgotPassword;
     private EditText edtPass, edtEmail;
     private Button button;
     public  static  int id;
@@ -42,9 +42,25 @@ public class LoginActivity extends AppCompatActivity {
         button = findViewById(R.id.button_login);
         txtNotification = findViewById(R.id.textview_notification);
         txtSignIn =findViewById(R.id.txt_sign_in);
+        txtForgotPassword = findViewById(R.id.txt_forgot_password);
 
         eventLogIn();
         clickTextSignIn();
+        keepLogIn();
+        eventForgotPass();
+
+    }
+
+    private void eventForgotPass() {
+        txtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ForgotPasswordActivity.class));
+            }
+        });
+    }
+
+    private void keepLogIn(){
         if(SaveSharedPreference.getUserName(LoginActivity.this).length() != 0)
         {
             id= Integer.parseInt(SaveSharedPreference.getUserName(LoginActivity.this));
