@@ -47,7 +47,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemHolder> {
         Cart cart= cartArrayList.get(i);
         itemHolder.txtName.setText(cart.getName());
         DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
-        itemHolder.txtPrice.setText("Giá : "+decimalFormat.format(cart.getPirce())+" đ");
+        itemHolder.txtPrice.setText("Giá : "+decimalFormat.format(cart.getPirce()/cart.getCount())+" đ");
         Picasso.get()
                 .load(cart.getImage())
                 .placeholder(R.drawable.image_place_holder)
