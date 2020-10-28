@@ -90,6 +90,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp"
                         android:text="Mặt"
+                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <androidx.recyclerview.widget.RecyclerView
@@ -114,6 +115,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp"
                         android:text="Mắt"
+                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -139,6 +141,7 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20dp"
                         android:text="Môi"
+                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
