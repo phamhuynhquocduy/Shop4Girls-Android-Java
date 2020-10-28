@@ -152,44 +152,44 @@ public class MainActivity extends AppCompatActivity {
         getFavorite();
         getTokenFMC();
         getAccount();
-        //eventTextViewAll();
+        eventTextViewAll();
         loadProduct(5,arrayListEye);
         loadProduct(6,arrayListFace);
         loadProduct(7,arrayListLip);
     }
 
-//    private void eventTextViewAll() {
-//        txtEye.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadProduct(5,arrayListEye);
-//                Intent intent = new Intent(context.getApplicationContext(), ListProductActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("idcategory",category.getId());
-//                startActivity(intent);
-//            }
-//        });
-//        txtFace.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadProduct(6,arrayListFace);
-//                Intent intent = new Intent(context.getApplicationContext(), ListProductActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("idcategory",category.getId());
-//                context.startActivity(intent);
-//            }
-//        });
-//        txtLip.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadProduct(7,arrayListLip);
-//                Intent intent = new Intent(context.getApplicationContext(), ListProductActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("idcategory",category.getId());
-//                context.startActivity(intent);
-//            }
-//        });
-//    }
+    private void eventTextViewAll() {
+        txtEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadProduct(5,arrayListEye);
+                Intent intent = new Intent(getApplicationContext(), ListProductActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("idcategory",5);
+                startActivity(intent);
+            }
+        });
+        txtFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadProduct(6,arrayListFace);
+                Intent intent = new Intent(getApplicationContext(), ListProductActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("idcategory",6);
+                startActivity(intent);
+            }
+        });
+        txtLip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadProduct(7,arrayListLip);
+                Intent intent = new Intent(getApplicationContext(), ListProductActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("idcategory",7);
+                startActivity(intent);
+            }
+        });
+    }
 
     private void getNewProduct() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
