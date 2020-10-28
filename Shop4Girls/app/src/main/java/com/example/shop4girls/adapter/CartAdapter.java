@@ -115,6 +115,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemHolder> {
             public void onClick(View v) {
                 cartArrayList.remove(MainActivity.arrayListCart.get(i));
                 notifyDataSetChanged();
+                CartActivity.eventTotal();
                 if(MainActivity.arrayListCart.size() <= 0){
                     CartActivity.txtNotification.setVisibility(View.VISIBLE);
                     CartActivity.recyclerView.setVisibility(View.INVISIBLE);
