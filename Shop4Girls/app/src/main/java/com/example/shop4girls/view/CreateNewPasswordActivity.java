@@ -31,6 +31,7 @@ import com.nulabinc.zxcvbn.Zxcvbn;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -56,6 +57,8 @@ public class CreateNewPasswordActivity extends AppCompatActivity {
         tilConfirm = findViewById(R.id.confirm_new_pass_word);
         passwordStrenghText = findViewById(R.id.textView);
         passwordStrenghProgressBar = findViewById(R.id.progressBar);
+        passwordStrenghProgressBar.setVisibility(View.GONE);
+        passwordStrenghText.setVisibility(View.GONE);
 
         checkInput();
         eventButton();
@@ -125,6 +128,8 @@ public class CreateNewPasswordActivity extends AppCompatActivity {
                     tilConfirm.setError("Không được để trống");
                     checkConfirm=false;
                     btnAccept.setEnabled(false);
+                    passwordStrenghProgressBar.setVisibility(View.GONE);
+                    passwordStrenghText.setVisibility(View.GONE);
                 }
                 else if(!matcher.matches()){
                     tilConfirm.setError("Mật mẩu phải từ 8-20 ký tự và chứa ít nhất chữ hoa, thường, ký tự đặc biệt");
@@ -134,11 +139,15 @@ public class CreateNewPasswordActivity extends AppCompatActivity {
                     tilConfirm.setError("Mật khẩu xác nhận không giống với mật khẩu mới");
                     checkConfirm=false;
                     btnAccept.setEnabled(false);
+                    passwordStrenghProgressBar.setVisibility(View.GONE);
+                    passwordStrenghText.setVisibility(View.GONE);
                 }
                 else {
                     tilConfirm.setError(null);
                     checkConfirm=true;
                     checkError();
+                    passwordStrenghProgressBar.setVisibility(View.VISIBLE);
+                    passwordStrenghText.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -253,6 +262,22 @@ public class CreateNewPasswordActivity extends AppCompatActivity {
 
         passwordStrenghText.setTextColor(color);
         passwordStrenghProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+    }
+
+    private boolean convertString(String check,String password){
+        String [] words = check.split(" ", 8);
+        for (String word : words) {
+            if (password.toLowerCase().contains(word.toLowerCase())) {
+                return true;
+            }
+        }
+        return  false;
+    }
+
+    public static String removeAccent(String s) {
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(temp).replaceAll("");
     }
 
 }

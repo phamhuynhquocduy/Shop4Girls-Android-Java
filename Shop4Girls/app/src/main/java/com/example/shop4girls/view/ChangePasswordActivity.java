@@ -30,6 +30,7 @@ import com.nulabinc.zxcvbn.Zxcvbn;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TooManyListenersException;
@@ -314,5 +315,21 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         passwordStrenghText.setTextColor(color);
         passwordStrenghProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+    }
+
+    private boolean convertString(String check,String password){
+        String [] words = check.split(" ", 8);
+        for (String word : words) {
+            if (password.toLowerCase().contains(word.toLowerCase())) {
+                return true;
+            }
+        }
+        return  false;
+    }
+
+    public static String removeAccent(String s) {
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(temp).replaceAll("");
     }
 }

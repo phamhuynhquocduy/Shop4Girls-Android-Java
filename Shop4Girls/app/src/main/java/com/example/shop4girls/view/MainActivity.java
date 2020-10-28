@@ -225,6 +225,13 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.nav_support: {
+                        if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
+                            Intent intent = new Intent(MainActivity.this, InformationOfStoreActivity.class);
+                            startActivity(intent);
+                        } else {
+                            CheckConnection.ShowToast_short(getApplicationContext(), "Lỗi");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     }
                     case R.id.nav_change_password:{
