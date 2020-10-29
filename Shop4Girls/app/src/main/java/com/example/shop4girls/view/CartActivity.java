@@ -47,7 +47,18 @@ public class CartActivity extends AppCompatActivity {
         eventTotal();
         setActionBar();
         checkData();
+        eventButtonPayment();
     }
+
+    private void eventButtonPayment() {
+        btnPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),InformationOrderActivity.class));
+            }
+        });
+    }
+
     private void eventButtonContinue() {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
