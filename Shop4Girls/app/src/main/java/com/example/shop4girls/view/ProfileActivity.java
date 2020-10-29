@@ -167,7 +167,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }else{
                         MainActivity.account.setSex(1);
                     }
-                    MainActivity.account.setPass(edtLastName.getText().toString().trim());
                     Toast.makeText(ProfileActivity.this, "Cập nhật tài khoản thành công", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(ProfileActivity.this, "Cập nhật tài khoản không thành công", Toast.LENGTH_SHORT).show();
