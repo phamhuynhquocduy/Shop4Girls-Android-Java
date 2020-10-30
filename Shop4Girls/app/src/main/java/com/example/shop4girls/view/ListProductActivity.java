@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ListProductActivity extends AppCompatActivity {
 
@@ -37,6 +41,8 @@ public class ListProductActivity extends AppCompatActivity {
     private ListProductAdapter listProductAdapter;
     private  int id;
     private Toolbar toolbar;
+    private Spinner spinner;
+    private String selecteditem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class ListProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_product);
 
         toolbar = findViewById(R.id.toolbar);
+        spinner = findViewById(R.id.spinner);
 
         // Product
         recyclerViewListProduct = findViewById(R.id.recyclerview_list_product);
@@ -58,6 +65,7 @@ public class ListProductActivity extends AppCompatActivity {
 
         loadProduct();
         setActionBar();
+        setSpinner();
     }
 
     private void loadProduct() {
@@ -110,6 +118,45 @@ public class ListProductActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setSpinner(){
+        String[] arraySpinner = new String[] {
+                "Giá giảm dần", "Giá tăng dần", "A->Z", "Z->A"};
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selecteditem =  spinner.getItemAtPosition(position).toString();
+                switch (position){
+                    case 0:
+                        Collections.sort(arrayListListProduct, Product.decreasePrice);
+                        listProductAdapter.notifyDataSetChanged();
+                        break;
+                    case 1:
+                        Collections.sort(arrayListListProduct, Product.ascendingPrice);
+                        listProductAdapter.notifyDataSetChanged();
+                        break;
+                    case 2:
+                        Collections.sort(arrayListListProduct, Product.nameAtoZ);
+                        listProductAdapter.notifyDataSetChanged();
+                        break;
+                    case 3:
+                        Collections.sort(arrayListListProduct, Product.nameZtoA);
+                        listProductAdapter.notifyDataSetChanged();
+                        break;
+                    default:
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
     }
 
     @Override

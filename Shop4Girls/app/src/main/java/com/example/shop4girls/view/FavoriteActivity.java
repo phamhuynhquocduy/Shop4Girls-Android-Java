@@ -31,8 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FavoriteActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private TextView txtProductEmpty;
+    public static RecyclerView recyclerView;
+    public static TextView txtProductEmpty;
     private Toolbar toolbar;
 
 

@@ -1,6 +1,7 @@
 package com.example.shop4girls.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public class Product implements Serializable {
     public int id;
@@ -75,4 +76,39 @@ public class Product implements Serializable {
     public void setFirm(int firm) {
         this.firm = firm;
     }
+
+    public static Comparator<Product> ascendingPrice = new Comparator<Product>() {
+
+        public int compare(Product p1, Product p2) {
+
+            int product1 = p1.getPrice();
+            int product2 = p2.getPrice();
+
+            return product1-product2;
+        }};
+    public static Comparator<Product> decreasePrice = new Comparator<Product>() {
+
+        public int compare(Product p1, Product p2) {
+
+            int product1 = p1.getPrice();
+            int product2 = p2.getPrice();
+
+            return product2-product1;
+        }};
+    public static Comparator<Product> nameAtoZ = new Comparator<Product>() {
+
+        public int compare(Product p1, Product p2) {
+            String  product1 = p1.getName().toUpperCase();
+            String  product2 = p2.getName().toUpperCase();
+
+            return product1.compareTo(product2);
+        }};
+    public static Comparator<Product> nameZtoA = new Comparator<Product>() {
+
+        public int compare(Product p1, Product p2) {
+            String product1 = p1.getName().toUpperCase();
+            String product2 = p2.getName().toUpperCase();
+
+            return product2.compareTo(product1);
+        }};
 }

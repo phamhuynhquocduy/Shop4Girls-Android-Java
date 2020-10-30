@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop4girls.R;
 import com.example.shop4girls.model.Product;
+import com.example.shop4girls.view.CartActivity;
 import com.example.shop4girls.view.DetailProductActivity;
+import com.example.shop4girls.view.FavoriteActivity;
+import com.example.shop4girls.view.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -55,6 +59,20 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
                 context.startActivity(intent);
             }
         });
+        itemHolder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList.remove(MainActivity.arrayListFavorite.get(i));
+                notifyDataSetChanged();
+                if(MainActivity.arrayListFavorite.size() <= 0){
+                    FavoriteActivity.txtProductEmpty.setVisibility(View.VISIBLE);
+                    FavoriteActivity.recyclerView.setVisibility(View.INVISIBLE);
+                }else{
+                    FavoriteActivity.txtProductEmpty.setVisibility(View.INVISIBLE);
+                    FavoriteActivity.recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override
@@ -64,12 +82,14 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView image;
         public TextView txtName,txtPrice;
+        public ImageButton imageButton;
 
         public ItemHolder(View itemView) {
             super(itemView);
             image=itemView.findViewById(R.id.imageview);
             txtName=itemView.findViewById(R.id.textview_name);
             txtPrice=itemView.findViewById(R.id.textview_price);
+            imageButton =itemView.findViewById(R.id.img_btn);
         }
     }
 }
