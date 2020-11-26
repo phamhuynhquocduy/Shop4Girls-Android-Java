@@ -1,10 +1,13 @@
 package com.example.shop4girls.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,10 +56,11 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context.getApplicationContext(), DetailProductActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("thongtinsanpham", arrayList.get(i));
-                context.startActivity(intent);
+//                Intent intent = new Intent(context.getApplicationContext(), DetailProductActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("thongtinsanpham", arrayList.get(i));
+//                context.startActivity(intent);
+
             }
         });
         itemHolder.imageButton.setOnClickListener(new View.OnClickListener() {

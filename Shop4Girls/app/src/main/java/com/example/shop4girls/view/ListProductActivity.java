@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,12 +38,13 @@ import java.util.Collections;
 public class ListProductActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewListProduct;
-    private ArrayList arrayListListProduct;
+    private ArrayList arrayListListProduct,arrayListCopy=new ArrayList();
     private ListProductAdapter listProductAdapter;
     private  int id;
     private Toolbar toolbar;
     private Spinner spinner;
     private String selecteditem;
+    private ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class ListProductActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         spinner = findViewById(R.id.spinner);
+        imageButton = findViewById(R.id.image_button);
 
         // Product
         recyclerViewListProduct = findViewById(R.id.recyclerview_list_product);
@@ -60,12 +63,21 @@ public class ListProductActivity extends AppCompatActivity {
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerViewListProduct.setLayoutManager(gridLayoutManager);
         recyclerViewListProduct.setAdapter(listProductAdapter);
+        //Get id category
         Intent intent = getIntent();
         id=intent.getIntExtra("idcategory",1);
+        //Arraylistcopy
+        arrayListCopy.addAll(arrayListListProduct);
 
         loadProduct();
         setActionBar();
         setSpinner();
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AdSearchActivity.class));
+            }
+        });
     }
 
     private void loadProduct() {
@@ -121,8 +133,7 @@ public class ListProductActivity extends AppCompatActivity {
     }
 
     private void setSpinner(){
-        String[] arraySpinner = new String[] {
-                "Giá giảm dần", "Giá tăng dần", "A->Z", "Z->A"};
+        String[] arraySpinner = new String[] {"Chọn lọc","Giá giảm dần", "Giá tăng dần", "A->Z", "Z->A"};
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,18 +144,22 @@ public class ListProductActivity extends AppCompatActivity {
                 selecteditem =  spinner.getItemAtPosition(position).toString();
                 switch (position){
                     case 0:
-                        Collections.sort(arrayListListProduct, Product.decreasePrice);
+                        arrayListListProduct.addAll(arrayListCopy);
                         listProductAdapter.notifyDataSetChanged();
                         break;
                     case 1:
-                        Collections.sort(arrayListListProduct, Product.ascendingPrice);
+                        Collections.sort(arrayListListProduct, Product.decreasePrice);
                         listProductAdapter.notifyDataSetChanged();
                         break;
                     case 2:
-                        Collections.sort(arrayListListProduct, Product.nameAtoZ);
+                        Collections.sort(arrayListListProduct, Product.ascendingPrice);
                         listProductAdapter.notifyDataSetChanged();
                         break;
                     case 3:
+                        Collections.sort(arrayListListProduct, Product.nameAtoZ);
+                        listProductAdapter.notifyDataSetChanged();
+                        break;
+                    case 4:
                         Collections.sort(arrayListListProduct, Product.nameZtoA);
                         listProductAdapter.notifyDataSetChanged();
                         break;

@@ -18,4 +18,7 @@ public class Server {
     public static String checkSameAccount=url+"checkSameAccount.php";
     public static String changePassword=url+"changePassword.php";
     public static String checkAccount = url+"checkAccount.php";
+    public static String getOder = url+"postOder.php";
+    public static String getDetailOder =url+"postDetailOder.php";
+    public static String postRating = url+="postRating.php";
 }

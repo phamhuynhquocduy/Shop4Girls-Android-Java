@@ -1,20 +1,27 @@
 package com.example.shop4girls.view;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -31,10 +38,12 @@ import com.example.shop4girls.connect.CheckConnection;
 import com.example.shop4girls.connect.Server;
 import com.example.shop4girls.model.Cart;
 import com.example.shop4girls.model.Product;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DetailProductActivity extends AppCompatActivity {
@@ -42,7 +51,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private ImageView imageView;
     private Toolbar toolbar;
     private ImageButton btnFavorite;
-    private Button btnCart, btnMinus, btnPlus , btnValues;
+    private Button btnCart, btnMinus, btnPlus , btnValues, btnDeposit;
     public int id=0;
     public String name="";
     public int price=0;
@@ -66,12 +75,54 @@ public class DetailProductActivity extends AppCompatActivity {
         btnMinus = findViewById(R.id.button_minus);
         btnPlus = findViewById(R.id.button_plus);
         btnValues = findViewById(R.id.button_values);
-
+        btnDeposit =findViewById(R.id.btn_deposit);
         getData();
         setActionBar();
         eventButtonCart();
         eventButtonFavorite();
         evenCountProduct();
+        eventDeposit();
+    }
+
+    private void eventDeposit() {
+        btnDeposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] singleItems = {"Xem sản phẩm ký gửi", "Ký gửi sản phẩm"};
+                Context context = new ContextThemeWrapper(DetailProductActivity.this, R.style.AppTheme2);
+                final MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
+                dialogBuilder.setNeutralButton("Huỷ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialogBuilder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ListView lv = ((AlertDialog)dialog).getListView();
+                        Integer selected = (Integer)lv.getTag();
+                        if(selected != null) {
+                           switch (selected){
+                               case 0:
+                                   startActivity(new Intent(getApplicationContext(),ListProductActivity.class) );
+                                   break;
+                               default:
+                                   startActivity(new Intent(getApplicationContext(),DepositActivity.class));
+                           }
+                        }
+                    }
+                });
+                dialogBuilder.setSingleChoiceItems(singleItems, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ListView lv = ((AlertDialog)dialog).getListView();
+                        lv.setTag(new Integer(which));
+                    }
+                });
+                dialogBuilder.show();
+            }
+        });
     }
 
     private void evenCountProduct() {

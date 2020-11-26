@@ -112,7 +112,6 @@ public class InformationOfStoreActivity extends AppCompatActivity implements OnM
                             mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                             CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(15).build();
                             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                            Toast.makeText(InformationOfStoreActivity.this, location.getLatitude()+""+location.getLongitude(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

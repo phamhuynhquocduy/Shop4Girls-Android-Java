@@ -21,7 +21,7 @@ public class CartActivity extends AppCompatActivity {
     public static RecyclerView recyclerView;
     public static TextView txtNotification;
     public static TextView txtTotal;
-    private static long tongtien=0;
+    public static long total=0;
     private Button btnPayment,btnContinue;
     private Toolbar toolbar;
     private CartAdapter adapter;
@@ -70,12 +70,12 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public static void eventTotal() {
-        tongtien=0;
+        total=0;
         for(int i=0;i<MainActivity.arrayListCart.size();i++){
-            tongtien+=MainActivity.arrayListCart.get(i).getPirce();
+            total+=MainActivity.arrayListCart.get(i).getPirce();
         }
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        txtTotal.setText(decimalFormat.format(tongtien)+" đ");
+        txtTotal.setText(decimalFormat.format(total)+" đ");
     }
 
     private void setActionBar() {

@@ -1,8 +1,15 @@
 package com.example.shop4girls.view;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.adapter.OrderProductAdapter;
 import com.example.shop4girls.connect.CheckConnection;
+import com.example.shop4girls.connect.RecyclerItemClickListener;
 import com.example.shop4girls.connect.Server;
 import com.example.shop4girls.model.OrderProduct;
 
@@ -37,6 +45,7 @@ public class OrderProductActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ArrayList<OrderProduct> arrayList;
     private OrderProductAdapter orderProductAdapter;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,7 @@ public class OrderProductActivity extends AppCompatActivity {
         if(CheckConnection.haveNetworkConnection(getApplicationContext())) {
             setActionBar();
             getData();
+            eventClickItem();
 
         }else{
             CheckConnection.ShowToast_short(getApplicationContext(),"Lỗi kết nối mạng");
@@ -63,6 +73,35 @@ public class OrderProductActivity extends AppCompatActivity {
         recyclerView.setAdapter(orderProductAdapter);
     }
 
+    private void eventClickItem() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                final AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                final Dialog dialogRating = new Dialog(activity);
+                //Gan content view cho dialog la mot layout tu dinh nghia
+                dialogRating.setContentView(R.layout.layout_custom_dialog_rating);
+
+                ratingBar = dialogRating.findViewById(R.id.ratingBar);
+                Button button = dialogRating.findViewById(R.id.button);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OrderProduct product=arrayList.get(position);
+                        createRating(product.getId());
+
+                    }
+                });
+
+                // Setting wight and height dialog
+                dialogRating.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.WRAP_CONTENT);
+                dialogRating.show();
+            }
+        }));
+    }
+
     private void getData(){
         final DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
@@ -74,7 +113,9 @@ public class OrderProductActivity extends AppCompatActivity {
                         JSONArray jsonArray=new JSONArray(response);
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject object=jsonArray.getJSONObject(i);
-                            arrayList.add(new OrderProduct(object.getString("tensp"),
+                            arrayList.add(new OrderProduct(
+                                    object.getInt("idsp"),
+                                    object.getString("tensp"),
                                     object.getString("hinhanhsp"),
                                     object.getInt("giasp"),
                                     object.getInt("soluongsanpham"),
@@ -83,6 +124,7 @@ public class OrderProductActivity extends AppCompatActivity {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(OrderProductActivity.this, e.getMessage()+"", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     txtProductEmpty.setVisibility(View.VISIBLE);
@@ -116,4 +158,33 @@ public class OrderProductActivity extends AppCompatActivity {
         });
     }
 
+    private void createRating(final int idProduct){
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.postAccount, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("success")) {
+                    Toast.makeText(getApplicationContext(), "Đánh giá thành công", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Đánh giá không thành Công", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idsanpham", String.valueOf(idProduct));
+                param.put("sodanhgia", String.valueOf(ratingBar.getRating()));
+                param.put("idkhachhang", String.valueOf(LoginActivity.id));
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
 }
