@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlack"
         android:text="Đánh Giá Sản Phẩm" />
 
     <LinearLayout
