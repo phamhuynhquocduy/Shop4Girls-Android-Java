@@ -22,6 +22,10 @@
                     android:id="@+id/nav_my_account"
                     android:icon="@drawable/ic_baseline_person_24"
                     android:title="Hồ sơ người dùng" />
+                <item
+                    android:id="@+id/nav_deposit"
+                    android:icon="@drawable/ic_baseline_receipt_24"
+                    android:title="Ký Gửi" />
             </group>
         </menu>
     </item>

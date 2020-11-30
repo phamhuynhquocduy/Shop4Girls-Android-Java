@@ -2,6 +2,7 @@ package com.example.shop4girls.view;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -160,7 +161,7 @@ public class OrderProductActivity extends AppCompatActivity {
 
     private void createRating(final int idProduct){
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.postAccount, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.postRating, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.equals("success")) {

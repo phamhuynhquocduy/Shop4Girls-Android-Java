@@ -264,6 +264,16 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                     }
+                    case R.id.nav_deposit: {
+                        if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
+                            Intent intent = new Intent(MainActivity.this, DepositActivity.class);
+                            startActivity(intent);
+                        } else {
+                            CheckConnection.ShowToast_short(getApplicationContext(), "Lỗi");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    }
                     case R.id.nav_support: {
                         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
                             Intent intent = new Intent(MainActivity.this, InformationOfStoreActivity.class);
