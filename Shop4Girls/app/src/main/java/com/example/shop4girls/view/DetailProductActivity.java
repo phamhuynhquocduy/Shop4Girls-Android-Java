@@ -75,55 +75,13 @@ public class DetailProductActivity extends AppCompatActivity {
         btnMinus = findViewById(R.id.button_minus);
         btnPlus = findViewById(R.id.button_plus);
         btnValues = findViewById(R.id.button_values);
-        btnDeposit =findViewById(R.id.btn_deposit);
         getData();
         setActionBar();
         eventButtonCart();
         eventButtonFavorite();
         evenCountProduct();
-        eventDeposit();
     }
 
-    private void eventDeposit() {
-        btnDeposit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String[] singleItems = {"Xem sản phẩm ký gửi", "Ký gửi sản phẩm"};
-                Context context = new ContextThemeWrapper(DetailProductActivity.this, R.style.AppTheme2);
-                final MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(context);
-                dialogBuilder.setNeutralButton("Huỷ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialogBuilder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ListView lv = ((AlertDialog)dialog).getListView();
-                        Integer selected = (Integer)lv.getTag();
-                        if(selected != null) {
-                           switch (selected){
-                               case 0:
-                                   startActivity(new Intent(getApplicationContext(),ListProductActivity.class) );
-                                   break;
-                               default:
-                                   startActivity(new Intent(getApplicationContext(),DepositActivity.class));
-                           }
-                        }
-                    }
-                });
-                dialogBuilder.setSingleChoiceItems(singleItems, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ListView lv = ((AlertDialog)dialog).getListView();
-                        lv.setTag(new Integer(which));
-                    }
-                });
-                dialogBuilder.show();
-            }
-        });
-    }
 
     private void evenCountProduct() {
         final int sl= Integer.parseInt(btnValues.getText().toString());

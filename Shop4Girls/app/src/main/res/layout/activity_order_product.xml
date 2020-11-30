@@ -15,18 +15,20 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:minHeight="?attr/actionBarSize">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
                 android:textSize="25dp"
                 android:text="Sản phẩm đã mua"
-                android:gravity="center"
-                android:layout_margin="ce" >
+                android:gravity="center">
             </TextView>
         </androidx.appcompat.widget.Toolbar>
 

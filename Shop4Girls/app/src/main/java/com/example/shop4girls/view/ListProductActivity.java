@@ -120,8 +120,10 @@ public class ListProductActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Mắt");
         }else if(id==6){
             getSupportActionBar().setTitle("Mặt");
-        }else {
+        }else if(id==7){
             getSupportActionBar().setTitle("Môi");
+        }else{
+            getSupportActionBar().setTitle("Nước Hoa");
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

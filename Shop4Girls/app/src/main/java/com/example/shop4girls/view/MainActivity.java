@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewCategory = findViewById(R.id.recyclerview_category);
         arrayListCategory = new ArrayList<>();
         categoryHomeAdapter = new CategoryHomeAdapter(getApplicationContext(), arrayListCategory);
-        GridLayoutManager gridLayoutManagerCategory = new GridLayoutManager(this, 3);
+        GridLayoutManager gridLayoutManagerCategory = new GridLayoutManager(this, 4);
         recyclerViewCategory.setHasFixedSize(true);
         gridLayoutManagerCategory.setOrientation(GridLayoutManager.VERTICAL);
         recyclerViewCategory.setLayoutManager(gridLayoutManagerCategory);

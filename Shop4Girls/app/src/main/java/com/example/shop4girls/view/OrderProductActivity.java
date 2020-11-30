@@ -150,6 +150,7 @@ public class OrderProductActivity extends AppCompatActivity {
 
     private void setActionBar(){
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
