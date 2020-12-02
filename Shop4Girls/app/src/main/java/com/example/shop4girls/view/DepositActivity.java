@@ -7,36 +7,33 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Bundle;
-import android.print.PrintManager;
-import android.print.pdf.PrintedPdfDocument;
-import android.view.MotionEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.example.shop4girls.R;
-import com.example.shop4girls.connect.DrawableClickListener;
-import com.example.shop4girls.connect.CustomEditText;
-import com.example.shop4girls.connect.ViewPrintAdapter;
-import com.example.shop4girls.connect.DrawableClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DepositActivity extends AppCompatActivity {
 
-    private EditText edtCapacity , edtRemainingCapacity, edtNameProduct,edtExpiryDate,edtDateManufacture,edtPrice, edtDescription;
+    private EditText  edtRemainingCapacity, edtNameProduct,edtExpiryDate,edtDateManufacture,edtPrice, edtDescription;
+    private TextInputLayout tilNameProduct,tilExpiryDate,tilDateManufacture,tilPrice, tilDescription,tilRemainingCapacity;
+    private Boolean checkNameProduct=false,checkExpiryDate=false,checkDateManufacture=false,checkPrice=false, checkDescription=false,checkRemainingCapacity=false;
     private CheckBox checkBox;
     private RadioButton radioButtonLipstick, radioButtonPerfume;
-    private TextInputLayout tilCapacity, tilRemainingCapacity;
     private Button button;
     private Context context;
     private ImageButton imgBtnExpiryDate, imgBtnDateManufacture;
@@ -47,12 +44,10 @@ public class DepositActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
 
-        edtCapacity=findViewById(R.id.edt_capacity);
         edtRemainingCapacity=findViewById(R.id.edt_remaining_capacity);
         checkBox=findViewById(R.id.checkBox);
         radioButtonLipstick=findViewById(R.id.radiobutton_lipstick);
         radioButtonPerfume=findViewById(R.id.radiobutton_perfume);
-        tilCapacity = findViewById(R.id.til_capacity);
         tilRemainingCapacity = findViewById(R.id.til_remaining_capacity);
         button = findViewById(R.id.button_print);
         edtNameProduct = findViewById(R.id.edt_name_prodcut);
@@ -62,10 +57,16 @@ public class DepositActivity extends AppCompatActivity {
         imgBtnExpiryDate = findViewById(R.id.expiry_date);
         edtDescription = findViewById(R.id.edt_description);
         edtPrice = findViewById(R.id.edt_price);
+        tilDescription = findViewById(R.id.til_description);
+        tilNameProduct = findViewById(R.id.til_name_product);
+        tilDateManufacture = findViewById(R.id.til_date_manufacture);
+        tilExpiryDate = findViewById(R.id.til_expiry_date);
+        tilPrice = findViewById(R.id.til_price);
 
 
         eventImageButton();
         eventRadioButton();
+        check();
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +81,10 @@ public class DepositActivity extends AppCompatActivity {
                 intent.putExtra("Price",edtPrice.getText().toString().trim());
                 if(radioButtonLipstick.isChecked()){
                     intent.putExtra("Type","Son");
+                    intent.putExtra("TrangThai","Sản Phẩm Chưa Được Sử Dụng");
                 }else{
                     intent.putExtra("Type","Nước Hoa");
+                    intent.putExtra("TrangThai",edtRemainingCapacity.getText().toString().trim());
                 }
                 startActivity(intent);
 
@@ -89,6 +92,170 @@ public class DepositActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    public void check(){
+        edtNameProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtNameProduct.getText().length()<= 0) {
+                    tilNameProduct.setError("Không được để trống");
+                    checkNameProduct=false;
+                    button.setEnabled(false);
+                }
+                else {
+                    tilNameProduct.setError(null);
+                    checkNameProduct=true;
+                    checkError();
+                }
+            }
+        });
+        edtPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtPrice.getText().length()<= 0) {
+                    tilPrice.setError("Không được để trống");
+                    checkPrice=false;
+                    button.setEnabled(false);
+                }
+                else {
+                    tilPrice.setError(null);
+                    checkPrice=true;
+                    checkError();
+                }
+            }
+        });
+        edtDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtDescription.getText().length()<= 0) {
+                    tilDescription.setError("Không được để trống");
+                    checkDescription=false;
+                    button.setEnabled(false);
+                }
+                else {
+                    tilDescription.setError(null);
+                    checkDescription=true;
+                    checkError();
+                }
+            }
+        });
+        edtExpiryDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtExpiryDate.getText().length()<= 0) {
+                    tilExpiryDate.setError("Không được để trống");
+                    checkExpiryDate=false;
+                    button.setEnabled(false);
+                }
+                else {
+                    tilExpiryDate.setError(null);
+                    checkExpiryDate=true;
+                    checkError();
+                }
+            }
+        });
+        edtDateManufacture.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtDateManufacture.getText().length()<= 0) {
+                    tilDateManufacture.setError("Không được để trống");
+                    checkDateManufacture=false;
+                    button.setEnabled(false);
+                }
+                else {
+                    tilDateManufacture.setError(null);
+                    checkDateManufacture=true;
+                    checkError();
+                }
+            }
+        });
+        edtRemainingCapacity.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (edtRemainingCapacity.getText().length()<= 0) {
+                        tilRemainingCapacity.setError("Không được để trống");
+                        checkRemainingCapacity=false;
+                        button.setEnabled(false);
+                    }
+                    else {
+                        tilRemainingCapacity.setError(null);
+                        checkRemainingCapacity=true;
+                        checkError();
+                    }
+                }
+            });
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              checkError();
+            }
+        });
+    }
+
+    private void checkError() {
+        if(radioButtonPerfume.isChecked()){
+            if(checkNameProduct==true&&checkExpiryDate==true&&checkDateManufacture==true&&checkPrice==true&&checkDescription==true&&checkRemainingCapacity==true){
+                button.setEnabled(true);
+            }else {
+                button.setEnabled(false);
+            }
+        }else{
+            if(checkNameProduct==true&&checkExpiryDate==true&&checkDateManufacture==true&&checkPrice==true&&checkDescription==true&&checkBox.isChecked()){
+                button.setEnabled(true);
+            }else {
+                button.setEnabled(false);
+            }
+        }
 
     }
     public void eventImageButton(){
@@ -138,16 +305,15 @@ public class DepositActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(radioButtonLipstick.isChecked()){
                     checkBox.setVisibility(View.VISIBLE);
-                    edtCapacity.setVisibility(View.GONE);
                     edtRemainingCapacity.setVisibility(View.GONE);
-                    tilCapacity.setVisibility(View.GONE);
                     tilRemainingCapacity.setVisibility(View.GONE);
+                    checkError();
                 }else{
                     checkBox.setVisibility(View.GONE);
-                    edtCapacity.setVisibility(View.VISIBLE);
                     edtRemainingCapacity.setVisibility(View.VISIBLE);
-                    tilCapacity.setVisibility(View.VISIBLE);
                     tilRemainingCapacity.setVisibility(View.VISIBLE);
+                    checkError();
+
                 }
             }
         });
@@ -155,17 +321,15 @@ public class DepositActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(radioButtonPerfume.isChecked()){
-                    edtCapacity.setVisibility(View.VISIBLE);
                     edtRemainingCapacity.setVisibility(View.VISIBLE);
-                    tilCapacity.setVisibility(View.VISIBLE);
                     tilRemainingCapacity.setVisibility(View.VISIBLE);
                     checkBox.setVisibility(View.GONE);
+                    checkError();
                 }else{
-                    edtCapacity.setVisibility(View.GONE);
                     edtRemainingCapacity.setVisibility(View.GONE);
                     checkBox.setVisibility(View.VISIBLE);
-                    tilCapacity.setVisibility(View.GONE);
                     tilRemainingCapacity.setVisibility(View.GONE);
+                    checkError();
                 }
             }
         });

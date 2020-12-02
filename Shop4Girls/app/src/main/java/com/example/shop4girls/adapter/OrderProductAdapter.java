@@ -41,7 +41,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     @NonNull
     @Override
     public OrderProductAdapter.ItemHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_favorite,null);
+        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_order_product,null);
         OrderProductAdapter.ItemHolder itemHolder=new OrderProductAdapter.ItemHolder(v);
         return itemHolder;
     }

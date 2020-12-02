@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class BillDepositActivity extends AppCompatActivity {
     public static Context context;
     public static View view;
-    private TextView txtName, txtPhone,txtEmail,txtAddress,txtNameProduct,txtCurrentDdate,txtExpiryDate,txtDateManufacture,txtPrice, txtDescription,txtType;
+    private TextView txtName, txtPhone,txtEmail,txtAddress,txtNameProduct,txtCurrentDdate,txtExpiryDate,txtDateManufacture,txtPrice, txtDescription,txtType,txtStatus,txtSend;
 
 
 
@@ -42,7 +42,22 @@ public class BillDepositActivity extends AppCompatActivity {
         txtPrice = findViewById(R.id.txt_price);
         txtDescription = findViewById(R.id.txt_description);
         txtType = findViewById(R.id.txt_type_prodcut);
+        txtStatus = findViewById(R.id.txt_status);
+        txtSend = findViewById(R.id.txt_send);
 
+
+        setInforBill();
+        //Print
+        PrintManager printManager = (PrintManager) getSystemService(PRINT_SERVICE);
+        printManager.print("print_any_view_job_name", new ViewPrintAdapter(getcontext(),
+                findViewById(R.id.linearLayout3)), null);
+    }
+
+    public static Context getcontext(){
+        return context;
+    }
+
+    private  void setInforBill(){
         txtEmail.setText(MainActivity.account.getEmail());
         txtAddress.setText(MainActivity.account.getAddress());
         txtPhone.setText(MainActivity.account.getPhone());
@@ -55,18 +70,7 @@ public class BillDepositActivity extends AppCompatActivity {
         txtExpiryDate.setText(getIntent().getStringExtra("ExpiryDate"));
         txtDescription.setText(getIntent().getStringExtra("Description"));
         txtType.setText(getIntent().getStringExtra("Type"));
-
-
-
-        PrintManager printManager = (PrintManager) getSystemService(PRINT_SERVICE);
-        printManager.print("print_any_view_job_name", new ViewPrintAdapter(getcontext(),
-                findViewById(R.id.linearLayout3)), null);
+        txtStatus.setText(getIntent().getStringExtra("TrangThai"));
+        txtSend.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
     }
-
-    public static Context getcontext(){
-        return context;
-    }
-
-
-
 }
