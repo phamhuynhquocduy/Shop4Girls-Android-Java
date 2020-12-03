@@ -73,4 +73,5 @@ public class BillDepositActivity extends AppCompatActivity {
         txtStatus.setText(getIntent().getStringExtra("TrangThai"));
         txtSend.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
     }
+
 }

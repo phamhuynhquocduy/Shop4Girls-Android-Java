@@ -1,6 +1,7 @@
 package com.example.shop4girls.connect;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -16,8 +17,14 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.shop4girls.view.BillDepositActivity;
+import com.example.shop4girls.view.DepositActivity;
+import com.example.shop4girls.view.DetailProductActivity;
+import com.example.shop4girls.view.MainActivity;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,6 +35,7 @@ class ViewPrintAdapter extends PrintDocumentAdapter {
     private PrintedPdfDocument mDocument;
     private Context mContext;
     private View mView;
+    BillDepositActivity billDepositActivity = new BillDepositActivity();
 
     public ViewPrintAdapter(Context context, View view) {
         mContext = context;
@@ -53,6 +61,12 @@ class ViewPrintAdapter extends PrintDocumentAdapter {
 
         PrintDocumentInfo info = builder.build();
         callback.onLayoutFinished(info, true);
+        cancellationSignal.setOnCancelListener(new CancellationSignal.OnCancelListener() {
+            @Override
+            public void onCancel() {
+                Toast.makeText(mContext, "dsfsdfdsfsdf", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -98,5 +112,13 @@ class ViewPrintAdapter extends PrintDocumentAdapter {
             mDocument = null;
         }
         callback.onWriteFinished(new PageRange[]{new PageRange(0, 0)});
+    }
+
+    @Override
+    public void onFinish() {
+        Intent intent = new Intent(mContext.getApplicationContext(), DepositActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+        super.onFinish();
     }
 }
