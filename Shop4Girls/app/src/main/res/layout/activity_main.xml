@@ -161,6 +161,33 @@
                         android:paddingRight="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20dp"
+                        android:text="Nước Hoa"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_perfume"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:id="@+id/txt_perfume"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15dp"
+                        android:text="Xem tất cả>>"
+                        android:textAlignment="viewEnd"
+                        android:paddingRight="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>

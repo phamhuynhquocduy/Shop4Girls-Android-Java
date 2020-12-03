@@ -40,6 +40,7 @@ import com.example.shop4girls.adapter.FaceAdapter;
 import com.example.shop4girls.adapter.FavoriteProductAdapter;
 import com.example.shop4girls.adapter.LipAdapter;
 import com.example.shop4girls.adapter.NewProductAdpater;
+import com.example.shop4girls.adapter.PerfumeAdapter;
 import com.example.shop4girls.connect.CheckConnection;
 import com.example.shop4girls.connect.SaveSharedPreference;
 import com.example.shop4girls.connect.Server;
@@ -64,19 +65,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView txtEye,txtLip,txtFace;
+    private TextView txtEye,txtLip,txtFace,txtPerfume;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ViewFlipper viewFlipper;
-    private RecyclerView recyclerViewNewProduct,recyclerViewCategory,recyclerViewEye,recyclerViewFace,recyclerViewLip;
+    private RecyclerView recyclerViewNewProduct,recyclerViewCategory,recyclerViewEye,recyclerViewFace,recyclerViewLip,recyclerViewPerfume;
     private NewProductAdpater newProductAdpater;
-    private ArrayList<Product> arrayListNewProdcut,arrayListEye,arrayListFace, arrayListLip;
+    private ArrayList<Product> arrayListNewProdcut,arrayListEye,arrayListFace, arrayListLip,arrayListPerfume;
     private CategoryHomeAdapter categoryHomeAdapter;
     private ArrayList<Category> arrayListCategory;
     private EyeAdapter eyeAdapter;
     private FaceAdapter faceAdapter;
     private LipAdapter lipAdapter;
+    private PerfumeAdapter perfumeAdapter;
     public static ArrayList<Cart> arrayListCart;
     public static ArrayList<Product> arrayListFavorite= new ArrayList<>();
     public static FavoriteProductAdapter favoriteProductAdapter;
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         txtEye = findViewById(R.id.txt_eye);
         txtFace = findViewById(R.id.txt_face);
         txtLip = findViewById(R.id.txt_lip);
+        txtPerfume = findViewById(R.id.txt_perfume);
         //Cart
         if (arrayListCart != null) {
         } else {
@@ -143,6 +146,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewLip.setLayoutManager(gridLayoutManagerLip);
         recyclerViewLip.setHasFixedSize(true);
         recyclerViewLip.setAdapter(lipAdapter);
+        //PerfumeCategory
+        recyclerViewPerfume = findViewById(R.id.recyclerview_perfume);
+        arrayListPerfume = new ArrayList<>();
+        perfumeAdapter = new PerfumeAdapter(getApplicationContext(), arrayListPerfume);
+        GridLayoutManager gridLayoutManagerPerfume = new GridLayoutManager(this, 1);
+        gridLayoutManagerPerfume.setOrientation(GridLayoutManager.HORIZONTAL);
+        recyclerViewPerfume.setLayoutManager(gridLayoutManagerPerfume);
+        recyclerViewPerfume.setHasFixedSize(true);
+        recyclerViewPerfume.setAdapter(perfumeAdapter);
 
         setActionBar();
         setUpNavDrawer();
@@ -156,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         loadProduct(5,arrayListEye);
         loadProduct(6,arrayListFace);
         loadProduct(7,arrayListLip);
+        loadProduct(8,arrayListPerfume);
     }
 
     private void eventTextViewAll() {
@@ -186,6 +199,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ListProductActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("idcategory",7);
+                startActivity(intent);
+            }
+        });
+        txtPerfume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadProduct(8,arrayListPerfume);
+                Intent intent = new Intent(getApplicationContext(), ListProductActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("idcategory",8);
                 startActivity(intent);
             }
         });
@@ -455,6 +478,8 @@ public class MainActivity extends AppCompatActivity {
                                 faceAdapter.notifyDataSetChanged();
                             }else if(idCate==7){
                                 lipAdapter.notifyDataSetChanged();
+                            }else if(idCate==8){
+                                perfumeAdapter.notifyDataSetChanged();
                             }
 
                         } catch (JSONException e) {
