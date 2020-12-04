@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Ký Gửi Sản Phẩm"
-            android:textColor="#000000"
-            android:textSize="25sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -175,6 +175,8 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:text="Ký Gửi"
+            android:textColor="@color/colorWhite"
+            android:textSize="22sp"
             android:enabled="false"
             android:textStyle="bold"
             android:background="@drawable/custom_button"/>

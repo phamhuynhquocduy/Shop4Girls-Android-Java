@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Thông tin đặt hàng"
-            android:textColor="@color/colorBlack"
-            android:textSize="25sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
     <ScrollView
@@ -34,7 +34,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -287,7 +287,9 @@
                 android:layout_height="50dp"
                 android:text="XÁC NHẬN ĐẶT HÀNG"
                 android:background="@color/colorPrimary"
-                android:textSize="20dp">
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textSize="22sp">
             </Button>
         </LinearLayout>
     </ScrollView>

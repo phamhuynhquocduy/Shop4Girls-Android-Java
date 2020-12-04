@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textStyle="bold"
-                android:textColor="@color/colorBlack"
-                android:textSize="25dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
                 android:text="Sản phẩm yêu thích"
                 android:gravity="center">
             </TextView>
@@ -37,7 +37,7 @@
                 android:textSize="30sp"
                 android:id="@+id/txt_product_empty"
                 android:layout_gravity="center"
-                android:text="Bạn Chưa có Sản Phẩm Yêu Thích"
+                android:text="Bạn chưa có sản phẩm Yêu Thích"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <androidx.recyclerview.widget.RecyclerView

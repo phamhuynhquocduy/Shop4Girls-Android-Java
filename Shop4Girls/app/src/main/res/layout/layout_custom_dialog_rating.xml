@@ -37,8 +37,10 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/custom_button"
-        android:textSize="20dp"
-        android:text="Đánh Giá" />
+        android:textSize="22sp"
+        android:text="Đánh Giá"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"/>
 
 
 </LinearLayout>
