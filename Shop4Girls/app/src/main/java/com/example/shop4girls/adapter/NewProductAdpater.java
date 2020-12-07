@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class NewProductAdpater extends RecyclerView.Adapter<NewProductAdpater.It
         itemHolder.txtName.setText(product.getName());
         DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
         itemHolder.txtPrice.setText(decimalFormat.format(product.getPrice())+" đ");
+        itemHolder.ratingBar.setRating((float) product.getRating());
         Picasso.get().load(product.getImage())
                 .placeholder(R.drawable.image_place_holder)
                 .error(R.drawable.image_error)
@@ -66,12 +68,14 @@ public class NewProductAdpater extends RecyclerView.Adapter<NewProductAdpater.It
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView image;
         public TextView txtName,txtPrice;
+        public RatingBar ratingBar;
 
         public ItemHolder(View itemView) {
             super(itemView);
             image=itemView.findViewById(R.id.imageview);
             txtName=itemView.findViewById(R.id.textview_name);
             txtPrice=itemView.findViewById(R.id.textview_price);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
     }
 }

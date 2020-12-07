@@ -12,20 +12,34 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
+import com.example.shop4girls.model.Firm;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DepositActivity extends AppCompatActivity {
 
@@ -37,6 +51,9 @@ public class DepositActivity extends AppCompatActivity {
     private Button button;
     private Context context;
     private ImageButton imgBtnExpiryDate, imgBtnDateManufacture;
+    private Spinner spinner;
+    private ArrayAdapter<Firm> spinnerAdapter;
+    ArrayList arrayList = new ArrayList();
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -62,11 +79,13 @@ public class DepositActivity extends AppCompatActivity {
         tilDateManufacture = findViewById(R.id.til_date_manufacture);
         tilExpiryDate = findViewById(R.id.til_expiry_date);
         tilPrice = findViewById(R.id.til_price);
+        spinner = findViewById(R.id.spinner);
 
-
+        loadFirm();
         eventImageButton();
         eventRadioButton();
         check();
+        setSpinner();
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +111,27 @@ public class DepositActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+
+    private void setSpinner(){
+        String[] firms = new String[]{};
+        for(int i=0;i<arrayList.size();++i){
+            firms[i]=arrayList.get(i).toString();
+        }
+        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayList);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selecteditem =  spinner.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
     }
 
@@ -258,6 +298,7 @@ public class DepositActivity extends AppCompatActivity {
         }
 
     }
+
     public void eventImageButton(){
         imgBtnExpiryDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,6 +340,7 @@ public class DepositActivity extends AppCompatActivity {
             }
         });
     }
+
     public void eventRadioButton(){
         radioButtonLipstick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,6 +375,35 @@ public class DepositActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void loadFirm() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("https://mshop4girls.000webhostapp.com//getFirm.php", new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null) {
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String name = jsonObject.getString("ten");
+                            arrayList.add(new Firm(id, name));
+                            spinnerAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
     }
 
     @Override

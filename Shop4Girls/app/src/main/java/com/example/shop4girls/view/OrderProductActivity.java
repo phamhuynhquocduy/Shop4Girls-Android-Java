@@ -189,4 +189,27 @@ public class OrderProductActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
+//    public float getSum(final int loai){
+//        RequestQueue requestQueue2 = Volley.newRequestQueue(context);
+//        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, Server.sumRating, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                sum = Float.parseFloat(response);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(context,"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                HashMap<String, String> param = new HashMap<String, String>();
+//                param.put("id", String.valueOf(loai));
+//                return param;
+//            }
+//        };
+//        requestQueue2.add(stringRequest2);
+//        return sum;
+//    }
 }

@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:text="Chi Tiết Sản Phẩm"
             android:textColor="@color/colorWhite"
-            android:textSize="30sp"
+            android:textSize="27sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
     <ScrollView

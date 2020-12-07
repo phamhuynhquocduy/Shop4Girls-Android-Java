@@ -102,6 +102,13 @@
             </ImageButton>
         </LinearLayout>
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            >
+        </Spinner>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_price"
             android:layout_width="match_parent"

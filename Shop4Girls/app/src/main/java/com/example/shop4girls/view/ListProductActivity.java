@@ -45,6 +45,7 @@ public class ListProductActivity extends AppCompatActivity {
     private Spinner spinner;
     private String selecteditem;
     private ImageButton imageButton;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,8 @@ public class ListProductActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         spinner = findViewById(R.id.spinner);
-        imageButton = findViewById(R.id.image_button);
+//        imageButton = findViewById(R.id.image_button);
+        searchView = findViewById(R.id.search_bar);
 
         // Product
         recyclerViewListProduct = findViewById(R.id.recyclerview_list_product);
@@ -72,15 +74,28 @@ public class ListProductActivity extends AppCompatActivity {
         loadProduct();
         setActionBar();
         setSpinner();
-        imageButton.setOnClickListener(new View.OnClickListener() {
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getApplicationContext(),AdSearchActivity.class));
+//            }
+//        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AdSearchActivity.class));
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listProductAdapter.filterName(newText.trim());
+                return false;
             }
         });
     }
 
     private void loadProduct() {
+        listProductAdapter.arrayListCopy.clear();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.getProduct+id, new Response.Listener<JSONArray>() {
             @Override
@@ -95,8 +110,9 @@ public class ListProductActivity extends AppCompatActivity {
                             String image = jsonObject.getString("hinhanhsp");
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
-                            arrayListListProduct.add(new Product(id, name, price, image, description, idCategory));
-                            listProductAdapter.arrayListCopy.add(new Product(id, name, price, image, description, idCategory));
+                            float sosao= jsonObject.getInt("sosao");
+                            arrayListListProduct.add(new Product(id, name, price, image, description, idCategory,sosao));
+                            listProductAdapter.arrayListCopy.add(new Product(id, name, price, image, description, idCategory,sosao));
                             listProductAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             Toast.makeText(ListProductActivity.this, e.getMessage()+"", Toast.LENGTH_SHORT).show();
@@ -116,15 +132,16 @@ public class ListProductActivity extends AppCompatActivity {
 
     private void setActionBar() {
         setSupportActionBar(toolbar);
-        if(id==5){
-            getSupportActionBar().setTitle("Mắt");
-        }else if(id==6){
-            getSupportActionBar().setTitle("Mặt");
-        }else if(id==7){
-            getSupportActionBar().setTitle("Môi");
-        }else{
-            getSupportActionBar().setTitle("Nước Hoa");
-        }
+        getSupportActionBar().setTitle("");
+//        if(id==5){
+//            getSupportActionBar().setTitle("Mắt");
+//        }else if(id==6){
+//            getSupportActionBar().setTitle("Mặt");
+//        }else if(id==7){
+//            getSupportActionBar().setTitle("Môi");
+//        }else{
+//            getSupportActionBar().setTitle("Nước Hoa");
+//        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +152,7 @@ public class ListProductActivity extends AppCompatActivity {
     }
 
     private void setSpinner(){
-        String[] arraySpinner = new String[] {"Chọn lọc","Giá giảm dần", "Giá tăng dần", "A->Z", "Z->A"};
+        String[] arraySpinner = new String[] {"Sắp Xếp","Giá giảm dần", "Giá tăng dần", "A->Z", "Z->A"};
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -176,27 +193,28 @@ public class ListProductActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu,menu);
-        androidx.appcompat.widget.SearchView searchView= (androidx.appcompat.widget.SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                listProductAdapter.filterName(s.trim());
-                return false;
-            }
-        });
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.search_menu,menu);
+//        androidx.appcompat.widget.SearchView searchView= (androidx.appcompat.widget.SearchView) menu.findItem(R.id.menu_search).getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                listProductAdapter.filterName(s.trim());
+//                return false;
+//            }
+//        });
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        return super.onOptionsItemSelected(item);
+//    }
 }

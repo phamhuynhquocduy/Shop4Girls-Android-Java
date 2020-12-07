@@ -21,4 +21,5 @@ public class Server {
     public static String getOder = url+"postOder.php";
     public static String getDetailOder =url+"postDetailOder.php";
     public static String postRating = url+="postRating.php";
+    public static String getFirm =url+="getFirm.php";
 }
