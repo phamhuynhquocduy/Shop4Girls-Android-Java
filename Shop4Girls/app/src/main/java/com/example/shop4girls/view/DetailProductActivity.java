@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageButton btnFavorite;
     private Button btnCart, btnMinus, btnPlus , btnValues, btnDeposit;
+    private RatingBar ratingBar;
     public int id=0;
     public String name="";
     public int price=0;
@@ -75,6 +77,7 @@ public class DetailProductActivity extends AppCompatActivity {
         btnMinus = findViewById(R.id.button_minus);
         btnPlus = findViewById(R.id.button_plus);
         btnValues = findViewById(R.id.button_values);
+        ratingBar = findViewById(R.id.ratingBar);
         getData();
         setActionBar();
         eventButtonCart();
@@ -171,6 +174,7 @@ public class DetailProductActivity extends AppCompatActivity {
         description=product.getDescription();
         idcategory=product.getIdCategory();
         int gia=product.getPrice();
+        ratingBar.setRating((float) product.getRating());
         txtName.setText(product.getName());
         txtDescription.setText(product.getDescription());
         DecimalFormat decimalFormat=new DecimalFormat("###,###,###");

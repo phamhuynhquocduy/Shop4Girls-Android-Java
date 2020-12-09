@@ -1,5 +1,7 @@
 package com.example.shop4girls.model;
 
+import android.util.EventLogTags;
+
 import java.io.Serializable;
 
 public class OrderProduct implements Serializable {
@@ -10,6 +12,22 @@ public class OrderProduct implements Serializable {
     private int count;
     private Integer total;
     private int status;
+    private String description;
+    double rating;
+    int category;
+
+    public OrderProduct(int id, String name, String image, Integer price, int count, Integer total, int status, String description, double rating, int category) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.count = count;
+        this.total = total;
+        this.status = status;
+        this.description = description;
+        this.rating = rating;
+        this.category = category;
+    }
 
     public OrderProduct(int id, String name, String image, Integer price, int count, Integer total, int status) {
         this.id = id;
@@ -85,6 +103,30 @@ public class OrderProduct implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
     }
 
 

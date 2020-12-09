@@ -228,6 +228,7 @@
                         android:layout_gravity="left">
                     </TextView>
                     <TextView
+                        android:id="@+id/txt_total"
                         android:layout_width="310dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

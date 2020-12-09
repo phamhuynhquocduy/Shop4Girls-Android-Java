@@ -39,8 +39,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class DepositActivity extends AppCompatActivity {
 
@@ -87,7 +89,7 @@ public class DepositActivity extends AppCompatActivity {
         eventRadioButton();
         check();
         setSpinner();
-
+        setActionBar();
 
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -314,7 +316,10 @@ public class DepositActivity extends AppCompatActivity {
                         , new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        edtExpiryDate.setText(day+"/"+month+"/"+year);
+                        c.set(year,month,dayOfMonth);
+                        String myFormat = "dd/MM/yyyy"; // your format
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+                        edtExpiryDate.setText(sdf.format(c.getTime()));
                     }
                 }, year, month, day);
 
@@ -329,14 +334,16 @@ public class DepositActivity extends AppCompatActivity {
                 final int year=c.get(Calendar.YEAR);
                 final int month=c.get(Calendar.MONTH);
                 final int day =c.get(Calendar.DAY_OF_MONTH);
-
                 DatePickerDialog dialog =new DatePickerDialog(DepositActivity.this
                         , new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        edtDateManufacture.setText(day+"/"+month+"/"+year);
+                        c.set(year,month,dayOfMonth);
+                        String myFormat = "dd/MM/yyyy"; // your format
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+                        edtDateManufacture.setText(sdf.format(c.getTime()));
                     }
-                }, year, month, day);
+                }, year,month,day);
 
                 dialog.show();
             }
@@ -415,6 +422,7 @@ public class DepositActivity extends AppCompatActivity {
         startActivity(intent);
         super.onBackPressed();
     }
+
     private void setActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -422,7 +430,9 @@ public class DepositActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
     }

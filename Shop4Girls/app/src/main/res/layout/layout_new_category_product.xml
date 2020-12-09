@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginLeft="15dp"
+                android:secondaryProgressTint="@color/colorGray"
                 android:progressTint="@color/colorYellow"
                 style="?android:attr/ratingBarStyleSmall"
                 android:stepSize="0.1"

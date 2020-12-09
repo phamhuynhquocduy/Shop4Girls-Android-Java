@@ -121,7 +121,10 @@ public class OrderProductActivity extends AppCompatActivity {
                                     object.getInt("giasp"),
                                     object.getInt("soluongsanpham"),
                                     object.getInt("tientungsanpham"),
-                                    object.getInt("trangthai")));
+                                    object.getInt("trangthai"),
+                                    object.getString("motasp"),
+                                    object.getDouble("sosao"),
+                                    object.getInt("idloai")));
                             orderProductAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {

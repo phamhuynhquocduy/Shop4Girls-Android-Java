@@ -31,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.connect.Server;
 import com.example.shop4girls.model.OrderProduct;
+import com.example.shop4girls.model.Product;
 import com.example.shop4girls.view.DetailProductActivity;
 import com.example.shop4girls.view.LoginActivity;
 import com.example.shop4girls.view.SignInActivity;
@@ -71,6 +72,16 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                 .into(itemHolder.image);
         if(product.getStatus()==1){
             itemHolder.button.setText("Xem lại");
+            itemHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context.getApplicationContext(), DetailProductActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Product productView = new Product(product.getId(),product.getName(),product.getPrice(),product.getImage(),product.getDescription(),product.getCategory(),product.getRating());
+                    intent.putExtra("thongtinsanpham", productView);
+                    context.startActivity(intent);
+                }
+            });
         }else {
             itemHolder.button.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -31,7 +31,7 @@ import java.util.Map;
 public class InformationOrderActivity extends AppCompatActivity {
     private Button btnOrder;
     private Toolbar toolbar;
-    private TextView txtName, txtPhone ,txtAddress;
+    private TextView txtName, txtPhone ,txtAddress,txtTotal;
 
 
     @Override
@@ -43,7 +43,10 @@ public class InformationOrderActivity extends AppCompatActivity {
         txtName = findViewById(R.id.txtName_Order);
         txtPhone = findViewById(R.id.txtPhone_Order);
         txtAddress = findViewById(R.id.txtAddrerss_Order);
+        txtTotal = findViewById(R.id.txt_total);
         eventOrder();
+        setActionBar();
+        setInfoOrder();
     }
 
     private void eventOrder() {
@@ -137,6 +140,7 @@ public class InformationOrderActivity extends AppCompatActivity {
         txtAddress.setText(MainActivity.account.getAddress());
         txtPhone.setText(MainActivity.account.getPhone());
         txtName.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
+        txtTotal.setText(getIntent().getStringExtra("tongtien"));
     }
 
 }

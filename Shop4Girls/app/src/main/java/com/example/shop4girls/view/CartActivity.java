@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shop4girls.R;
 import com.example.shop4girls.adapter.CartAdapter;
+import com.example.shop4girls.model.OrderProduct;
+import com.example.shop4girls.model.Product;
 
 import java.text.DecimalFormat;
 
@@ -54,7 +56,9 @@ public class CartActivity extends AppCompatActivity {
         btnPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),InformationOrderActivity.class));
+                Intent intent = new Intent(getApplicationContext(), InformationOrderActivity.class);
+                intent.putExtra("tongtien", txtTotal.getText().toString().trim());
+                startActivity(intent);
             }
         });
     }
@@ -63,7 +67,7 @@ public class CartActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
             }
         });
 
