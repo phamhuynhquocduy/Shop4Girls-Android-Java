@@ -23,7 +23,7 @@
             android:text="Hóa đơn điện tử"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="28dp"
+            android:textSize="25sp"
             android:textStyle="bold"></TextView>
 
         <LinearLayout
@@ -31,12 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="vertical"
-            android:background="#FFCCFF">
+            android:background="#FFCCCC">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFCCFF"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -44,6 +43,7 @@
                     android:text="Kính gửi: "
                     android:textStyle="bold"
                     android:textSize="15dp"
+                    android:background="#FFCCCC"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:textColor="@color/colorBlack">
@@ -54,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="15dp"
+                    android:background="#FFCCCC"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:textColor="@color/colorBlack">
@@ -66,6 +67,7 @@
                 android:text="Mã số hóa đơn: "
                 android:textStyle="bold"
                 android:textSize="15dp"
+                android:background="#FFCCCC"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -94,7 +96,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFCCFF"
+                android:background="#FFCCCC"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,7 +104,7 @@
                     android:text="Họ và Tên: "
                     android:textStyle="bold"
                     android:textSize="17dp"
-                    android:background="#FFCCFF"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -114,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="17dp"
-                    android:background="#FFCCFF"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -153,7 +155,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFCCFF"
+                android:background="#FFCCCC"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -161,7 +163,7 @@
                     android:text="Số điện thoại: "
                     android:textStyle="bold"
                     android:textSize="17dp"
-                    android:background="#FFCCFF"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -173,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="17dp"
-                    android:background="#FFCCFF"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -212,7 +214,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFCCFF"
+                android:background="#FFCCCC"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -220,6 +222,7 @@
                     android:text="Tên Sản Phẩm: "
                     android:textStyle="bold"
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -231,6 +234,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -270,13 +274,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#FFCCFF">
+                android:background="#FFCCCC">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hãng Sản Phẩm: "
                     android:textStyle="bold"
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -288,6 +293,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -328,13 +334,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#FFCCFF">
+                android:background="#FFCCCC">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ngày sản xuất: "
                     android:textStyle="bold"
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -346,6 +353,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -385,13 +393,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#FFCCFF">
+                android:background="#FFCCCC">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mô tả: "
                     android:textStyle="bold"
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -403,6 +412,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -442,13 +452,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#FFCCFF">
+                android:background="#FFCCCC">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Giá mong muốn: "
                     android:textStyle="bold"
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -459,6 +470,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textSize="17dp"
+                    android:background="#FFCCCC"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"

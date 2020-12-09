@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:text="Thông tin đặt hàng"
             android:textColor="@color/colorWhite"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
     <ScrollView
@@ -292,6 +292,6 @@
         android:background="@color/colorPrimary"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
-        android:textSize="22sp">
+        android:textSize="20sp">
     </Button>
 </LinearLayout>

@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:text="Đăng Nhập"
             android:textColor="@color/colorWhite"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
     <LinearLayout
@@ -100,7 +100,7 @@
             android:padding="4dp"
             android:text="Đăng Nhập"
             android:textColor="@color/colorWhite"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"

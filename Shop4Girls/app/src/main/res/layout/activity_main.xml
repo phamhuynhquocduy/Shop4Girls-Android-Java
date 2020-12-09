@@ -26,7 +26,7 @@
                     android:layout_gravity="center"
                     android:text="Shop4Girls"
                     android:textColor="@color/colorWhite"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.Toolbar>
 

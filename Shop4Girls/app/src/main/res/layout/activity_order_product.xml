@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textColor="@color/colorWhite"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:text="Sản phẩm đã mua"
                 android:gravity="center">
             </TextView>
@@ -35,10 +35,10 @@
             android:layout_height="match_parent">
             <TextView
                 android:gravity="center"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:id="@+id/txt_product_empty"
                 android:layout_gravity="center"
-                android:text="Bạn chưa đặt hàng"
+                android:text="Bạn chưa mua sản phẩm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

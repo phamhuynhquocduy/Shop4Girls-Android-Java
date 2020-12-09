@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:text="Chi Tiết Sản Phẩm"
             android:textColor="@color/colorWhite"
-            android:textSize="27sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
     <ScrollView
@@ -182,7 +182,7 @@
             android:background="@drawable/custom_button"
             android:scaleType="centerInside"
             android:text="Thêm Giỏ Hàng"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhite" />
 </LinearLayout>
