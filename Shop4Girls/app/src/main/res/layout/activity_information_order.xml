@@ -141,51 +141,8 @@
                     </RadioGroup>
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:gravity="clip_horizontal"
-                android:background="@drawable/custom_border"
-                android:orientation="vertical"
-                tools:ignore="MissingConstraints">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hình thức thanh toán"
-                    android:textSize="20dp"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
-                </TextView>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:gravity="clip_horizontal"
-                    android:background="@drawable/custom_borderradius">
-                    <RadioGroup
-                        android:layout_width="370dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
-                        <RadioButton
-                            android:id="@+id/radiobutton_tienmat"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Thanh toán bằng tiền mặt" />
-                        <RadioButton
-                            android:id="@+id/radiobutton_ATM"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Thanh toán bằng thẻ ATM" />
-                        <RadioButton
-                            android:id="@+id/radiobutton_chuyenkhoan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Chuyển khoản qua ngân hàng" />
-                    </RadioGroup>
-                </LinearLayout>
-            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -282,8 +239,7 @@
                     </TextView>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+
     <Button
         android:id="@+id/button_order"
         android:layout_width="match_parent"
