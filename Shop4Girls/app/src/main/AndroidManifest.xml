@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.BillDepositActivity"></activity>
+        <activity android:name=".view.OrderSuccessActivity"></activity>
+        <activity android:name=".view.BillDepositActivity" />
         <activity android:name=".view.DepositActivity" />
         <activity
             android:name=".view.AdSearchActivity"
