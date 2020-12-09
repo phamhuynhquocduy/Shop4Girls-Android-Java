@@ -63,13 +63,15 @@
                     android:textSize="20sp"
                     android:paddingTop="10dp"/>
                 <RatingBar
+                    android:layout_marginTop="5sp"
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7sp"
+                    android:layout_marginLeft="5sp"
                     android:layout_gravity="left"
                     android:progressTint="@color/colorYellow"
-                    style="?android:attr/ratingBarStyleSmall"
+                    android:stepSize="0.1"
+                    style="?android:attr/ratingBarStyleIndicator"
                     android:max="5"
                     android:numStars="5">
                 </RatingBar>
