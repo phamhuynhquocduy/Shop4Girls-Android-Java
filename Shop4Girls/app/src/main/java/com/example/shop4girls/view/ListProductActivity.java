@@ -110,7 +110,7 @@ public class ListProductActivity extends AppCompatActivity {
                             String image = jsonObject.getString("hinhanhsp");
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
-                            float sosao= jsonObject.getInt("sosao");
+                            double sosao= jsonObject.getDouble("sosao");
                             arrayListListProduct.add(new Product(id, name, price, image, description, idCategory,sosao));
                             listProductAdapter.arrayListCopy.add(new Product(id, name, price, image, description, idCategory,sosao));
                             listProductAdapter.notifyDataSetChanged();
@@ -187,6 +187,8 @@ public class ListProductActivity extends AppCompatActivity {
                         listProductAdapter.notifyDataSetChanged();
                         break;
                     default:
+                        Toast.makeText(ListProductActivity.this, "Chua Chon", Toast.LENGTH_SHORT).show();
+
                 }
             }
 

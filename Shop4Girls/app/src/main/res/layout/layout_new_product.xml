@@ -58,6 +58,7 @@
                 android:layout_marginLeft="15dp"
                 android:progressTint="@color/colorYellow"
                 style="?android:attr/ratingBarStyleSmall"
+                android:stepSize="0.1"
                 android:max="5"
                 android:numStars="5">
             </RatingBar>

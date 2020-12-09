@@ -146,6 +146,12 @@ public class Product implements Serializable {
         public int compare(Product p1, Product p2) {
             double product1 = p1.getRating();
             double product2 = p2.getRating();
-            return (int) (product2-product1);
+            if (product1 > product2) {
+                return 1;
+            } else if (product1 < product2){
+                return -1;
+            } else {
+                return 0;
+            }
         }};
 }
