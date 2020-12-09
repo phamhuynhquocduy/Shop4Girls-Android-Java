@@ -2,6 +2,7 @@ package com.example.shop4girls.view;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.os.Build;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 public class BillDepositActivity extends AppCompatActivity {
     public static Context context;
     public static View view;
+    private Toolbar toolbar;
     private TextView txtName, txtPhone,txtEmail,txtAddress,txtNameProduct,txtCurrentDdate,txtExpiryDate,txtDateManufacture,txtPrice, txtDescription,txtType,txtStatus,txtSend,txtFirm;
 
 
@@ -30,7 +32,7 @@ public class BillDepositActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_deposit);
         context=getApplicationContext();
-
+        toolbar = findViewById(R.id.toolbar);
         txtName = findViewById(R.id.txt_name);
         txtPhone = findViewById(R.id.txt_phone);
         txtAddress = findViewById(R.id.txt_address);

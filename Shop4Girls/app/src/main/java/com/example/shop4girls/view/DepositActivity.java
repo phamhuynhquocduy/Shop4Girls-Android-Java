@@ -2,6 +2,7 @@ package com.example.shop4girls.view;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -47,6 +48,7 @@ public class DepositActivity extends AppCompatActivity {
     private TextInputLayout tilNameProduct,tilExpiryDate,tilDateManufacture,tilPrice, tilDescription,tilRemainingCapacity;
     private Boolean checkNameProduct=false,checkExpiryDate=false,checkDateManufacture=false,checkPrice=false, checkDescription=false,checkRemainingCapacity=false;
     private CheckBox checkBox;
+    private Toolbar toolbar;
     private RadioButton radioButtonLipstick, radioButtonPerfume;
     private Button button;
     private Context context;
@@ -60,13 +62,13 @@ public class DepositActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
-
         edtRemainingCapacity=findViewById(R.id.edt_remaining_capacity);
         checkBox=findViewById(R.id.checkBox);
         radioButtonLipstick=findViewById(R.id.radiobutton_lipstick);
         radioButtonPerfume=findViewById(R.id.radiobutton_perfume);
         tilRemainingCapacity = findViewById(R.id.til_remaining_capacity);
         button = findViewById(R.id.button_print);
+        toolbar = findViewById(R.id.toolbar);
         edtNameProduct = findViewById(R.id.edt_name_prodcut);
         edtExpiryDate = findViewById(R.id.edt_expiry_date);
         edtDateManufacture = findViewById(R.id.edt_date_manufacture);
@@ -80,7 +82,6 @@ public class DepositActivity extends AppCompatActivity {
         tilExpiryDate = findViewById(R.id.til_expiry_date);
         tilPrice = findViewById(R.id.til_price);
         spinner = findViewById(R.id.spinner);
-
         loadFirm();
         eventImageButton();
         eventRadioButton();
@@ -413,5 +414,16 @@ public class DepositActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         super.onBackPressed();
+    }
+    private void setActionBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package com.example.shop4girls.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,14 +29,15 @@ import java.util.Map;
 
 public class InformationOrderActivity extends AppCompatActivity {
     private Button btnOrder;
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information_order);
-
         btnOrder = findViewById(R.id.button_order);
-
+        toolbar = findViewById(R.id.toolbar);
         eventOrder();
     }
 
@@ -112,6 +114,17 @@ public class InformationOrderActivity extends AppCompatActivity {
                 requestQueue.add(stringRequest);
 
 
+            }
+        });
+    }
+    private void setActionBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
