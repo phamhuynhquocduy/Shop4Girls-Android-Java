@@ -45,6 +45,7 @@ public class NewProductAdpater extends RecyclerView.Adapter<NewProductAdpater.It
         DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
         itemHolder.txtPrice.setText(decimalFormat.format(product.getPrice())+" đ");
         itemHolder.ratingBar.setRating((float) product.getRating());
+        itemHolder.ratingBar.setStepSize((float) product.getRating());
         Picasso.get().load(product.getImage())
                 .placeholder(R.drawable.image_place_holder)
                 .error(R.drawable.image_error)

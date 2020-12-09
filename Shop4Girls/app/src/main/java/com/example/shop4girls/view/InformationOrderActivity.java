@@ -60,7 +60,7 @@ public class InformationOrderActivity extends AppCompatActivity {
                                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                         CheckConnection.ShowToast_short(getApplicationContext(),"Mời bạn tiếp tục mua sản phẩm");
                                     }else{
-                                        CheckConnection.ShowToast_short(getApplicationContext(),"dữ liệu của bạn đã bị lỗi");
+                                        CheckConnection.ShowToast_short(getApplicationContext(),"Dữ liệu của bạn đã bị lỗi");
                                     }
                                 }
                             }, new Response.ErrorListener() {
@@ -80,6 +80,7 @@ public class InformationOrderActivity extends AppCompatActivity {
                                             object.put("masanpham",MainActivity.arrayListCart.get(i).getId());
                                             object.put("soluongsanpham",MainActivity.arrayListCart.get(i).getCount());
                                             object.put("tientungsanpham",MainActivity.arrayListCart.get(i).getPirce());
+
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }

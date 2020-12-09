@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                             String image = jsonObject.getString("hinhanhsp");
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
-                            float rating =  jsonObject.getInt("sosao");
+                            double rating =  jsonObject.getDouble("sosao");
                             arrayListNewProdcut.add(new Product(id, name, price, image, description, idCategory,rating));
                             newProductAdpater.notifyDataSetChanged();
                         } catch (JSONException e) {
@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                             String image = jsonObject.getString("hinhanhsp");
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
-                            float rating =   jsonObject.getInt("sosao");
+                            double rating =   jsonObject.getDouble("sosao");
                             arrayListRating.add(new Product(id, name, price, image, description, idCategory,rating));
                             ratingAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
@@ -521,7 +521,7 @@ public class MainActivity extends AppCompatActivity {
                             String image = jsonObject.getString("hinhanhsp");
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
-                            float rating =  jsonObject.getInt("sosao");
+                            double rating =  jsonObject.getDouble("sosao");
                             arrayList.add(new Product(id, name, price, image, description, idCategory,rating));
                             if(idCate==5){
                                 eyeAdapter.notifyDataSetChanged();

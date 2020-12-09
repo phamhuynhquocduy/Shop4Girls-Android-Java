@@ -11,9 +11,9 @@ public class Product implements Serializable {
     public String description;
     public int idCategory;
     public int firm;
-    public float rating;
+    public double rating;
 
-    public Product(int id, String name, Integer price, String image, String description, int idCategory, float rating) {
+    public Product(int id, String name, Integer price, String image, String description, int idCategory, double rating) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -23,7 +23,7 @@ public class Product implements Serializable {
         this.rating = rating;
     }
 
-    public Product(int id, String name, Integer price, String image, String description, int idCategory, int firm, float rating) {
+    public Product(int id, String name, Integer price, String image, String description, int idCategory, int firm, double rating) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -99,12 +99,11 @@ public class Product implements Serializable {
         this.firm = firm;
     }
 
-
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
@@ -145,8 +144,8 @@ public class Product implements Serializable {
     public static Comparator<Product> highRating = new Comparator<Product>() {
 
         public int compare(Product p1, Product p2) {
-            float product1 = p1.getRating();
-            float product2 = p2.getRating();
+            double product1 = p1.getRating();
+            double product2 = p2.getRating();
             return (int) (product2-product1);
         }};
 }

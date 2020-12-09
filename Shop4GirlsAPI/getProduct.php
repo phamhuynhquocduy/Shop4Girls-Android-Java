@@ -12,16 +12,18 @@
             $row['giasanpham'],
             $row['hinhanhsanpham'],
             $row['motasanpham'],
-            $row['idsanpham'],));
+			$row['idsanpham'],
+			$row['tongsosao']));
 	}
 	class Sanpham{
-		function Sanpham($id,$tensp,$giasp,$hinhanhsp,$motasp,$idsanpham){
+		function Sanpham($id,$tensp,$giasp,$hinhanhsp,$motasp,$idsanpham,$sosao){
 			$this->id=$id;
 			$this->tensp=$tensp;
 			$this->giasp=$giasp;
 			$this->hinhanhsp=$hinhanhsp;
 			$this->motasp=$motasp;
 			$this->idsanpham=$idsanpham;
+			$this->sosao=$sosao;
 		}
 	}
 	echo json_encode($mangloaisanphammoinhat);

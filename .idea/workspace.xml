@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4d85e90-1b5e-42e6-ae68-e4f17909ff09" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/EyeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/EyeAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/FaceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/FaceAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/LipAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/LipAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/ListProductAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/ListProductAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/NewProductAdpater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/NewProductAdpater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/OrderProductAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/OrderProductAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/PerfumeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/adapter/PerfumeAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/view/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop4Girls/app/src/main/java/com/example/shop4girls/view/MainActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +32,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Shop4Girls" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />

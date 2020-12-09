@@ -6,7 +6,7 @@
 	$matkhau=md5($_POST['matkhau']);
 	$sdt=$_POST['dt'];
 	$gioitinh=$_POST['gioitinh'];
-	$kiemtra="SELECT * FROM taikhoan WHERE email='$email' OR sdt='$sdt'";
+	$kiemtra="SELECT * FROM taikhoan WHERE email='$email'";
 	$dchi=$_POST['diachi'];
 	$tontai=$con->query($kiemtra);
 	if($tontai->num_rows >= 1){
