@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ import java.util.Map;
 public class InformationOrderActivity extends AppCompatActivity {
     private Button btnOrder;
     private Toolbar toolbar;
+    private TextView txtName, txtPhone ,txtAddress;
 
 
     @Override
@@ -38,6 +40,9 @@ public class InformationOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_information_order);
         btnOrder = findViewById(R.id.button_order);
         toolbar = findViewById(R.id.toolbar);
+        txtName = findViewById(R.id.txtName_Order);
+        txtPhone = findViewById(R.id.txtPhone_Order);
+        txtAddress = findViewById(R.id.txtAddrerss_Order);
         eventOrder();
     }
 
@@ -127,6 +132,11 @@ public class InformationOrderActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    private void setInfoOrder(){
+        txtAddress.setText(MainActivity.account.getAddress());
+        txtPhone.setText(MainActivity.account.getPhone());
+        txtName.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
     }
 
 }
