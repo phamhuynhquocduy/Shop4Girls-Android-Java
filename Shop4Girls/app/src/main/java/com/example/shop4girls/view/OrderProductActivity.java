@@ -60,7 +60,7 @@ public class OrderProductActivity extends AppCompatActivity {
         if(CheckConnection.haveNetworkConnection(getApplicationContext())) {
             setActionBar();
             getData();
-            eventClickItem();
+            //eventClickItem();
 
         }else{
             CheckConnection.ShowToast_short(getApplicationContext(),"Lỗi kết nối mạng");
@@ -74,34 +74,34 @@ public class OrderProductActivity extends AppCompatActivity {
         recyclerView.setAdapter(orderProductAdapter);
     }
 
-    private void eventClickItem() {
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, final int position) {
-                final AppCompatActivity activity=(AppCompatActivity)view.getContext();
-                final Dialog dialogRating = new Dialog(activity);
-                //Gan content view cho dialog la mot layout tu dinh nghia
-                dialogRating.setContentView(R.layout.layout_custom_dialog_rating);
-
-                ratingBar = dialogRating.findViewById(R.id.ratingBar);
-                Button button = dialogRating.findViewById(R.id.button);
-
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        OrderProduct product=arrayList.get(position);
-                        createRating(product.getId());
-
-                    }
-                });
-
-                // Setting wight and height dialog
-                dialogRating.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT);
-                dialogRating.show();
-            }
-        }));
-    }
+//    private void eventClickItem() {
+//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, final int position) {
+//                final AppCompatActivity activity=(AppCompatActivity)view.getContext();
+//                final Dialog dialogRating = new Dialog(activity);
+//                //Gan content view cho dialog la mot layout tu dinh nghia
+//                dialogRating.setContentView(R.layout.layout_custom_dialog_rating);
+//
+//                ratingBar = dialogRating.findViewById(R.id.ratingBar);
+//                Button button = dialogRating.findViewById(R.id.button);
+//
+//                button.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        OrderProduct product=arrayList.get(position);
+//                        createRating(product.getId());
+//
+//                    }
+//                });
+//
+//                // Setting wight and height dialog
+//                dialogRating.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+//                        WindowManager.LayoutParams.WRAP_CONTENT);
+//                dialogRating.show();
+//            }
+//        }));
+//    }
 
     private void getData(){
         final DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
@@ -120,7 +120,8 @@ public class OrderProductActivity extends AppCompatActivity {
                                     object.getString("hinhanhsp"),
                                     object.getInt("giasp"),
                                     object.getInt("soluongsanpham"),
-                                    object.getInt("tientungsanpham")));
+                                    object.getInt("tientungsanpham"),
+                                    object.getInt("trangthai")));
                             orderProductAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {

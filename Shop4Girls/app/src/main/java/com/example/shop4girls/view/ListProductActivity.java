@@ -152,7 +152,7 @@ public class ListProductActivity extends AppCompatActivity {
     }
 
     private void setSpinner(){
-        String[] arraySpinner = new String[] {"Sắp Xếp","Giá giảm dần", "Giá tăng dần", "A->Z", "Z->A"};
+        String[] arraySpinner = new String[] {"Sắp Xếp","Giá giảm dần", "Giá tăng dần", "A->Z", "Z->A","Đánh Giá"};
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -180,6 +180,10 @@ public class ListProductActivity extends AppCompatActivity {
                         break;
                     case 4:
                         Collections.sort(arrayListListProduct, Product.nameZtoA);
+                        listProductAdapter.notifyDataSetChanged();
+                        break;
+                    case 5:
+                        Collections.sort(arrayListListProduct, Product.highRating);
                         listProductAdapter.notifyDataSetChanged();
                         break;
                     default:

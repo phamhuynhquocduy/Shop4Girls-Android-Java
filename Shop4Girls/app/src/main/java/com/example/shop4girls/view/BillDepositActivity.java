@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class BillDepositActivity extends AppCompatActivity {
     public static Context context;
     public static View view;
-    private TextView txtName, txtPhone,txtEmail,txtAddress,txtNameProduct,txtCurrentDdate,txtExpiryDate,txtDateManufacture,txtPrice, txtDescription,txtType,txtStatus,txtSend;
+    private TextView txtName, txtPhone,txtEmail,txtAddress,txtNameProduct,txtCurrentDdate,txtExpiryDate,txtDateManufacture,txtPrice, txtDescription,txtType,txtStatus,txtSend,txtFirm;
 
 
 
@@ -44,7 +44,7 @@ public class BillDepositActivity extends AppCompatActivity {
         txtType = findViewById(R.id.txt_type_prodcut);
         txtStatus = findViewById(R.id.txt_status);
         txtSend = findViewById(R.id.txt_send);
-
+        txtFirm =findViewById(R.id.txt_maker_product);
 
         setInforBill();
         //Print
@@ -72,6 +72,7 @@ public class BillDepositActivity extends AppCompatActivity {
         txtType.setText(getIntent().getStringExtra("Type"));
         txtStatus.setText(getIntent().getStringExtra("TrangThai"));
         txtSend.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
+        txtFirm.setText(getIntent().getStringExtra("Firm"));
     }
 
 }

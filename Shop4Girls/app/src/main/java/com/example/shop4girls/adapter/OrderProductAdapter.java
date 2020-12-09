@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapter.ItemHolder> {
     public Context context;
     public ArrayList<OrderProduct> arrayList;
+    private RatingBar ratingBar;
 
     public OrderProductAdapter(Context context, ArrayList<OrderProduct> arrayList) {
         this.context = context;
@@ -47,8 +49,8 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderProductAdapter.ItemHolder itemHolder, final int i) {
-        OrderProduct product=arrayList.get(i);
+    public void onBindViewHolder(@NonNull final OrderProductAdapter.ItemHolder itemHolder, final int i) {
+        final OrderProduct product=arrayList.get(i);
         itemHolder.txtName.setText(product.getName());
         DecimalFormat decimalFormat=new DecimalFormat("###,###,###");
         itemHolder.txtPrice.setText(decimalFormat.format(product.getPrice())+" đ");
@@ -56,6 +58,30 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                 .placeholder(R.drawable.image_place_holder)
                 .error(R.drawable.image_error)
                 .into(itemHolder.image);
+        if(product.getStatus()==1){
+            itemHolder.button.setText("Xem lại");
+        }else {
+            itemHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    final AppCompatActivity activity=(AppCompatActivity)  v.getContext();
+                    final Dialog dialogRating = new Dialog(activity);
+                    //Gan content view cho dialog la mot layout tu dinh nghia
+                    dialogRating.setContentView(R.layout.layout_custom_dialog_rating);
+
+                    ratingBar = dialogRating.findViewById(R.id.ratingBar);
+                    Button button = dialogRating.findViewById(R.id.button);
+                    //createRating(product.getId());
+
+                    // Setting wight and height dialog
+                    dialogRating.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.WRAP_CONTENT);
+                    dialogRating.show();
+                }
+            });
+        }
+
     }
 
     @Override
@@ -66,12 +92,14 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView image;
         public TextView txtName,txtPrice;
+        private Button button;
 
         public ItemHolder(View itemView) {
             super(itemView);
             image=itemView.findViewById(R.id.imageview);
             txtName=itemView.findViewById(R.id.textview_name);
             txtPrice=itemView.findViewById(R.id.textview_price);
+            button = itemView.findViewById(R.id.button_order);
         }
     }
 }

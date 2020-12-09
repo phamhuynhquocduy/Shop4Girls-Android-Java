@@ -98,6 +98,7 @@ public class DepositActivity extends AppCompatActivity {
                 intent.putExtra("ExpiryDate",edtExpiryDate.getText().toString().trim());
                 intent.putExtra("Description",edtDescription.getText().toString().trim());
                 intent.putExtra("Price",edtPrice.getText().toString().trim());
+                intent.putExtra("Firm",spinner.getSelectedItem().toString());
                 if(radioButtonLipstick.isChecked()){
                     intent.putExtra("Type","Son");
                     intent.putExtra("TrangThai","Sản Phẩm Chưa Được Sử Dụng");

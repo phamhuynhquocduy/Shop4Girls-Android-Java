@@ -9,6 +9,17 @@ public class OrderProduct implements Serializable {
     private Integer price;
     private int count;
     private Integer total;
+    private int status;
+
+    public OrderProduct(int id, String name, String image, Integer price, int count, Integer total, int status) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.count = count;
+        this.total = total;
+        this.status = status;
+    }
 
     public OrderProduct(int id, String name, String image, Integer price, int count, Integer total) {
         this.id = id;
@@ -67,12 +78,13 @@ public class OrderProduct implements Serializable {
         this.total = total;
     }
 
-    public OrderProduct(String name, String image, Integer price, int count, Integer total) {
-        this.name = name;
-        this.image = image;
-        this.price = price;
-        this.count = count;
-        this.total = total;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 

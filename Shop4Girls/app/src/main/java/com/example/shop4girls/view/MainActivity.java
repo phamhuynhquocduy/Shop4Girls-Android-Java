@@ -41,9 +41,11 @@ import com.example.shop4girls.adapter.FavoriteProductAdapter;
 import com.example.shop4girls.adapter.LipAdapter;
 import com.example.shop4girls.adapter.NewProductAdpater;
 import com.example.shop4girls.adapter.PerfumeAdapter;
+import com.example.shop4girls.adapter.RatingAdapter;
 import com.example.shop4girls.connect.CheckConnection;
 import com.example.shop4girls.connect.SaveSharedPreference;
 import com.example.shop4girls.connect.Server;
+import com.example.shop4girls.connect.Server2;
 import com.example.shop4girls.model.Account;
 import com.example.shop4girls.model.Cart;
 import com.example.shop4girls.model.Category;
@@ -70,15 +72,16 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ViewFlipper viewFlipper;
-    private RecyclerView recyclerViewNewProduct,recyclerViewCategory,recyclerViewEye,recyclerViewFace,recyclerViewLip,recyclerViewPerfume;
+    private RecyclerView recyclerViewNewProduct,recyclerViewCategory,recyclerViewEye,recyclerViewFace,recyclerViewLip,recyclerViewPerfume,recyclerViewNewRating;
     private NewProductAdpater newProductAdpater;
-    private ArrayList<Product> arrayListNewProdcut,arrayListEye,arrayListFace, arrayListLip,arrayListPerfume;
+    private ArrayList<Product> arrayListNewProdcut,arrayListEye,arrayListFace, arrayListLip,arrayListPerfume,arrayListRating;
     private CategoryHomeAdapter categoryHomeAdapter;
     private ArrayList<Category> arrayListCategory;
     private EyeAdapter eyeAdapter;
     private FaceAdapter faceAdapter;
     private LipAdapter lipAdapter;
     private PerfumeAdapter perfumeAdapter;
+    private RatingAdapter ratingAdapter;
     public static ArrayList<Cart> arrayListCart;
     public static ArrayList<Product> arrayListFavorite= new ArrayList<>();
     public static FavoriteProductAdapter favoriteProductAdapter;
@@ -155,6 +158,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewPerfume.setLayoutManager(gridLayoutManagerPerfume);
         recyclerViewPerfume.setHasFixedSize(true);
         recyclerViewPerfume.setAdapter(perfumeAdapter);
+        //Rating
+        recyclerViewNewRating = findViewById(R.id.recyclerview_rating);
+        arrayListRating = new ArrayList<>();
+        ratingAdapter = new RatingAdapter(getApplicationContext(), arrayListRating);
+        GridLayoutManager gridLayoutManagerRating = new GridLayoutManager(this, 1);
+        gridLayoutManagerRating.setOrientation(GridLayoutManager.HORIZONTAL);
+        recyclerViewNewRating.setLayoutManager(gridLayoutManagerRating);
+        recyclerViewNewRating.setHasFixedSize(true);
+        recyclerViewNewRating.setAdapter(ratingAdapter);
 
         setActionBar();
         setUpNavDrawer();
@@ -169,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         loadProduct(6,arrayListFace);
         loadProduct(7,arrayListLip);
         loadProduct(8,arrayListPerfume);
+        getRating();
     }
 
     private void eventTextViewAll() {
@@ -229,7 +242,8 @@ public class MainActivity extends AppCompatActivity {
                             String image = jsonObject.getString("hinhanhsp");
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
-                            arrayListNewProdcut.add(new Product(id, name, price, image, description, idCategory));
+                            float rating =  jsonObject.getInt("sosao");
+                            arrayListNewProdcut.add(new Product(id, name, price, image, description, idCategory,rating));
                             newProductAdpater.notifyDataSetChanged();
                         } catch (JSONException e) {
                             Toast.makeText(MainActivity.this, e.getMessage()+"", Toast.LENGTH_SHORT).show()
@@ -246,6 +260,41 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(jsonArrayRequest);
     }
+
+    private void getRating() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server2.getRatingProduct, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null) {
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            int id = jsonObject.getInt("id");
+                            String name = jsonObject.getString("tensp");
+                            int price = jsonObject.getInt("giasp");
+                            String image = jsonObject.getString("hinhanhsp");
+                            String description = jsonObject.getString("motasp");
+                            int idCategory = jsonObject.getInt("idsanpham");
+                            float rating =   jsonObject.getInt("sosao");
+                            arrayListRating.add(new Product(id, name, price, image, description, idCategory,rating));
+                            ratingAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            Toast.makeText(MainActivity.this, e.getMessage()+"", Toast.LENGTH_SHORT).show()
+                            ;e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, error.getMessage()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+    }
+
 
     public void setUpNavDrawer() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -271,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
                         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
                             Intent intent = new Intent(MainActivity.this, OrderProductActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             CheckConnection.ShowToast_short(getApplicationContext(), "Lỗi");
                         }
@@ -471,7 +521,8 @@ public class MainActivity extends AppCompatActivity {
                             String image = jsonObject.getString("hinhanhsp");
                             String description = jsonObject.getString("motasp");
                             int idCategory = jsonObject.getInt("idsanpham");
-                            arrayList.add(new Product(id, name, price, image, description, idCategory));
+                            float rating =  jsonObject.getInt("sosao");
+                            arrayList.add(new Product(id, name, price, image, description, idCategory,rating));
                             if(idCate==5){
                                 eyeAdapter.notifyDataSetChanged();
                             }else if(idCate==6){

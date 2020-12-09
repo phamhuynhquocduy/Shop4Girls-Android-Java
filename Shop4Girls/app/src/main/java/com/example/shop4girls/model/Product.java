@@ -142,4 +142,11 @@ public class Product implements Serializable {
 
             return product2.compareTo(product1);
         }};
+    public static Comparator<Product> highRating = new Comparator<Product>() {
+
+        public int compare(Product p1, Product p2) {
+            float product1 = p1.getRating();
+            float product2 = p2.getRating();
+            return (int) (product2-product1);
+        }};
 }
