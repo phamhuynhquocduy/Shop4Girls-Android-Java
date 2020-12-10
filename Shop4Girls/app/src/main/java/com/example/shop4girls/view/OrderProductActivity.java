@@ -124,7 +124,8 @@ public class OrderProductActivity extends AppCompatActivity {
                                     object.getInt("trangthai"),
                                     object.getString("motasp"),
                                     object.getDouble("sosao"),
-                                    object.getInt("idloai")));
+                                    object.getInt("idloai"),
+                                    object.getInt("id")));
                             orderProductAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {

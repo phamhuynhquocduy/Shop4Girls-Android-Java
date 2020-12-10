@@ -13,6 +13,20 @@ public class Product implements Serializable {
     public int firm;
     public double rating;
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", idCategory=" + idCategory +
+                ", firm=" + firm +
+                ", rating=" + rating +
+                '}';
+    }
+
     public Product(int id, String name, Integer price, String image, String description, int idCategory, double rating) {
         this.id = id;
         this.name = name;

@@ -15,6 +15,38 @@ public class OrderProduct implements Serializable {
     private String description;
     double rating;
     int category;
+    int iddonhang;
+
+    @Override
+    public String toString() {
+        return "OrderProduct{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
+                ", count=" + count +
+                ", total=" + total +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                ", rating=" + rating +
+                ", category=" + category +
+                ", iddonhang=" + iddonhang +
+                '}';
+    }
+
+    public OrderProduct(int id, String name, String image, Integer price, int count, Integer total, int status, String description, double rating, int category, int iddonhang) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.count = count;
+        this.total = total;
+        this.status = status;
+        this.description = description;
+        this.rating = rating;
+        this.category = category;
+        this.iddonhang = iddonhang;
+    }
 
     public OrderProduct(int id, String name, String image, Integer price, int count, Integer total, int status, String description, double rating, int category) {
         this.id = id;
@@ -46,6 +78,15 @@ public class OrderProduct implements Serializable {
         this.price = price;
         this.count = count;
         this.total = total;
+    }
+
+
+    public int getIddonhang() {
+        return iddonhang;
+    }
+
+    public void setIddonhang(int iddonhang) {
+        this.iddonhang = iddonhang;
     }
 
     public int getId() {

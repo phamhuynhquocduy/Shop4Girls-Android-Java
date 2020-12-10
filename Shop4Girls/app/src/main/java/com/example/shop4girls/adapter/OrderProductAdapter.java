@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +31,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.connect.Server;
+import com.example.shop4girls.connect.Server2;
 import com.example.shop4girls.model.OrderProduct;
 import com.example.shop4girls.model.Product;
 import com.example.shop4girls.view.DetailProductActivity;
 import com.example.shop4girls.view.LoginActivity;
+import com.example.shop4girls.view.MainActivity;
 import com.example.shop4girls.view.SignInActivity;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +49,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     public Context context;
     public ArrayList<OrderProduct> arrayList;
     private RatingBar ratingBar;
+    private float sum;
 
     public OrderProductAdapter(Context context, ArrayList<OrderProduct> arrayList) {
         this.context = context;
@@ -71,18 +75,9 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                 .error(R.drawable.image_error)
                 .into(itemHolder.image);
         if(product.getStatus()==1){
-            itemHolder.button.setText("Xem lại");
-            itemHolder.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context.getApplicationContext(), DetailProductActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Product productView = new Product(product.getId(),product.getName(),product.getPrice(),product.getImage(),product.getDescription(),product.getCategory(),product.getRating());
-                    intent.putExtra("thongtinsanpham", productView);
-                    context.startActivity(intent);
-                }
-            });
+            viewDetail(itemHolder.button,product);
         }else {
+            itemHolder.button.setText("Đánh Giá");
             itemHolder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,6 +94,9 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                     public void onClick(View v) {
                         OrderProduct product=arrayList.get(i);
                         createRating(product.getId());
+                        change(product.getIddonhang(),itemHolder.button);
+                        float tmp =getSum(product.getId());
+                        viewDetail(itemHolder.button,product);
                         dialogRating.dismiss();
                     }
                 });
@@ -121,7 +119,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView image;
         public TextView txtName,txtPrice;
-        private Button button;
+        public Button button;
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -141,7 +139,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                     Toast.makeText(context, "Đánh giá thành công", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(context, "Đánh giá không thành Công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Đánh giá không thành Công"+response, Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -160,5 +158,106 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    private void change(final int idbill, final Button button){
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server2.changeStatus, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String check = response;
+                if(check.equals("success")) {
+                    button.setText("Xem Lại");
+                }else{
+                    Toast.makeText(context, response+"", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("id", String.valueOf(idbill));
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    private float getSum(final int loai){
+        Log.d("getSumRating",Server2.getSumRating+"?id="+loai);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(context);
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, Server2.getSumRating+"?id="+loai, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    sum = Float.parseFloat(response);
+                    changeSumRating(loai,sum);
+                }catch (Exception e){
+                    Log.d("loi",response);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("id", String.valueOf(loai));
+                return param;
+            }
+        };
+        requestQueue2.add(stringRequest2);
+        return sum;
+    }
+
+    private void changeSumRating(final int id, final float checkSum){
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server2.changeRating, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String check = response;
+                if(check.equals("success")) {
+                }else{
+                    Toast.makeText(context,"Lỗi Xảy Ra: " +response+" "+getSum(id),Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,"Lỗi Xảy Ra: " +error.getMessage()+" "+getSum(id),Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("id", String.valueOf(id));
+                param.put("tongsosao", String.valueOf(checkSum));
+                return param;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    private void viewDetail(Button button, final OrderProduct producttmp){
+        button.setText("Xem lại");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context.getApplicationContext(), DetailProductActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Product productView = new Product(producttmp.getId(),producttmp.getName(),producttmp.getPrice(),producttmp.getImage(),producttmp.getDescription(),producttmp.getCategory(),getSum(producttmp.getId()));
+                intent.putExtra("thongtinsanpham", productView);
+                context.startActivity(intent);
+            }
+        });
     }
 }
