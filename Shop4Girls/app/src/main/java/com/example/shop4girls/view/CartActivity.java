@@ -57,7 +57,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), InformationOrderActivity.class);
-                intent.putExtra("tongtien", txtTotal.getText().toString().trim());
+                intent.putExtra("tongtien", total);
                 startActivity(intent);
             }
         });

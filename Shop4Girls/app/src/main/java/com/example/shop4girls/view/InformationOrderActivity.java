@@ -26,14 +26,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 public class InformationOrderActivity extends AppCompatActivity {
     private Button btnOrder;
     private Toolbar toolbar;
-    private TextView txtName, txtPhone , txtAddress, txtTotal, txtGHThuong, txtGHNhanh, txtGHNhanhTrongNgay, txtGHTrong3h, txtTransport, txtTotalBill;
+    private TextView txtName, txtPhone , txtAddress, txtTotal, txtTransport, txtTotalBill;
     private RadioButton radioButtonGHThuong, radioButtonGHNhanh, radioButtonGHNhanhTrongNgay, radioButtonGHTrong3h;
+    private long total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +134,7 @@ public class InformationOrderActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -143,32 +146,47 @@ public class InformationOrderActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setInfoOrder(){
         txtAddress.setText(MainActivity.account.getAddress());
         txtPhone.setText(MainActivity.account.getPhone());
         txtName.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
-        txtTotal.setText(getIntent().getStringExtra("tongtien"));
-//        txtGHThuong.setText("25000");
-//        txtGHNhanh.setText("35000");
-//        txtGHNhanhTrongNgay.setText("45000");
-//        txtGHTrong3h.setText("69000");
-//        txtTotalBill.setText((getIntent().getStringExtra("tongtien") + txtTransport));
-//        if (radioButtonGHThuong.isChecked()){
-//            txtTransport = ;
-//        }
-//        else {
-//            if (radioButtonGHNhanh.isChecked()){
-//                txtTransport = txtGHNhanh;
-//            }
-//            else {
-//                if (radioButtonGHNhanhTrongNgay.isChecked()){
-//                    txtTransport = txtGHNhanhTrongNgay;
-//                }
-//                else{
-//                    txtTransport = txtGHTrong3h;
-//                }
-//            }
-//        }
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        total= getIntent().getLongExtra("tongtien",0);
+        txtTotal.setText(decimalFormat.format(total)+" đ");
+        txtTransport.setText("0 đ");
 
+        radioButtonGHThuong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtTransport.setText("25.000 đ");
+                DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+                txtTotalBill.setText(decimalFormat.format( total+25000)+" đ");
+            }
+        });
+        radioButtonGHTrong3h.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+                txtTotalBill.setText(decimalFormat.format( total+69000)+" đ");
+                txtTransport.setText("69.000 đ");
+            }
+        });
+        radioButtonGHNhanhTrongNgay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+                txtTotalBill.setText(decimalFormat.format( total+45000)+" đ");
+                txtTransport.setText("45.000 đ");
+            }
+        });
+        radioButtonGHNhanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+                txtTotalBill.setText(decimalFormat.format( total+35000)+" đ");
+                txtTransport.setText("35.000 đ");
+            }
+        });
     }
 }
