@@ -66,6 +66,7 @@
     </TextView>
 
     <Button
+        android:id="@+id/button"
         android:layout_marginTop="10sp"
         android:layout_width="300sp"
         android:layout_height="wrap_content"

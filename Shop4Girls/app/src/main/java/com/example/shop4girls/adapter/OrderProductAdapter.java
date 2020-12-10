@@ -37,6 +37,7 @@ import com.example.shop4girls.model.Product;
 import com.example.shop4girls.view.DetailProductActivity;
 import com.example.shop4girls.view.LoginActivity;
 import com.example.shop4girls.view.MainActivity;
+import com.example.shop4girls.view.OrderSuccessActivity;
 import com.example.shop4girls.view.SignInActivity;
 import com.squareup.picasso.Picasso;
 
@@ -93,9 +94,14 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                     @Override
                     public void onClick(View v) {
                         OrderProduct product=arrayList.get(i);
+                        //tao danh gia
                         createRating(product.getId());
+                        //set lại trang thai
                         change(product.getIddonhang(),itemHolder.button);
-                        float tmp =getSum(product.getId());
+                        //tinh tong sau khi danh gia
+                        getSum(product.getId());
+                        // cap nhat danh gia tren database và app
+                        changeSumRating(product.getId(),sum,product);
                         viewDetail(itemHolder.button,product);
                         dialogRating.dismiss();
                     }
@@ -137,6 +143,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             public void onResponse(String response) {
                 if(response.equals("success")) {
                     Toast.makeText(context, "Đánh giá thành công", Toast.LENGTH_SHORT).show();
+
                 }
                 else{
                     Toast.makeText(context, "Đánh giá không thành Công"+response, Toast.LENGTH_SHORT).show();
@@ -188,15 +195,15 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
         requestQueue.add(stringRequest);
     }
 
-    private float getSum(final int loai){
+    private void getSum(final int loai){
         Log.d("getSumRating",Server2.getSumRating+"?id="+loai);
         RequestQueue requestQueue2 = Volley.newRequestQueue(context);
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, Server2.getSumRating+"?id="+loai, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{
-                    sum = Float.parseFloat(response);
-                    changeSumRating(loai,sum);
+                    sum=Float.parseFloat(response);
+                    Toast.makeText(context, ""+response, Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     Log.d("loi",response);
                 }
@@ -216,24 +223,24 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             }
         };
         requestQueue2.add(stringRequest2);
-        return sum;
     }
 
-    private void changeSumRating(final int id, final float checkSum){
+    private void changeSumRating(final int id, final float checkSum, final OrderProduct orderProduct){
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server2.changeRating, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String check = response;
                 if(check.equals("success")) {
+                    orderProduct.setRating(sum);
                 }else{
-                    Toast.makeText(context,"Lỗi Xảy Ra: " +response+" "+getSum(id),Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Lỗi Xảy Ra: " +response,Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context,"Lỗi Xảy Ra: " +error.getMessage()+" "+getSum(id),Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Lỗi Xảy Ra: " +error.getMessage(),Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -254,7 +261,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(context.getApplicationContext(), DetailProductActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Product productView = new Product(producttmp.getId(),producttmp.getName(),producttmp.getPrice(),producttmp.getImage(),producttmp.getDescription(),producttmp.getCategory(),getSum(producttmp.getId()));
+                Product productView = new Product(producttmp.getId(),producttmp.getName(),producttmp.getPrice(),producttmp.getImage(),producttmp.getDescription(),producttmp.getCategory(),producttmp.getRating());
                 intent.putExtra("thongtinsanpham", productView);
                 context.startActivity(intent);
             }

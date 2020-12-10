@@ -76,8 +76,8 @@ public class InformationOrderActivity extends AppCompatActivity {
                                     if(response.equals("success")){
                                         MainActivity.arrayListCart.clear();
                                         CheckConnection.ShowToast_short(getApplicationContext(),"Bạn đã thêm giỏ hàng thành công");
-                                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                                        CheckConnection.ShowToast_short(getApplicationContext(),"Mời bạn tiếp tục mua sản phẩm");
+                                        startActivity(new Intent(getApplicationContext(),OrderSuccessActivity.class));
+                                        finish();
                                     }else{
                                         CheckConnection.ShowToast_short(getApplicationContext(),"Dữ liệu của bạn đã bị lỗi");
                                     }
