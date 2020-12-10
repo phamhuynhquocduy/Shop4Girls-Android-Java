@@ -148,27 +148,27 @@ public class InformationOrderActivity extends AppCompatActivity {
         txtPhone.setText(MainActivity.account.getPhone());
         txtName.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
         txtTotal.setText(getIntent().getStringExtra("tongtien"));
-        txtGHThuong.setText("25000");
-        txtGHNhanh.setText("35000");
-        txtGHNhanhTrongNgay.setText("45000");
-        txtGHTrong3h.setText("69000");
-        txtTotalBill.setText((getIntent().getStringExtra("tongtien") + txtTransport));
-        if (radioButtonGHThuong.isChecked()){
-            txtTransport = txtGHThuong;
-        }
-        else {
-            if (radioButtonGHNhanh.isChecked()){
-                txtTransport = txtGHNhanh;
-            }
-            else {
-                if (radioButtonGHNhanhTrongNgay.isChecked()){
-                    txtTransport = txtGHNhanhTrongNgay;
-                }
-                else{
-                    txtTransport = txtGHTrong3h;
-                }
-            }
-        }
+//        txtGHThuong.setText("25000");
+//        txtGHNhanh.setText("35000");
+//        txtGHNhanhTrongNgay.setText("45000");
+//        txtGHTrong3h.setText("69000");
+//        txtTotalBill.setText((getIntent().getStringExtra("tongtien") + txtTransport));
+//        if (radioButtonGHThuong.isChecked()){
+//            txtTransport = ;
+//        }
+//        else {
+//            if (radioButtonGHNhanh.isChecked()){
+//                txtTransport = txtGHNhanh;
+//            }
+//            else {
+//                if (radioButtonGHNhanhTrongNgay.isChecked()){
+//                    txtTransport = txtGHNhanhTrongNgay;
+//                }
+//                else{
+//                    txtTransport = txtGHTrong3h;
+//                }
+//            }
+//        }
 
     }
 }
