@@ -232,7 +232,7 @@
                         android:layout_width="310dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tổng tiền"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -254,10 +254,11 @@
                         android:layout_gravity="left">
                     </TextView>
                     <TextView
+                        android:id="@+id/txtTienVanChuyen"
                         android:layout_width= "250dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tiền vận chuyển"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -293,7 +294,7 @@
                         android:layout_width= "fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tổng đơn hàng"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:textSize="20dp"
                         android:textStyle="bold"

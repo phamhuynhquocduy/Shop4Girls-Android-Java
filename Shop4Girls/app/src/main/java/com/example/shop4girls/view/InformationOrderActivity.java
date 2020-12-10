@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -31,8 +32,9 @@ import java.util.Map;
 public class InformationOrderActivity extends AppCompatActivity {
     private Button btnOrder;
     private Toolbar toolbar;
-    private TextView txtName, txtPhone ,txtAddress,txtTotal;
-
+    private TextView txtName, txtPhone , txtAddress, txtTotal, txtGHThuong, txtGHNhanh, txtGHNhanhTrongNgay, txtGHTrong3h, txtTransport;
+    private RadioButton radioButtonGHThuong, radioButtonGHNhanh, radioButtonGHNhanhTrongNgay, radioButtonGHTrong3h;
+    private int transport = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,11 @@ public class InformationOrderActivity extends AppCompatActivity {
         txtPhone = findViewById(R.id.txtPhone_Order);
         txtAddress = findViewById(R.id.txtAddrerss_Order);
         txtTotal = findViewById(R.id.txt_total);
+        txtTransport = findViewById(R.id.txtTienVanChuyen);
+        radioButtonGHThuong = findViewById(R.id.radiobutton_GHThuong);
+        radioButtonGHNhanh = findViewById(R.id.radiobutton_GHNhanh);
+        radioButtonGHNhanhTrongNgay = findViewById(R.id.radiobutton_GHNhanhTrongNgay);
+        radioButtonGHTrong3h = findViewById(R.id.radiobutton_GHTrong3h);
         eventOrder();
         setActionBar();
         setInfoOrder();
@@ -141,6 +148,25 @@ public class InformationOrderActivity extends AppCompatActivity {
         txtPhone.setText(MainActivity.account.getPhone());
         txtName.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
         txtTotal.setText(getIntent().getStringExtra("tongtien"));
+        txtGHThuong.setText("25000");
+        txtGHNhanh.setText("35000");
+        txtGHNhanhTrongNgay.setText("45000");
+        txtGHTrong3h.setText("69000");
+        if (radioButtonGHThuong.isChecked()){
+            txtTransport = txtGHThuong;
+        }
+        else {
+            if (radioButtonGHNhanh.isChecked()){
+                txtTransport = txtGHNhanh;
+            }
+            else {
+                if (radioButtonGHNhanhTrongNgay.isChecked()){
+                    txtTransport = txtGHNhanhTrongNgay;
+                }
+                else{
+                    txtTransport = txtGHTrong3h;
+                }
+            }
+        }
     }
-
 }
