@@ -57,7 +57,6 @@ public class InformationOrderActivity extends AppCompatActivity {
         setActionBar();
         setInfoOrder();
     }
-
     private void eventOrder() {
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,14 +153,14 @@ public class InformationOrderActivity extends AppCompatActivity {
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         total= getIntent().getLongExtra("tongtien",0);
         txtTotal.setText(decimalFormat.format(total)+" đ");
-        txtTransport.setText("0 đ");
+        txtTransport.setText("25.000 đ");
+        DecimalFormat decimalFormat1 = new DecimalFormat("###,###,###");
+        txtTotalBill.setText(decimalFormat1.format( total+25000)+" đ");
 
         radioButtonGHThuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtTransport.setText("25.000 đ");
-                DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-                txtTotalBill.setText(decimalFormat.format( total+25000)+" đ");
+
             }
         });
         radioButtonGHTrong3h.setOnClickListener(new View.OnClickListener() {
