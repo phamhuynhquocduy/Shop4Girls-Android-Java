@@ -32,9 +32,8 @@ import java.util.Map;
 public class InformationOrderActivity extends AppCompatActivity {
     private Button btnOrder;
     private Toolbar toolbar;
-    private TextView txtName, txtPhone , txtAddress, txtTotal, txtGHThuong, txtGHNhanh, txtGHNhanhTrongNgay, txtGHTrong3h, txtTransport;
+    private TextView txtName, txtPhone , txtAddress, txtTotal, txtGHThuong, txtGHNhanh, txtGHNhanhTrongNgay, txtGHTrong3h, txtTransport, txtTotalBill;
     private RadioButton radioButtonGHThuong, radioButtonGHNhanh, radioButtonGHNhanhTrongNgay, radioButtonGHTrong3h;
-    private int transport = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,7 @@ public class InformationOrderActivity extends AppCompatActivity {
         txtAddress = findViewById(R.id.txtAddrerss_Order);
         txtTotal = findViewById(R.id.txt_total);
         txtTransport = findViewById(R.id.txtTienVanChuyen);
+        txtTotalBill = findViewById(R.id.txtToTalBill);
         radioButtonGHThuong = findViewById(R.id.radiobutton_GHThuong);
         radioButtonGHNhanh = findViewById(R.id.radiobutton_GHNhanh);
         radioButtonGHNhanhTrongNgay = findViewById(R.id.radiobutton_GHNhanhTrongNgay);
@@ -152,6 +152,7 @@ public class InformationOrderActivity extends AppCompatActivity {
         txtGHNhanh.setText("35000");
         txtGHNhanhTrongNgay.setText("45000");
         txtGHTrong3h.setText("69000");
+        txtTotalBill.setText((getIntent().getStringExtra("tongtien") + txtTransport));
         if (radioButtonGHThuong.isChecked()){
             txtTransport = txtGHThuong;
         }
@@ -168,5 +169,6 @@ public class InformationOrderActivity extends AppCompatActivity {
                 }
             }
         }
+
     }
 }
