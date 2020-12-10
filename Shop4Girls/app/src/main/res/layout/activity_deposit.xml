@@ -172,13 +172,28 @@
             android:layout_width="match_parent"
             android:visibility="gone"
             android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/edt_remaining_capacity"
+            <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:hint="Mô Tả Tình Trạng Sản Phẩm">
-            </EditText>
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radiobutton_perfume_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:textSize="25sp"
+                    android:text="Chưa sử dụng" />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_perfume_used"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:textSize="15sp"
+                    android:text="Đã sử dụng" />
+            </RadioGroup>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
