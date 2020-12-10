@@ -62,18 +62,18 @@
                         android:layout_gravity="left">
                     </TextView>
 
-                    <TextView
-                        android:id="@+id/txtChangeInfo"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:text="Thay đổi"
-                        android:textColor="#0099FF"
-                        android:textSize="15dp"
-                        android:textAlignment="textEnd"
-                        android:textStyle="bold"
-                        android:layout_gravity="right"
-                        tools:ignore="RtlCompat">
-                    </TextView>
+<!--                    <TextView-->
+<!--                        android:id="@+id/txtChangeInfo"-->
+<!--                        android:layout_width="200dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Thay đổi"-->
+<!--                        android:textColor="#0099FF"-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:textAlignment="textEnd"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:layout_gravity="right"-->
+<!--                        tools:ignore="RtlCompat">-->
+<!--                    </TextView>-->
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
