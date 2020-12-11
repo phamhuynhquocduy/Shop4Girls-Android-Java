@@ -161,9 +161,9 @@ public class Product implements Serializable {
             double product1 = p1.getRating();
             double product2 = p2.getRating();
             if (product1 > product2) {
-                return 1;
-            } else if (product1 < product2){
                 return -1;
+            } else if (product1 < product2){
+                return 1;
             } else {
                 return 0;
             }
