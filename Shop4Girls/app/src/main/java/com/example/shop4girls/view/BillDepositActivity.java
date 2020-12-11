@@ -17,12 +17,13 @@ import com.example.shop4girls.connect.ViewPrintAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 
 public class BillDepositActivity extends AppCompatActivity {
     public static Context context;
     public static View view;
     private Toolbar toolbar;
-    private TextView txtName, txtPhone,txtEmail,txtAddress,txtNameProduct,txtCurrentDdate,txtExpiryDate,txtDateManufacture,txtPrice, txtDescription,txtType,txtStatus,txtSend,txtFirm;
+    private TextView txtName, txtPhone,txtEmail,txtAddress,txtNameProduct,txtCurrentDdate,txtExpiryDate,txtDateManufacture,txtPrice, txtDescription,txtType,txtStatus,txtSend,txtFirm,txtCode;
 
 
 
@@ -46,7 +47,8 @@ public class BillDepositActivity extends AppCompatActivity {
         txtType = findViewById(R.id.txt_type_prodcut);
         txtStatus = findViewById(R.id.txt_status);
         txtSend = findViewById(R.id.txt_send);
-        txtFirm =findViewById(R.id.txt_maker_product);
+        txtCode = findViewById(R.id.txt_code);
+        txtFirm = findViewById(R.id.txt_maker_product);
 
         setInforBill();
         //Print
@@ -75,6 +77,9 @@ public class BillDepositActivity extends AppCompatActivity {
         txtStatus.setText(getIntent().getStringExtra("TrangThai"));
         txtSend.setText(MainActivity.account.getLastName()+" "+MainActivity.account.getFirstName());
         txtFirm.setText(getIntent().getStringExtra("Firm"));
+        Random rNo = new Random();
+        final String code = String.valueOf(rNo.nextInt((999999999 - 100000000) + 1) + 1000000000);
+        txtCode.setText(code);
     }
 
 }

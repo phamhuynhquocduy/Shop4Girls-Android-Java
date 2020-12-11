@@ -1,12 +1,14 @@
 package com.example.shop4girls.view;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,9 +48,9 @@ import java.util.Locale;
 
 public class DepositActivity extends AppCompatActivity {
 
-    private EditText  edtRemainingCapacity, edtNameProduct,edtExpiryDate,edtDateManufacture,edtPrice, edtDescription;
-    private TextInputLayout tilNameProduct,tilExpiryDate,tilDateManufacture,tilPrice, tilDescription,tilRemainingCapacity;
-    private Boolean checkNameProduct=false,checkExpiryDate=false,checkDateManufacture=false,checkPrice=false, checkDescription=false,checkRemainingCapacity=false;
+    private EditText  edtNameProduct,edtExpiryDate,edtDateManufacture,edtPrice, edtDescription;
+    private TextInputLayout tilNameProduct,tilExpiryDate,tilDateManufacture,tilPrice, tilDescription;
+    private Boolean checkNameProduct=false,checkExpiryDate=false,checkDateManufacture=false,checkPrice=false, checkDescription=false;
     private CheckBox checkBox;
     private Toolbar toolbar;
     private RadioButton radioButtonLipstick, radioButtonPerfume;
@@ -64,11 +66,9 @@ public class DepositActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
-        edtRemainingCapacity=findViewById(R.id.edt_remaining_capacity);
         checkBox=findViewById(R.id.checkBox);
         radioButtonLipstick=findViewById(R.id.radiobutton_lipstick);
         radioButtonPerfume=findViewById(R.id.radiobutton_perfume);
-        tilRemainingCapacity = findViewById(R.id.til_remaining_capacity);
         button = findViewById(R.id.button_print);
         toolbar = findViewById(R.id.toolbar);
         edtNameProduct = findViewById(R.id.edt_name_prodcut);
@@ -107,15 +107,23 @@ public class DepositActivity extends AppCompatActivity {
                     intent.putExtra("TrangThai","Sản Phẩm Chưa Được Sử Dụng");
                 }else{
                     intent.putExtra("Type","Nước Hoa");
-                    intent.putExtra("TrangThai",edtRemainingCapacity.getText().toString().trim());
                 }
                 startActivity(intent);
+                finish();
 
             }
         });
 
-
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(DepositActivity.this);
+        builder.setTitle("Điều Khoản");
+        builder.setMessage("Shop4Grils có quyền từ chối nhận sản phẩm không giống ảnh, chất lượng như khác hàng mô tả trước đó"+'\n'+"Shop4Girls không chịu trách nhiệm nào về sản phẩm đang tranh chấp");
+        builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog alertDialog =builder.create();
+        alertDialog.show();
     }
 
 
@@ -255,29 +263,6 @@ public class DepositActivity extends AppCompatActivity {
                 }
             }
         });
-        edtRemainingCapacity.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (edtRemainingCapacity.getText().length()<= 0) {
-                        tilRemainingCapacity.setError("Không được để trống");
-                        checkRemainingCapacity=false;
-                        button.setEnabled(false);
-                    }
-                    else {
-                        tilRemainingCapacity.setError(null);
-                        checkRemainingCapacity=true;
-                        checkError();
-                    }
-                }
-            });
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,7 +273,7 @@ public class DepositActivity extends AppCompatActivity {
 
     private void checkError() {
         if(radioButtonPerfume.isChecked()){
-            if(checkNameProduct==true&&checkExpiryDate==true&&checkDateManufacture==true&&checkPrice==true&&checkDescription==true&&checkRemainingCapacity==true){
+            if(checkNameProduct==true&&checkExpiryDate==true&&checkDateManufacture==true&&checkPrice==true&&checkDescription==true){
                 button.setEnabled(true);
             }else {
                 button.setEnabled(false);
@@ -356,13 +341,9 @@ public class DepositActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(radioButtonLipstick.isChecked()){
                     checkBox.setVisibility(View.VISIBLE);
-                    edtRemainingCapacity.setVisibility(View.GONE);
-                    tilRemainingCapacity.setVisibility(View.GONE);
                     checkError();
                 }else{
                     checkBox.setVisibility(View.GONE);
-                    edtRemainingCapacity.setVisibility(View.VISIBLE);
-                    tilRemainingCapacity.setVisibility(View.VISIBLE);
                     checkError();
 
                 }
@@ -372,14 +353,10 @@ public class DepositActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(radioButtonPerfume.isChecked()){
-                    edtRemainingCapacity.setVisibility(View.VISIBLE);
-                    tilRemainingCapacity.setVisibility(View.VISIBLE);
                     checkBox.setVisibility(View.GONE);
                     checkError();
                 }else{
-                    edtRemainingCapacity.setVisibility(View.GONE);
                     checkBox.setVisibility(View.VISIBLE);
-                    tilRemainingCapacity.setVisibility(View.GONE);
                     checkError();
                 }
             }

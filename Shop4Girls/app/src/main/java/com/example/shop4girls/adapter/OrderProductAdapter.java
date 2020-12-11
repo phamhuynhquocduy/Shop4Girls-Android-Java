@@ -76,6 +76,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                 .error(R.drawable.image_error)
                 .into(itemHolder.image);
         if(product.getStatus()==1){
+            itemHolder.button.setText("Xem lại");
             viewDetail(itemHolder.button,product);
         }else {
             itemHolder.button.setText("Đánh Giá");
@@ -95,14 +96,13 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
                     public void onClick(View v) {
                         OrderProduct product=arrayList.get(i);
                         //tao danh gia
-                        createRating(product.getId());
+                        createRating(product,itemHolder.button);
                         //set lại trang thai
                         change(product.getIddonhang(),itemHolder.button);
-                        //tinh tong sau khi danh gia
-                        getSum(product.getId());
-                        // cap nhat danh gia tren database và app
-                        changeSumRating(product.getId(),sum,product);
+                        //Tinh tong sau khi danh gia
+                        //Cap nhat danh gia tren database và app
                         viewDetail(itemHolder.button,product);
+                        itemHolder.button.setEnabled(false);
                         dialogRating.dismiss();
                     }
                 });
@@ -136,13 +136,14 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
         }
     }
 
-    private void createRating(final int idProduct){
+    private void createRating(final OrderProduct orderProduct, final Button button){
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.postRating, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.equals("success")) {
                     Toast.makeText(context, "Đánh giá thành công", Toast.LENGTH_SHORT).show();
+                    getSum(orderProduct.getId(),orderProduct,button);
 
                 }
                 else{
@@ -158,7 +159,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> param = new HashMap<String, String>();
-                param.put("idsanpham", String.valueOf(idProduct));
+                param.put("idsanpham", String.valueOf(orderProduct.getId()));
                 param.put("sodanhgia", String.valueOf(ratingBar.getRating()));
                 param.put("idkhachhang", String.valueOf(LoginActivity.id));
                 return param;
@@ -174,7 +175,6 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             public void onResponse(String response) {
                 String check = response;
                 if(check.equals("success")) {
-                    button.setText("Xem Lại");
                 }else{
                     Toast.makeText(context, response+"", Toast.LENGTH_SHORT).show();
                 }
@@ -195,7 +195,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
         requestQueue.add(stringRequest);
     }
 
-    private void getSum(final int loai){
+    public float getSum(final int loai, final OrderProduct orderProduct, final Button button){
         Log.d("getSumRating",Server2.getSumRating+"?id="+loai);
         RequestQueue requestQueue2 = Volley.newRequestQueue(context);
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, Server2.getSumRating+"?id="+loai, new Response.Listener<String>() {
@@ -203,7 +203,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             public void onResponse(String response) {
                 try{
                     sum=Float.parseFloat(response);
-                    Toast.makeText(context, ""+response, Toast.LENGTH_SHORT).show();
+                    changeSumRating(loai,sum,orderProduct,button);
                 }catch (Exception e){
                     Log.d("loi",response);
                 }
@@ -223,16 +223,20 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             }
         };
         requestQueue2.add(stringRequest2);
+        return sum;
     }
 
-    private void changeSumRating(final int id, final float checkSum, final OrderProduct orderProduct){
+    private void changeSumRating(final int id, final float checkSum, final OrderProduct  orderProduct, final Button button){
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server2.changeRating, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String check = response;
                 if(check.equals("success")) {
-                    orderProduct.setRating(sum);
+                    orderProduct.setRating(checkSum);
+                    Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    button.setText("Xem Lại");
+                    button.setEnabled(true);
                 }else{
                     Toast.makeText(context,"Lỗi Xảy Ra: " +response,Toast.LENGTH_LONG).show();
                 }
@@ -255,7 +259,6 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     }
 
     private void viewDetail(Button button, final OrderProduct producttmp){
-        button.setText("Xem lại");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

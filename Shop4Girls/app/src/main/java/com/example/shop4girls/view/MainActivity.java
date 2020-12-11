@@ -340,6 +340,7 @@ public class MainActivity extends AppCompatActivity {
                         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
                             Intent intent = new Intent(MainActivity.this, DepositActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             CheckConnection.ShowToast_short(getApplicationContext(), "Lỗi");
                         }
