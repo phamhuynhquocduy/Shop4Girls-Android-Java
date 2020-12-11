@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -35,6 +36,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shop4girls.R;
 import com.example.shop4girls.model.Firm;
+import com.example.shop4girls.model.Product;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
@@ -44,6 +46,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
 public class DepositActivity extends AppCompatActivity {
@@ -57,8 +60,10 @@ public class DepositActivity extends AppCompatActivity {
     private Button button;
     private Context context;
     private ImageButton imgBtnExpiryDate, imgBtnDateManufacture;
-    private Spinner spinner;
+    private Spinner spinner,spinnerStatus;
     private ArrayAdapter<Firm> spinnerAdapter;
+    private LinearLayout linearLayout;
+    private int check=0;
     ArrayList arrayList = new ArrayList();
 
     @SuppressLint("WrongViewCast")
@@ -84,18 +89,21 @@ public class DepositActivity extends AppCompatActivity {
         tilExpiryDate = findViewById(R.id.til_expiry_date);
         tilPrice = findViewById(R.id.til_price);
         spinner = findViewById(R.id.spinner);
+        spinnerStatus = findViewById(R.id.spinner_status);
+        linearLayout = findViewById(R.id.linear);
         loadFirm();
         eventImageButton();
         eventRadioButton();
         check();
         setSpinner();
         setActionBar();
+        setSpinnerStatus();
 
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BillDepositActivity.class);
+                final Intent intent = new Intent(getApplicationContext(), BillDepositActivity.class);
                 intent.putExtra("name",edtNameProduct.getText().toString().trim());
                 intent.putExtra("DateManufacture",edtDateManufacture.getText().toString().trim());
                 intent.putExtra("ExpiryDate",edtExpiryDate.getText().toString().trim());
@@ -107,9 +115,13 @@ public class DepositActivity extends AppCompatActivity {
                     intent.putExtra("TrangThai","Sản Phẩm Chưa Được Sử Dụng");
                 }else{
                     intent.putExtra("Type","Nước Hoa");
+                    if(check==0){
+                        intent.putExtra("TrangThai","Sản Phẩm Chưa Được Sử Dụng");
+                    }else{
+                        intent.putExtra("TrangThai","Sản Phẩm Chưa Được Sử Dụng");
+                    }
                 }
                 startActivity(intent);
-                finish();
 
             }
         });
@@ -138,6 +150,25 @@ public class DepositActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selecteditem =  spinner.getItemAtPosition(position).toString();
+                spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String selecteditem =  spinnerStatus.getItemAtPosition(position).toString();
+                        switch (position){
+                            case 0:
+                                check=0;
+                                break;
+                            case 1:
+                                check=1;
+                                break;
+                            default:
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
             }
 
             @Override
@@ -145,6 +176,14 @@ public class DepositActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setSpinnerStatus(){
+        String[] arraySpinner = new String[] {"Chưa Sử Dụng","Đã Sử Dụng"};
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerStatus.setAdapter(adapter);
     }
 
     public void check(){
@@ -341,9 +380,13 @@ public class DepositActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(radioButtonLipstick.isChecked()){
                     checkBox.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                    spinnerStatus.setVisibility(View.GONE);
                     checkError();
                 }else{
                     checkBox.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                    spinnerStatus.setVisibility(View.VISIBLE);
                     checkError();
 
                 }
@@ -354,9 +397,11 @@ public class DepositActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(radioButtonPerfume.isChecked()){
                     checkBox.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
                     checkError();
                 }else{
                     checkBox.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
                     checkError();
                 }
             }
