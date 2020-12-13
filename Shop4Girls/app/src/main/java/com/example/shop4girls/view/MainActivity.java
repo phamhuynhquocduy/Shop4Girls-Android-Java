@@ -605,4 +605,15 @@ public class MainActivity extends AppCompatActivity {
         finishAffinity();
         super.onBackPressed();
     }
+
+
+    @Override
+    protected void onResume() {
+        getRating();
+        recyclerViewPerfume.setAdapter(perfumeAdapter);
+        perfumeAdapter.notifyDataSetChanged();
+        ratingAdapter.notifyDataSetChanged();
+        recyclerViewNewRating.setAdapter(ratingAdapter);
+        super.onResume();
+    }
 }
